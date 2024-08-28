@@ -139,4 +139,4 @@ app/
   - Crear documentación detallada para desarrolladores y usuarios finales.
 - **Capacitación:**
   - Formación para el uso y administración del sistema.
-```
+
