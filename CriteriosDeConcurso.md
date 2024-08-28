@@ -110,7 +110,7 @@ app/
   - Middleware para validar permisos según el rol del usuario (usuario, cocina, dueños, administradores).
   
 - **Gestión de Usuarios y Roles:**
-  - Crear y gestionar usuarios, cocineros, dueños, administradores.
+  - Crear y gestionar usuarios, personal, dueños, administradores.
   - Cada rol tendrá permisos específicos (por ejemplo, `canCreate`, `canUpdate`).
 
 - **Módulo de E-commerce:**
