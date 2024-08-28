@@ -1,10 +1,6 @@
-Claro, aquí tienes la estructura del proyecto en formato Markdown, con algunos emojis para hacerlo más visual y entendible:
-
-```markdown
 # Estructura del Proyecto 🚀
-
 ## **1. Estructura del Proyecto**
-```text
+```markdown
 app/
 │
 ├── FrontEnd/                # Código del frontend (Next.js) 🌐
