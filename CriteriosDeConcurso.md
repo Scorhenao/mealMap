@@ -3,7 +3,7 @@
 El documento es un resumen detallado y bastante completo del proyecto, pero hay algunos puntos a mejorar y organizar para asegurar que todo esté cubierto y en orden. Aquí te dejo una versión revisada y mejorada:
 
 ### **1. Estructura del Proyecto**
-- **Carpetas Principales:**
+```text
 app/
 │
 ├── FrontEnd/                # Código del frontend (Next.js)
@@ -96,6 +96,10 @@ app/
     │       └── example.test.ts
     │
     └── .env                 # Archivo de variables de entorno
+```
+
+Esta estructura organiza el proyecto de manera escalable y modular, con una separación clara entre el frontend y el backend.
+
 
 
 Esta estructura organiza el frontend en la carpeta `public/`, asegurando una clara separación entre los recursos estáticos y la lógica del backend, mientras que se adhiere a los principios SOLID y a la arquitectura de una API RESTful en el backend.
