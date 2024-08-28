@@ -135,11 +135,8 @@ app/
   - Seleccionar tecnología frontend, desarrollar UI, integrar con backend.
 
 ## **7. Documentación y Capacitación 📚**
-- **Documentación Técnica y de
-
- Usuario:**
+- **Documentación Técnica y de Usuario:**
   - Crear documentación detallada para desarrolladores y usuarios finales.
 - **Capacitación:**
   - Formación para el uso y administración del sistema.
-
 ```
