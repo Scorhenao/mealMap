@@ -1,4 +1,3 @@
-Here’s a simplified translation of the functionalities:
 
 ---
 
