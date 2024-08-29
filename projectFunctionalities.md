@@ -1,74 +1,79 @@
-# Funcionalidades 👥
+Here’s a simplified translation of the functionalities:
 
-## 1. **Users (Clientes)** 🧑‍🤝‍🧑
+---
 
-- **Visualización del Menú:** 🍽️
-  - Los usuarios pueden ver el menú completo, incluidas las especialidades del día.
-- **Realización de Pedidos:** 🛒
-  - Permite a los usuarios seleccionar productos y personalizar sus pedidos (e.g., eliminar ingredientes).
-- **Estado del Pedido:** 🔄
-  - Los usuarios pueden rastrear en tiempo real el estado de su pedido (en preparación, listo, entregado).
-- **Método de Pago:** 💳
-  - Opciones de pago incluyen efectivo, débito y crédito.
-- **Asignación de Mesa:** 🪑
-  - El sistema asigna automáticamente al usuario a una mesa disponible al completar un pedido. Las mesas se identifican por número y piso (e.g., Mesa 201 en el piso 2).
-- **Personalización de Pedidos:** ✨
-  - Los usuarios pueden ajustar ingredientes específicos de los platos, lo que modifica automáticamente el precio.
-- **Propina Voluntaria:** 💵
-  - Se sugiere una propina del 6% del total del pedido, distribuida entre todos los meseros.
+# Features 👥
 
-## 2. **Kitchen Staff (Personal de Cocina)** 👩‍🍳👨‍🍳
+## 1. **Users (Customers)** 🧑‍🤝‍🧑
 
-- **Gestión del Menú del Día:** 📋
-  - Capacidad para definir los ingredientes disponibles y las especialidades del día.
-- **Definición de Promociones y Especialidades:** 🎉
-  - Posibilidad de establecer descuentos en platos seleccionados y definir especialidades.
-- **Gestión de Pedidos:** 📝
-  - **Orden de Preparación:** 
-    - Detalles del plato(s) solicitado(s).
-    - Ingredientes específicos del pedido.
-    - Usuario que realizó el pedido.
-    - Cantidad de platos solicitados.
-    - Mesa asignada (incluyendo identificación del piso si aplica).
-  - **Factura Detallada:**
-    - Costo total de cada plato.
-    - Costo adicional por ingredientes específicos.
-    - Cantidad de platos solicitados.
-    - **IVA** incluido en el total.
-    - **Propina Voluntaria:** 6% del total del pedido, distribuida entre todos los meseros.
+- **Menu Viewing:** 🍽️
+  - Users can see the full menu, including daily specials.
+- **Placing Orders:** 🛒
+  - Users can select items and customize their orders (e.g., remove ingredients).
+- **Order Status:** 🔄
+  - Users can track their order in real-time (preparing, ready, delivered).
+- **Payment Method:** 💳
+  - Payment options include cash, debit, and credit cards.
+- **Table Assignment:** 🪑
+  - The system automatically assigns a table when an order is placed. Tables are identified by number and floor (e.g., Table 201 on floor 2).
+- **Order Customization:** ✨
+  - Users can adjust specific ingredients, which changes the price automatically.
+- **Optional Tip:** 💵
+  - A 6% tip is suggested, to be shared among all waitstaff.
 
-## 3. **Owners (Propietarios)** 🏠
+## 2. **Kitchen Staff** 👩‍🍳👨‍🍳
 
-- **Gestión de Pedidos:** 📊
-  - Acceso a todos los pedidos realizados y su estado.
-- **Reportes y Estadísticas:** 📈
-  - Generación de reportes sobre ganancias diarias, pedidos por hora, y popularidad de los platos.
-- **Control de Mesas y Reservas:** 🪑
-  - Visualización y gestión de la disposición de mesas y reservas.
+- **Manage Daily Menu:** 📋
+  - Define available ingredients and daily specials.
+- **Set Promotions and Specials:** 🎉
+  - Create discounts on selected dishes and define specials.
+- **Order Management:** 📝
+  - **Preparation Order:**
+    - Details of the dish(es) ordered.
+    - Specific ingredients.
+    - User who placed the order.
+    - Quantity of dishes ordered.
+    - Assigned table (including floor if applicable).
+  - **Detailed Invoice:**
+    - Total cost of each dish.
+    - Extra cost for specific ingredients.
+    - Quantity of dishes ordered.
+    - **VAT** included in the total.
+    - **Optional Tip:** 6% of the total order, shared among all waitstaff.
 
-## 4. **Admins (Administradores)** 🛠️
+## 3. **Owners** 🏠
 
-- **Configuración del Sistema:** ⚙️
-  - Acceso completo a configuraciones del sistema, incluyendo la creación de roles, gestión de usuarios y ajustes de precios.
-- **Control de Inventario:** 📦
-  - Gestión del inventario de ingredientes y establecimiento de precios dinámicos.
-- **Gestión de Mesas:** 🪑
-  - Gestión y asignación de números y pisos para las mesas del restaurante.
-- **Configuración de Promociones:** 🎉
-  - Creación y ajuste de promociones y ofertas especiales.
-- **Configuración de Seguridad:** 🔐
-  - Implementación y gestión de autenticación JWT para sesiones de usuarios (validez de 2 horas).
-  - Encriptación de contraseñas utilizando bcrypt para proteger datos sensibles.
-  - Middleware para validar permisos y roles de usuario (e.g., cliente, personal de cocina, propietarios, administradores).
+- **Order Management:** 📊
+  - Access to all orders and their statuses.
+- **Reports and Statistics:** 📈
+  - Generate reports on daily earnings, orders per hour, and dish popularity.
+- **Table and Reservation Control:** 🪑
+  - View and manage table arrangements and reservations.
 
-## 5. **Meseros** 🍽️
+## 4. **Admins** 🛠️
 
-- **Liberación de Mesas:** 🆓
-  - Actualización del estado de las mesas a "disponible" una vez que los clientes terminan y la mesa está lista para uso.
-- **Entrega de Pedidos:** 🚚
-  - Información detallada sobre la mesa asignada y los platos para entregar.
-- **Distribución de Propinas:** 💰
-  - La propina voluntaria sugerida (6% del total del pedido) se distribuye equitativamente entre todos los meseros.
-- **Actualización del Estado de Mesas:** 📋
-  - Posibilidad de marcar mesas como "ocupadas" o "libres" según el estado actual.
+- **System Configuration:** ⚙️
+  - Full access to system settings, including role creation, user management, and price adjustments.
+- **Inventory Control:** 📦
+  - Manage ingredient inventory and set dynamic pricing.
+- **Table Management:** 🪑
+  - Manage and assign table numbers and floors.
+- **Promotion Setup:** 🎉
+  - Create and adjust promotions and special offers.
+- **Security Configuration:** 🔐
+  - Implement and manage JWT authentication for user sessions (valid for 2 hours).
+  - Encrypt passwords with bcrypt to protect sensitive data.
+  - Middleware to validate user permissions and roles (e.g., customer, kitchen staff, owners, admins).
 
+## 5. **Waitstaff** 🍽️
+
+- **Freeing Tables:** 🆓
+  - Update table status to "available" once customers leave and the table is ready for use.
+- **Order Delivery:** 🚚
+  - Detailed information about the assigned table and dishes to deliver.
+- **Tip Distribution:** 💰
+  - Suggested 6% tip is shared equally among all waitstaff.
+- **Table Status Update:** 📋
+  - Mark tables as "occupied" or "free" based on their current status.
+
+---
