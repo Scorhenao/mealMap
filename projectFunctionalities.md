@@ -1,6 +1,3 @@
-
----
-
 # Features 👥
 
 ## 1. **Users (Customers)** 🧑‍🤝‍🧑
