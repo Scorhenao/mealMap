@@ -1,70 +1,70 @@
-## Planificación Semanal 📅
+## Weekly Plan 📅
 
-### **Semana 1: Preparación y Configuración (Días 1-7)**
+### **Week 1: Preparation and Setup (Days 1-7)**
 
-**Día 1-2 (Lunes-Martes)**
-- **Reunión de Kickoff**: Se asegurará de que todos comprendan el proyecto y sus roles.
-- **Configuración de Repositorios y GitFlow**:
-  - Inicializará el repositorio y configurará GitFlow.
-  - Configurará los repositorios para frontend (React) y backend (NestJS).
+**Days 1-2 (Monday-Tuesday)**
+- **Kickoff Meeting**: Make sure everyone understands the project and their roles.
+- **Repository and GitFlow Setup**:
+  - Initialize the repository and set up GitFlow.
+  - Set up repositories for frontend (React) and backend (NestJS).
   - [GitFlow Documentation](https://www.atlassian.com/git/tutorials/gitflow-flow)
 
-**Día 3 (Miércoles)**
-- **Configuración de Jira**:
-  - Configurará el proyecto, definirá los flujos de trabajo y creará el tablero.
-  - Añadirá las historias de usuario iniciales a Jira.
+**Day 3 (Wednesday)**
+- **Jira Setup**:
+  - Set up the project, define workflows, and create the board.
+  - Add initial user stories to Jira.
   - [Jira Documentation](https://support.atlassian.com/jira-software-cloud/docs/what-is-jira-software/)
 
-**Día 4 (Jueves)**
-- **Diseño Arquitectónico**:
-  - Creará el **Diagrama de Arquitectura General** para definir los componentes y sus interacciones.
-  - Desarrollará el **Diagrama de Componentes y Clases UML** para detallar los módulos del backend y las entidades principales.
+**Day 4 (Thursday)**
+- **Architectural Design**:
+  - Create the **General Architecture Diagram** to define components and their interactions.
+  - Develop the **UML Component and Class Diagram** to detail backend modules and main entities.
   - [PlantUML Documentation](http://plantuml.com/)
 
-**Día 5 (Viernes)**
-- **Redacción de Historias de Usuario**:
-  - Redactará historias de usuario detalladas para el frontend y el backend.
-  - Creará tareas en Jira basadas en estas historias.
+**Day 5 (Friday)**
+- **Writing User Stories**:
+  - Write detailed user stories for both frontend and backend.
+  - Create tasks in Jira based on these stories.
   - [Writing User Stories](https://www.atlassian.com/agile/user-stories)
 
-**Día 6-7 (Sábado-Domingo)**
-- **Preparación de Entornos**:
-  - Configurará los entornos de desarrollo para frontend (React) y backend (NestJS).
-  - Revisará la configuración de CI/CD y ajustará los pipelines.
+**Days 6-7 (Saturday-Sunday)**
+- **Environment Setup**:
+  - Set up development environments for frontend (React) and backend (NestJS).
+  - Review and adjust CI/CD configurations and pipelines.
   - [React Documentation](https://reactjs.org/docs/getting-started.html)
   - [NestJS Documentation](https://docs.nestjs.com/)
 
 ---
 
-### **Semana 2: Desarrollo Backend y Frontend (Días 8-14)**
+### **Week 2: Backend and Frontend Development (Days 8-14)**
 
-**Día 8-9 (Lunes-Martes)**
+**Days 8-9 (Monday-Tuesday)**
 - **Backend (NestJS) 🚀**:
-  - **Configuración del Proyecto**: Configurará los módulos básicos y servicios.
-  - **Desarrollo de Autenticación**:
-    - Implementará JWT para autenticación.
-    - Configurará bcrypt para la encriptación de contraseñas.
+  - **Project Setup**: Set up basic modules and services.
+  - **Authentication Development**:
+    - Implement JWT for authentication.
+    - Set up bcrypt for password encryption.
     - **Checklist**:
-      - [ ] Configuración de JWT.
-      - [ ] Implementación de bcrypt.
-      - [ ] Creación de endpoints de autenticación.
+      - [ ] JWT setup.
+      - [ ] Bcrypt implementation.
+      - [ ] Create authentication endpoints.
     - [NestJS Authentication](https://docs.nestjs.com/security/authentication)
     - [Bcrypt Documentation](https://github.com/dcodeIO/bcrypt.js)
 
-  - **Desarrollo de Gestión de Usuarios**:
-    - Implementará módulos de gestión de usuarios y roles.
+  - **User Management Development**:
+    - Implement user and role management modules.
     - **Checklist**:
-      - [ ] CRUD de usuarios.
-      - [ ] Gestión de roles y permisos.
+      - [ ] User CRUD operations.
+      - [ ] Role and permission management.
 
-**Día 10-11 (Miércoles-Jueves)**
+**Days 10-11 (Wednesday-Thursday)**
 - **Frontend (React) 🌟**:
-  - **Configuración del Proyecto**: Configurará el entorno de desarrollo y herramientas.
-  - **Desarrollo de Componentes Básicos**:
+  - **Project Setup**: Set up the development environment and tools.
+  - **Basic Component Development**:
     - **Checklist**:
-      - [ ] Implementación de Header, Footer, Navbar.
-      - [ ] Creación de la estructura de carpetas (components, pages, etc.).
-    - **Ejemplo de Código**:
+      - [ ] Implement Header, Footer, Navbar.
+      - [ ] Set up folder structure (components, pages, etc.).
+    - **Code Example**:
       ```jsx
       // src/components/Header.jsx
       import React from 'react';
@@ -87,21 +87,21 @@
       ```
     - [React Components](https://reactjs.org/docs/components-and-props.html)
 
-  - **Desarrollo de Páginas**:
+  - **Page Development**:
     - **Checklist**:
-      - [ ] Página de inicio.
-      - [ ] Página de menú.
-      - [ ] Página de seguimiento de pedidos.
+      - [ ] Home page.
+      - [ ] Menu page.
+      - [ ] Order tracking page.
 
-**Día 12-13 (Viernes-Sábado)**
+**Days 12-13 (Friday-Saturday)**
 - **Backend (NestJS) 🚀**:
-  - **Desarrollo de Gestión de Pedidos**:
-    - Implementará la lógica de pedidos, incluyendo asignación de mesas y actualización de estado.
+  - **Order Management Development**:
+    - Implement order logic, including table assignment and status updates.
     - **Checklist**:
-      - [ ] CRUD de pedidos.
-      - [ ] Asignación de mesas.
-      - [ ] Actualización del estado del pedido.
-    - **Ejemplo de Código**:
+      - [ ] Order CRUD operations.
+      - [ ] Table assignment.
+      - [ ] Order status updates.
+    - **Code Example**:
       ```typescript
       // src/orders/orders.service.ts
       import { Injectable } from '@nestjs/common';
@@ -109,72 +109,72 @@
       @Injectable()
       export class OrdersService {
         async createOrder(createOrderDto: any): Promise<any> {
-          // Lógica para crear un pedido
+          // Logic to create an order
         }
 
         async updateOrderStatus(orderId: string, status: string): Promise<any> {
-          // Lógica para actualizar el estado del pedido
+          // Logic to update order status
         }
       }
       ```
 
-  - **Desarrollo de Facturación**:
-    - Implementará la lógica de generación de facturas con impuestos y propinas.
+  - **Billing Development**:
+    - Implement billing logic with taxes and tips.
     - **Checklist**:
-      - [ ] Generación de facturas.
-      - [ ] Cálculo de impuestos y propinas.
+      - [ ] Invoice generation.
+      - [ ] Tax and tip calculation.
 
-**Día 14 (Domingo)**
-- **Revisión de Integración**:
-  - Se asegurará de que el frontend y el backend se integren correctamente.
+**Day 14 (Sunday)**
+- **Integration Review**:
+  - Ensure frontend and backend integrate correctly.
   - [React Integration](https://reactjs.org/docs/faq-ajax.html)
 
 ---
 
-### **Semana 3: Pruebas y Despliegue (Días 15-21)**
+### **Week 3: Testing and Deployment (Days 15-21)**
 
-**Día 15-16 (Lunes-Martes)**
+**Days 15-16 (Monday-Tuesday)**
 - **Frontend (React) 🌟**:
-  - **Integración con Backend**:
-    - Conectará el frontend con el backend y realizará pruebas.
+  - **Backend Integration**:
+    - Connect frontend to backend and perform tests.
     - **Checklist**:
-      - [ ] Integración de endpoints.
-      - [ ] Pruebas de funcionalidades.
-  - **Revisión de UX/UI**:
-    - Realizará ajustes en la interfaz de usuario según el feedback.
+      - [ ] Endpoint integration.
+      - [ ] Functionality testing.
+  - **UX/UI Review**:
+    - Make adjustments based on feedback.
     - **Checklist**:
-      - [ ] Corrección de errores de interfaz.
-      - [ ] Pruebas de usabilidad.
+      - [ ] Fix UI issues.
+      - [ ] Usability testing.
 
-**Día 17-18 (Miércoles-Jueves)**
+**Days 17-18 (Wednesday-Thursday)**
 - **Backend (NestJS) 🚀**:
-  - **Pruebas de Backend**:
-    - Realizará pruebas unitarias e integradas.
+  - **Backend Testing**:
+    - Perform unit and integration tests.
     - **Checklist**:
-      - [ ] Pruebas unitarias de servicios.
-      - [ ] Pruebas de integración de endpoints.
+      - [ ] Unit tests for services.
+      - [ ] Endpoint integration tests.
     - [NestJS Testing](https://docs.nestjs.com/fundamentals/testing)
   
-  - **Documentación de Backend**:
-    - Completaría la documentación técnica del backend.
+  - **Backend Documentation**:
+    - Complete technical documentation.
     - **Checklist**:
-      - [ ] Documentación de API.
-      - [ ] Guías de configuración.
+      - [ ] API documentation.
+      - [ ] Configuration guides.
     - [OpenAPI Documentation](https://swagger.io/docs/specification/about/)
 
-**Día 19 (Viernes)**
-- **Pruebas Finales**:
-  - Realizará pruebas de usuario finales y recopilará feedback.
+**Day 19 (Friday)**
+- **Final Testing**:
+  - Conduct final user testing and gather feedback.
   - **Checklist**:
-    - [ ] Pruebas de flujo completo del sistema.
-    - [ ] Resolución de problemas identificados.
+    - [ ] Complete system flow tests.
+    - [ ] Resolve identified issues.
 
-**Día 20-21 (Sábado-Domingo)**
-- **Preparación para Despliegue**:
-  - **Documentación**: Completaría toda la documentación técnica y de usuario.
-  - **Despliegue**: Desplegará la aplicación en el entorno de producción.
+**Days 20-21 (Saturday-Sunday)**
+- **Deployment Preparation**:
+  - **Documentation**: Complete all technical and user documentation.
+  - **Deployment**: Deploy the application to production.
   - **Checklist**:
-    - [ ] Documentación final.
-    - [ ] Despliegue en producción.
-    - [ ] Monitoreo post-despliegue.
+    - [ ] Final documentation.
+    - [ ] Production deployment.
+    - [ ] Post-deployment monitoring.
     - [Deployment Strategies](https://www.atlassian.com/continuous-delivery/deployment-strategies)
