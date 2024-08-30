@@ -1,69 +1,69 @@
 # GitFlow Workflow 🌳
 
-GitFlow es una estrategia de ramificación de Git que ayuda a gestionar el desarrollo de manera estructurada. A continuación, te explicamos cómo funciona el flujo de trabajo con GitFlow y cómo utilizarlo en tu proyecto.
+GitFlow is a branching strategy for Git that helps manage development in a structured way. Here's a simple guide on how GitFlow works and how to use it in your project.
 
-## Flujo de Trabajo Local con GitFlow 🌍
+## Local Workflow with GitFlow 🌍
 
-### 1. **Configuración Inicial 🛠️**
+### 1. **Initial Setup 🛠️**
 
-Antes de empezar a usar GitFlow, necesitas inicializarlo en tu repositorio. Ejecuta el siguiente comando en tu terminal:
+Before using GitFlow, initialize it in your repository by running:
 
 ```bash
 git flow init
 ```
 
-Este comando configura las ramas principales (`master` y `develop`) y las ramas de soporte (feature, release, hotfix).
+This command sets up the main branches (`master` and `develop`) and support branches (feature, release, hotfix).
 
-### 2. **Ramas Principales 🧭**
+### 2. **Main Branches 🧭**
 
-GitFlow utiliza dos ramas principales para gestionar el desarrollo:
+GitFlow uses two main branches for development:
 
 #### **Master 🏅**
-- **Descripción:** Contiene el código de producción. Aquí se encuentran las versiones estables y liberadas del proyecto.
-- **Uso:** No debes hacer commits directamente a esta rama. Los cambios se fusionan desde otras ramas.
+- **Description:** Contains production code. It holds stable, released versions of the project.
+- **Usage:** Do not commit directly to this branch. Changes are merged from other branches.
 
 #### **Develop 🚀**
-- **Descripción:** Contiene el código de desarrollo. Aquí se integran todas las características antes de ser liberadas.
-- **Uso:** Los desarrolladores hacen commits en esta rama durante el ciclo de desarrollo.
+- **Description:** Contains development code. All features are integrated here before being released.
+- **Usage:** Developers commit to this branch during the development cycle.
 
-### 3. **Ramas de Soporte 🛠️**
+### 3. **Support Branches 🛠️**
 
 #### **Feature Branches 🌟**
-- **Descripción:** Se utilizan para desarrollar nuevas funcionalidades. Se crean a partir de la rama `develop` y se fusionan de nuevo a `develop` cuando se completa la funcionalidad.
-- **Creación:** 
+- **Description:** Used to develop new features. Created from `develop` and merged back into `develop` when done.
+- **Create:** 
   ```bash
   git flow feature start <feature-name>
   ```
-- **Finalización:** 
+- **Finish:** 
   ```bash
   git flow feature finish <feature-name>
   ```
 
 #### **Release Branches 🚀**
-- **Descripción:** Se utilizan para preparar una nueva versión de producción. Se crean a partir de `develop` cuando se decide que es el momento de lanzar una nueva versión.
-- **Creación:** 
+- **Description:** Used to prepare a new production release. Created from `develop` when ready for a new version.
+- **Create:** 
   ```bash
   git flow release start <version>
   ```
-- **Finalización:** 
+- **Finish:** 
   ```bash
   git flow release finish <version>
   ```
 
 #### **Hotfix Branches 🔥**
-- **Descripción:** Se utilizan para corregir errores críticos en producción. Se crean a partir de `master` y se fusionan en `master` y `develop` una vez que se resuelve el problema.
-- **Creación:** 
+- **Description:** Used to fix critical issues in production. Created from `master` and merged into both `master` and `develop` once fixed.
+- **Create:** 
   ```bash
   git flow hotfix start <hotfix-name>
   ```
-- **Finalización:** 
+- **Finish:** 
   ```bash
   git flow hotfix finish <hotfix-name>
   ```
 
-### 4. **Diagrama de Flujo 🌐**
+### 4. **Flow Diagram 🌐**
 
-Aquí tienes un diagrama visual que ilustra cómo interactúan las diferentes ramas en GitFlow. 
+Here's a visual diagram showing how the different branches interact in GitFlow.
 
 ```plantuml
 @startuml
@@ -88,75 +88,75 @@ hotfix -down-> develop : merge
 @enduml
 ```
 
-### 5. **Flujo de Trabajo en GitFlow 🏗️**
+### 5. **GitFlow Workflow 🏗️**
 
-#### **Desarrollo de Nuevas Funcionalidades:**
-1. **Crear una Rama de Funcionalidad:**
+#### **Developing New Features:**
+1. **Create a Feature Branch:**
    ```bash
    git flow feature start <feature-name>
    ```
-2. **Desarrollar y Hacer Commits:**
-   Trabaja en la funcionalidad, realiza commits frecuentes y asegura que el código está en el estado correcto antes de fusionarlo.
+2. **Develop and Commit:**
+   Work on the feature, make frequent commits, and ensure the code is ready before merging.
    ```bash
    git add .
    git commit -m "Describe your changes"
    ```
-3. **Finalizar la Rama de Funcionalidad:**
+3. **Finish the Feature Branch:**
    ```bash
    git flow feature finish <feature-name>
    ```
 
-#### **Preparación para un Lanzamiento:**
-1. **Crear una Rama de Liberación:**
+#### **Preparing for a Release:**
+1. **Create a Release Branch:**
    ```bash
    git flow release start <version>
    ```
-2. **Realizar Ajustes Finales y Correcciones:**
-   Haz commits según sea necesario:
+2. **Make Final Adjustments and Fixes:**
+   Commit as needed:
    ```bash
    git add .
    git commit -m "Final adjustments for release"
    ```
-3. **Finalizar la Rama de Liberación:**
+3. **Finish the Release Branch:**
    ```bash
    git flow release finish <version>
    ```
 
-#### **Corrección de Errores Críticos:**
-1. **Crear una Rama de Corrección:**
+#### **Fixing Critical Issues:**
+1. **Create a Hotfix Branch:**
    ```bash
    git flow hotfix start <hotfix-name>
    ```
-2. **Corregir el Error y Hacer Commits:**
+2. **Fix the Issue and Commit:**
    ```bash
    git add .
    git commit -m "Fix critical issue"
    ```
-3. **Finalizar la Rama de Corrección:**
+3. **Finish the Hotfix Branch:**
    ```bash
    git flow hotfix finish <hotfix-name>
    ```
 
-### 6. **Sincronización con el Repositorio Remoto 🌐**
+### 6. **Sync with Remote Repository 🌐**
 
-Antes de comenzar nuevas ramas o después de finalizar ramas, asegúrate de sincronizar tu repositorio local con el remoto:
+Before starting new branches or after finishing branches, make sure to sync your local repository with the remote:
 
-- **Actualizar tu rama local `develop` con los últimos cambios del remoto:**
+- **Update your local `develop` branch with the latest changes from remote:**
   ```bash
   git checkout develop
   git pull origin develop
   ```
 
-- **Subir tus cambios al repositorio remoto después de finalizar una rama:**
+- **Push your changes to the remote repository after finishing a branch:**
   ```bash
   git push origin develop
   git push origin master
   ```
 
-### 7. **Buenas Prácticas 🔍**
+### 7. **Best Practices 🔍**
 
-- **Mantén ramas pequeñas y enfocadas:** Esto facilita la revisión y fusión de cambios.
-- **Realiza merges frecuentes con `develop`:** Mantén la integración continua y evita conflictos grandes.
-- **Usa descripciones claras en tus commits:** Facilita la comprensión del propósito de cada cambio.
-- **Revisa tu código antes de hacer merge:** Asegúrate de que todo funciona correctamente y que el código es revisado por otros miembros del equipo.
-- **Sincroniza frecuentemente:** Mantén tu rama local actualizada con los cambios del repositorio remoto para evitar conflictos.
+- **Keep branches small and focused:** This makes code review and merging easier.
+- **Merge frequently with `develop`:** Maintain continuous integration and avoid large conflicts.
+- **Use clear commit messages:** Helps understand the purpose of each change.
+- **Review code before merging:** Ensure everything works correctly and get feedback from team members.
+- **Sync regularly:** Keep your local branch updated with changes from the remote repository to avoid conflicts.
