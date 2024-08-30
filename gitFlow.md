@@ -64,29 +64,7 @@ GitFlow uses two main branches for development:
 ### 4. **Flow Diagram 🌐**
 
 Here's a visual diagram showing how the different branches interact in GitFlow.
-
-```plantuml
-@startuml
-!define RECTANGLE class
-
-RECTANGLE "Master" as master
-RECTANGLE "Develop" as develop
-RECTANGLE "Feature Branches" as feature
-RECTANGLE "Release Branches" as release
-RECTANGLE "Hotfix Branches" as hotfix
-
-master -down-> develop : merge
-develop -down-> feature : create
-feature -down-> develop : merge
-develop -down-> release : create
-release -down-> master : merge
-release -down-> develop : merge
-master -down-> hotfix : create
-hotfix -down-> master : merge
-hotfix -down-> develop : merge
-
-@enduml
-```
+[git flow fundamentals](https://github.com/Riwi-io-Medellin/git_gitflow_fundamentals)
 
 ### 5. **GitFlow Workflow 🏗️**
 
