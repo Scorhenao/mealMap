@@ -64,7 +64,7 @@ GitFlow uses two main branches for development:
 ### 4. **Flow Diagram 🌐**
 
 Here's a visual diagram showing how the different branches interact in GitFlow.
-[git flow fundamentals](https://github.com/Riwi-io-Medellin/git_gitflow_fundamentals)
+[Git flow fundamentals](https://github.com/Riwi-io-Medellin/git_gitflow_fundamentals)
 
 ### 5. **GitFlow Workflow 🏗️**
 
