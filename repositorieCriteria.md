@@ -7,7 +7,6 @@
 - **`develop`**: For integrating new features. 🌟
 - **Feature Branches**: `feature/<name>` for new features. 💡
 - **Release Branches**: `release/<version>` for ready-to-release versions. 📦
-- **Hotfix Branches**: `hotfix/<name>` for urgent fixes. 🩹
 
 ---
 
@@ -15,7 +14,6 @@
 
 - **Feature Branches**: `feature/my-new-feature`
 - **Release Branches**: `release/v1.0.0`
-- **Hotfix Branches**: `hotfix/urgent-fix`
 
 ---
 
