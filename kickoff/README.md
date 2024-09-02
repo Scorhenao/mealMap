@@ -1,7 +1,7 @@
 ### Kickoff Meeting Report
 
 **Date:** [30/sep/2024]  
-**Attendees:** [Samuel Cordoba,Andres Gonzales, Jhonathan Vergara, Jorge Reyes]
+**Attendees:** [Andres Gonzales, Jhonathan Vergara, Jorge Reyes]
 **Clan** [Ritchie]  
 **Project Manager:** [Samuel Cordoba]
 
