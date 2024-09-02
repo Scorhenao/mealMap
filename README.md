@@ -38,3 +38,7 @@ The project meets the criteria of:
 
 ### **Target Audience 🎯**
 This system is designed for **medium to large restaurants** looking for a complete solution to manage tables, orders, and internal operations. It's ideal for establishments that want to optimize their workflow, enhance customer experience, and efficiently manage their staff and resources.
+
+# Contacts
+## Project Manager 
+## Staff 
