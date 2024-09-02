@@ -54,16 +54,3 @@ The kickoff meeting covered five main points, each focusing on different aspects
   - One team member joined late and missed the initial discussions but was present for the project overview.
   - The entire team expressed comfort with the project scope, with no requests to remove features due to difficulty.
 
----
-
-**Action Items:**
-1. Ensure all documentation is up-to-date in the repository.
-2. Begin setting up the project environment as per the technologies chosen.
-3. Start implementing the GitFlow structure in the repository.
-
-**Next Steps:**
-- Follow the weekly plan outlined for the project, with the first week's focus on preparation and setup.
-
----
-
-This report summarizes the key points discussed during the kickoff meeting, ensuring all team members are aligned on the project’s direction. Regular daily updates (dailies) will follow this kickoff to track progress.
