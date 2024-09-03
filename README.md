@@ -5,7 +5,7 @@
 This project is a comprehensive restaurant management system designed to handle everything from customer experience to kitchen operations. Built with **Nest.js** and **spring boot** for the backend and **React** for the frontend, it provides secure authentication, user and role management, and efficient order and table management.
 
 ### **Key Features 🌟**
-1. **Authentication and Roles:**
+1. **Authentication and Roles:***
    - JWT authentication with sessions up to 2 hours.
    - Password validation with security requirements (2 numbers and 2 special characters).
    - Middleware to validate permissions based on roles: users, kitchen staff, owners, and admins.
