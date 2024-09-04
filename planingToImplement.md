@@ -1,9 +1,9 @@
-# Weekly Plan 📅
+---
 
 ### **Week 1: Preparation and Setup (Days 1-7)**
 
 **Days 1-2 (Monday-Tuesday)**
-- **Kickoff Meeting**: Make sure everyone understands the project and their roles.
+- **Kickoff Meeting**: Ensure everyone understands the project and their roles.
 - **Repository and GitFlow Setup**:
   - Initialize the repository and set up GitFlow.
   - Set up repositories for frontend (React) and backend (NestJS).
@@ -12,25 +12,25 @@
 **Day 3 (Wednesday)**
 - **Jira Setup**:
   - Set up the project, define workflows, and create the board.
-  - Add initial user stories to Jira.
+  - Add initial user stories to Jira, including features for managing tips, order customization, and table management.
   - [Jira Documentation](https://support.atlassian.com/jira-software-cloud/docs/what-is-jira-software/)
 
 **Day 4 (Thursday)**
 - **Architectural Design**:
-  - Create the **General Architecture Diagram** to define components and their interactions.
+  - Create the **General Architecture Diagram** to define components and their interactions, including handling tips and table assignments.
   - Develop the **UML Component and Class Diagram** to detail backend modules and main entities.
   - [PlantUML Documentation](http://plantuml.com/)
 
 **Day 5 (Friday)**
 - **Writing User Stories**:
-  - Write detailed user stories for both frontend and backend.
+  - Write detailed user stories for both frontend and backend, including aspects like tip calculations, order status updates, and user role management.
   - Create tasks in Jira based on these stories.
   - [Writing User Stories](https://www.atlassian.com/agile/user-stories)
 
 **Days 6-7 (Saturday-Sunday)**
 - **Environment Setup**:
   - Set up development environments for frontend (React) and backend (NestJS).
-  - Review and adjust CI/CD configurations and pipelines.
+  - Review and adjust CI/CD configurations and pipelines to accommodate new features.
   - [React Documentation](https://reactjs.org/docs/getting-started.html)
   - [NestJS Documentation](https://docs.nestjs.com/)
 
@@ -178,3 +178,5 @@
     - [ ] Production deployment.
     - [ ] Post-deployment monitoring.
     - [Deployment Strategies](https://www.atlassian.com/continuous-delivery/deployment-strategies)
+
+---
