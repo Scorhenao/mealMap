@@ -41,4 +41,10 @@ This system is designed for **medium to large restaurants** looking for a comple
 
 # Contacts
 ## Project Manager 
+- Samuel Cordoba Henao Ritchie
 ## Staff 
+- Andres Gonzales Ritchie
+- Jhonathan vergara Ritchie
+- Narciris mena Jeff Bezzos
+- Samuel Echeverry
+- Jorge Reyes
