@@ -43,8 +43,6 @@
   - Access to all orders and their statuses.
 - **Reports and Statistics:** 📈
   - Generate reports on daily earnings, orders per hour, and dish popularity.
-- **Table and Reservation Control:** 🪑
-  - View and manage table arrangements and reservations.
 
 ## 4. **Admins** 🛠️
 
