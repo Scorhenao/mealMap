@@ -1,5 +1,3 @@
----
-
 ### **Week 1: Preparation and Setup (Days 1-7)**
 
 **Days 1-2 (Monday-Tuesday)**
@@ -11,7 +9,7 @@
 
 **Day 3 (Wednesday)**
 - **Jira Setup**:
-  - Set up the project, define workflows, and create the board.
+  - Set up the projeor in user YAML: (<unknown>): did nct, define workflows, and create the board.
   - Add initial user stories to Jira, including features for managing tips, order customization, and table management.
   - [Jira Documentation](https://support.atlassian.com/jira-software-cloud/docs/what-is-jira-software/)
 
@@ -33,8 +31,6 @@
   - Review and adjust CI/CD configurations and pipelines to accommodate new features.
   - [React Documentation](https://reactjs.org/docs/getting-started.html)
   - [NestJS Documentation](https://docs.nestjs.com/)
-
----
 
 ### **Week 2: Backend and Frontend Development (Days 8-14)**
 
