@@ -14,14 +14,14 @@ export class HttpExceptioManage implements ExceptionFilter{
              status= exception.getStatus();
             response.status(status).json({
                 status:status,
-                timeStamp:new Date().toISOString,
+                timeStamp:new Date().toISOString(),
                 path:request.url,
                 message:exception.message
             })
         }else{
             response.status(status).json({
                 status:status,
-                timeStamps:new Date().toISOString,
+                timeStamp:new Date().toISOString(),
                 message:message
             });
         }

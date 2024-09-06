@@ -3,8 +3,8 @@ import { Body, Catch, Controller, Delete, Get, Inject, Patch, Post, UseFilters, 
 import { map, Observable } from 'rxjs';
 import { guardJwt } from './verify-jwt/guard/jwt.guard';
 import { handleMicroservices } from './interfaces/interface.api-gateway';
-import { errorManage } from './config/error.manage';
-import { HttpExceptioManage } from './err/exception.fiulter';
+import { errorManage } from './common/config/error.manage';
+import { HttpExceptioManage } from './common/err/exception.fiulter';
 
 @Controller()
 export class AppController implements handleMicroservices{
