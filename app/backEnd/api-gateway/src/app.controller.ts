@@ -11,16 +11,15 @@ export class AppController implements handleMicroservices{
   constructor(@Inject() private httpService:HttpService){}
 
   @UseFilters(HttpExceptioManage)
-  @Get()
+  @Get("user")
  // @UseGuards(guardJwt)
   returnOneUser():Observable<User> {
     try{
-      const data=this.httpService.get("http://localhost:3001").pipe(
+      let data=this.httpService.get("http://localhost:3001").pipe(
         map(response=>response.data)
       );
-      if(!data){
-        console.log("entramos");
-        
+      data=null;
+      if(!data){    
         throw new errorManage({
           type:'BAD_REQUEST',
           message:"The user not found"
