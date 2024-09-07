@@ -11,10 +11,12 @@ export class HttpExceptioManage implements ExceptionFilter{
         let status= HttpStatus.INTERNAL_SERVER_ERROR;
         let message="There was an error processing your request. Please try again later."
 
-        if(exception instanceof HttpException){
-            console.log("entramos");
-            console.log(request);
-            
+        console.log("the exception is");
+        console.log(exception);
+        
+        
+
+        if(exception instanceof HttpException){          
              status= exception.getStatus();
             response.status(status).json({
                 status:status,

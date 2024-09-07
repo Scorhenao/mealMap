@@ -7,6 +7,8 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy){
     constructor(private configService:ConfigService){
+        console.log("entramos a validar");
+        
         super({
             jwtFromHeader:ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration:false,
