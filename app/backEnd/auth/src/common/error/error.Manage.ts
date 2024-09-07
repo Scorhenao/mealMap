@@ -5,7 +5,7 @@ export class errorManage extends Error{
         super(`${type}::${message}`);
     }
 
-    public static errorManage(message:string){
+    public static errorMethod(message:string){
         const name=message.split("::")[0];
         if(!name){
             throw new HttpException(message,HttpStatus[name]);
