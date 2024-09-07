@@ -5,9 +5,9 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy){
-    constructor(private configService:ConfigService){
+    constructor(configService:ConfigService){
         super({
-            jwtFromHeader:ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration:false,
             secretOrKey:configService.get<string>("SECRET_JWT")
         })
