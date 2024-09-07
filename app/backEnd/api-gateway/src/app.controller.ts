@@ -12,7 +12,7 @@ export class AppController implements handleMicroservices{
 
   @UseFilters(HttpExceptioManage)
   @Get("user")
- // @UseGuards(guardJwt)
+  @UseGuards(guardJwt)
   returnOneUser():Observable<User> {
     try{
       let data=this.httpService.get("http://localhost:3001").pipe(
