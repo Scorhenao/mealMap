@@ -15,9 +15,6 @@ export class WebSocketGatewayGateway {
 
   @SubscribeMessage('message')
   create(@MessageBody() createWebSocketGatewayDto: any) {
-    console.log("entramos");
-    console.log(createWebSocketGatewayDto);
-    
     this.server.emit('difamelo',createWebSocketGatewayDto);
   }
 
