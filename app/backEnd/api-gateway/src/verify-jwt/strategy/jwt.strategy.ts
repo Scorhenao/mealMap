@@ -9,7 +9,7 @@ import { errorManage } from "src/common/config/error.manage";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy){
-    constructor(private configService:ConfigService){
+    constructor(configService:ConfigService){
         super({
             jwtFromHeader:(req:Request)=>{
                 if(!req.signedCookies.token){

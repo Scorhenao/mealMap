@@ -8,6 +8,8 @@ import {
   Inject,
   Patch,
   Post,
+  Req,
+  Res,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
@@ -16,6 +18,7 @@ import { guardJwt } from './verify-jwt/guard/jwt.guard';
 import { handleMicroservices } from './interfaces/interface.api-gateway';
 import { errorManage } from './common/config/error.manage';
 import { HttpExceptioManage } from './common/err/exception.fiulter';
+import { Request, Response } from 'express';
 
 @Controller()
 export class AppController implements handleMicroservices {
@@ -42,7 +45,7 @@ export class AppController implements handleMicroservices {
     }
   }
 
-  @Get()
+  @Get("allUsers")
   @UseGuards(guardJwt)
   returnAllUsers(): Observable<User[]> {
     return this.httpService
@@ -51,17 +54,37 @@ export class AppController implements handleMicroservices {
   }
 
 
-  @Post()
-  async returnJwt(@Body() data:any){
-    const token=""
+  @Post("token")
+  async returnJwt(@Body() data:any, @Res() response:Response){
+    const token=this.httpService.post("http://localhost:3001/generate",data)
+    .pipe(map(response=>response.data));
 
+    response.cookie("token",token,{
+      httpOnly:true,
+      signed:true,
+    });
   }
+
 
   // @Get()
   // returnOneIngredient():Observable<Ingredient>{}
 
-  // @Get()
-  // returnAllIngredients():Observable<Ingredient[]>{}
+  @Get()
+  returnAllIngredients(){
+    try{
+      const peticion=this.httpService.get("http://localhost:3001/ingredient")
+      .pipe(map(response=>response.data));
+      if(!peticion){
+        throw new errorManage({
+          type:"BAD_REQUEST",
+          message:"There is not ingredients"
+        });
+      }
+      return peticion;
+    }catch(err:any){
+      throw errorManage.createSignatureError(err.message);
+    }
+  }
 
   @Get()
   @UseGuards(guardJwt)
@@ -85,6 +108,9 @@ export class AppController implements handleMicroservices {
   @Get()
   returnAllOrders() {}
 
+
+  @Post()
+
   @Post()
   sendNewUser(@Body() dataNewUser: User): Observable<User> {
     return this.httpService
@@ -105,4 +131,6 @@ export class AppController implements handleMicroservices {
       .delete('http://localhost:3001/user')
       .pipe(map((response) => response.data));
   }
+
+
 }
