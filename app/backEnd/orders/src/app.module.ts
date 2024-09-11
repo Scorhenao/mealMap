@@ -5,32 +5,38 @@ import { AppService } from './app.service';
 import { OrdersModule } from './orders/orders.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import {credentialsOptions} from './config/db.config';
+import { credentialsOptions } from './config/db.config';
 
 import { HttpModule } from '@nestjs/axios';
-
+import { APP_FILTER } from '@nestjs/core';
+import { allManageErrors } from './config/filters/exception.filter';
 
 @Module({
-  imports: [ OrdersModule,
+  imports: [
+    OrdersModule,
     ConfigModule.forRoot({
-      isGlobal:true,
-      envFilePath:".env"
+      isGlobal: true,
+      envFilePath: '.env',
     }),
-  TypeOrmModule.forRootAsync({
-    imports:[ConfigModule],
-    useClass:credentialsOptions
-  }),
-  
-HttpModule.registerAsync({
-  useFactory: () => ({
-    timeout: 5000,
-    maxRedirects: 5,
-  })
-}),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: credentialsOptions,
+    }),
+
+    HttpModule.registerAsync({
+      useFactory: () => ({
+        timeout: 5000,
+        maxRedirects: 5,
+      }),
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: allManageErrors,
+    },
+  ],
 })
-export class AppModule {
-  
-}
+export class AppModule {}

@@ -1,34 +1,52 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+// import { CreateOrderDto } from './dto/create-order.dto';
+import { errorManage } from 'src/config/error/error.manage';
 
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+  create(@Body() data2: any) {
+    try {
+      const createData = this.ordersService.create(data2);
+      return createData;
+    } catch (err: any) {
+      throw new errorManage({
+        type: 'BAD_REQUEST',
+        message: 'not cant create user',
+      });
+    }
   }
 
-  @Get()
-  findAll() {
-    return this.ordersService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   try {
+  //     const createData = this.ordersService.findAll();
+  //     return createData;
+  //   } catch (err: any) {
+  //     throw new errorManage({
+  //       type: 'BAD_REQUEST',
+  //       message: 'not cant create user',
+  //     });
+  //   }
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ordersService.remove(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   try {
+  //     const findData = this.ordersService.findOne(+id);
+  //     return findData;
+  //   } catch (err: any) {
+  //     throw new errorManage({
+  //       type: 'BAD_REQUEST',
+  //       message: 'not cant create user',
+  //     });
+  //   }
+  // }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.ordersService.remove(+id);
+  // }
 }
