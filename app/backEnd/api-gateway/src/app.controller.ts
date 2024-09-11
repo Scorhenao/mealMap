@@ -40,6 +40,12 @@ export class AppController implements handleMicroservices{
     );
   }
 
+
+  @Post()
+  async returnJwt(@Body() data:any){
+    const token=
+  }
+
   // @Get()
   // returnOneIngredient():Observable<Ingredient>{}
 
@@ -47,7 +53,23 @@ export class AppController implements handleMicroservices{
   // returnAllIngredients():Observable<Ingredient[]>{}
 
   @Get()
-  returnOneOrder(){}
+  @UseGuards(guardJwt)
+   createOrder(@Body() data:any){
+    try{
+      const request=this.httpService.post("http://localhost:3000/orders",data)
+      .pipe(map(response=>response.data));
+      if(!request){
+        throw new errorManage({
+          type:"BAD_REQUEST",
+          message:"The order not was created"
+        })
+      }
+      return request;
+
+    }catch(err:any){
+      throw errorManage.createSignatureError(err.message);
+    }
+  }
 
   @Get()
   returnAllOrders(){}
