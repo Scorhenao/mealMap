@@ -1,27 +1,22 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
+export interface handleMicroservices {
+  returnOneUser(): Observable<User>;
 
-export interface handleMicroservices{
+  // returnAllUsers():Observable<User[]>;
 
-    returnOneUser():Observable<User>;
+  // returnOneIngredients():Observable<Ingredient>;
 
-    // returnAllUsers():Observable<User[]>;
+  // returnAllIngredients():Observable<Ingredient[]>;
 
-    // returnOneIngredients():Observable<Ingredient>;
+  //    // returnOneOrder():Observable<>;
+  //    // returnAllOrders():Observable<>;
+  //     sendNewUser(data:User):Observable<User>;
 
-    // returnAllIngredients():Observable<Ingredient[]>;
+  //     sendNewIngredient(data:Ingredient):Observable<Ingredient>;
 
-//    // returnOneOrder():Observable<>;
-//    // returnAllOrders():Observable<>;
-//     sendNewUser(data:User):Observable<User>;
+  //     updateUser(data:Partial<User>):Observable<User>;
 
-//     sendNewIngredient(data:Ingredient):Observable<Ingredient>;
-
-    
-    
-//     updateUser(data:Partial<User>):Observable<User>;
-
-//     deleteIngredient(id:number):Observable<true>;
-//     deleteUser(id:string):Observable<true>;
-
+  //     deleteIngredient(id:number):Observable<true>;
+  //     deleteUser(id:string):Observable<true>;
 }
