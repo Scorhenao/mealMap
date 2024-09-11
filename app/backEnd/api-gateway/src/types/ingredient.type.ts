@@ -1,6 +1,4 @@
-
-
-type Ingredient={
-    name:string;
-    priceIngredient:number;
-}
+type Ingredient = {
+  name: string;
+  priceIngredient: number;
+};

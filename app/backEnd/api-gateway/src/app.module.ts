@@ -8,13 +8,13 @@ import { HttpModule, HttpService } from '@nestjs/axios';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal:true,
-      envFilePath:".env"
+      isGlobal: true,
+      envFilePath: '.env',
     }),
     HttpModule.register({
       timeout: 5000,
       maxRedirects: 5,
-    })
+    }),
   ],
   //providers:[JwtStrategy,guardJwt],
   controllers: [AppController],

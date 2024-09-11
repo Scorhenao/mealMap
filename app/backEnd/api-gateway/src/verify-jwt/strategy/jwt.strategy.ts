@@ -1,3 +1,4 @@
+
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
@@ -23,8 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
             secretOrKey:configService.get<string>("SECRET_JWT")
         });
     }
-
-    validate(payload:any){
-        return {id:payload.id, email:payload.email, role:payload.role};
-    }
+  validate(payload: any) {
+    return { id: payload.id, email: payload.email, role: payload.role };
+  }
 }
