@@ -1,16 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("orders")
+@Entity('orders')
 export class Order {
-    @PrimaryGeneratedColumn("uuid")
-    id:number;
-    
-    @Column()
-    idUser:string;
+  @PrimaryGeneratedColumn('uuid')
+  id: number;
 
-    @Column()
-    idTable:number;
+  @Column()
+  idUser: string;
 
-    @Column("simple-array")
-    dishes:number[];
+  @Column()
+  idTable: number;
+
+  @Column('simple-array')
+  dishes: number[];
 }
