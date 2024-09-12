@@ -5,6 +5,7 @@ import { errorManage } from 'src/config/error/error.manage';
 import {Server} from 'socket.io';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersGuard } from './guard/orders.guard';
+import { log } from 'console';
 @Controller()
 export class OrdersController {
   server:Server
@@ -12,12 +13,14 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
 
-  @Post()
-  @UseGuards(OrdersGuard)
-  create(@Body() data2: CreateOrderDto) {
+  //@UseGuards(OrdersGuard)
+  @Post("orders")
+  create(@Body() data2:any) {
     try {
-      const createData = this.ordersService.create(data2);
-      return createData;
+      console.log("hola entrmaos");
+      
+      //const createData = this.ordersService.create(data2);
+      return "hola";
     } catch (err: any) {
       throw new errorManage({
         type: 'BAD_REQUEST',
