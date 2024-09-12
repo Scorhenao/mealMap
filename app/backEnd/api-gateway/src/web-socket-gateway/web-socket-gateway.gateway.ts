@@ -1,6 +1,6 @@
-import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer } from '@nestjs/websockets';
+import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer, ConnectedSocket } from '@nestjs/websockets';
 import { WebSocketGatewayService } from './web-socket-gateway.service';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
@@ -14,8 +14,9 @@ export class WebSocketGatewayGateway {
   server:Server;
 
   @SubscribeMessage('message')
-  create(@MessageBody() createWebSocketGatewayDto: any) {
-    this.server.emit('difamelo',createWebSocketGatewayDto);
+  create(@ConnectedSocket() client:Socket,@MessageBody() createWebSocketGatewayDto: any) {
+    //this.server.emit('ola',createWebSocketGatewayDto);
+    client.broadcast.emit("ola",createWebSocketGatewayDto);
   }
 
   @SubscribeMessage('findAllWebSocketGateway')
