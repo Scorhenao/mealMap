@@ -7,5 +7,5 @@ export class createTokenDto{
 
     @IsNotEmpty()
     @IsString()
-    name:string;
+    password:string;
 }

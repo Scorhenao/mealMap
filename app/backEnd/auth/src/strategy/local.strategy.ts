@@ -9,6 +9,8 @@ import { errorManage } from "src/common/error/error.Manage";
 export class localStrategy extends PassportStrategy(Strategy){
 
     constructor(@Inject() private service:AppService){
+        console.log("entrmos al constructor");
+        
         super({
             usernameField:"email",passwordField:"password"
         });
@@ -16,6 +18,8 @@ export class localStrategy extends PassportStrategy(Strategy){
 
     validate(email:string,password:string){
         try{
+            console.log("entramos");
+            
             const data=this.service.returnUser(email,password);
             if(!data){
                 throw new errorManage({

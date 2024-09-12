@@ -30,8 +30,12 @@ export class AppService {
 
 
   returnToken(data:any): any{
+    console.log("entramos a crear el token");
+    const acces_token=this.jwtService.sign(data,{expiresIn:'20'});
+    const refres_token=this.jwtService.sign(data,{expiresIn:'20d'});
     return {
-      token_access:this.jwtService.sign(data)
+      acces_token,
+      refres_token
     }
   }
 }
