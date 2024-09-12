@@ -13,16 +13,17 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { map, Observable } from 'rxjs';
+import { lastValueFrom, map, Observable } from 'rxjs';
 import { guardJwt } from './verify-jwt/guard/jwt.guard';
 import { handleMicroservices } from './interfaces/interface.api-gateway';
 import { errorManage } from './common/config/error.manage';
 import { HttpExceptioManage } from './common/err/exception.fiulter';
 import { Request, Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 
 @Controller()
 export class AppController implements handleMicroservices {
-  constructor(@Inject() private httpService: HttpService) {}
+  constructor(@Inject() private httpService: HttpService,private configService:ConfigService) {}
 
   @UseFilters(HttpExceptioManage)
   @Get('user')
@@ -55,19 +56,75 @@ export class AppController implements handleMicroservices {
 
 
   @Post("token")
-  async returnJwt(@Body() data:any, @Res() response:Response){
-    const token=this.httpService.post("http://localhost:3001/generate",data)
+  @UseFilters(HttpExceptioManage)
+  async returnJwt(@Body() datos:any, @Res() response2:Response){
+    try{
+      console.log("entramos");
+    
+    const request=this.httpService.post("http://localhost:3005/token",datos,{
+      withCredentials:true,
+      headers:{
+        "api-key":this.configService.get("API_KEY")
+      }
+    })
     .pipe(map(response=>response.data));
 
-    response.cookie("token",token,{
-      httpOnly:true,
+    const token=await  lastValueFrom(request);
+    console.log("volvemos al flujo ");
+    console.log(token);
+      
+    response2.cookie("token2",token,{
       signed:true,
+      httpOnly:true
     });
-  }
+    
+    response2.json(token);
+    
+    }catch(err:any){
+      
+      throw new errorManage({
+        type:"BAD_REQUEST",
+        message:err.message
+      });
 
+    }
+}
 
-  // @Get()
-  // returnOneIngredient():Observable<Ingredient>{}
+    @Post("verifytoken")
+    @UseFilters(HttpExceptioManage)
+    async verifyJwt(@Body() datos:any, @Res() response2:Response,@Req() request2:Request){
+      try{
+      const token2=request2.signedCookies["token2"];
+      
+      
+      const request=this.httpService.get("http://localhost:3005/verifyToken",{
+        withCredentials:true,
+        headers:{
+          "Authorization":"Bearer "+token2.token_access,
+          "api-key":this.configService.get<string>("API_KEY")
+        }
+      })
+      .pipe(map(response=>response.data));
+  
+      const token=await  lastValueFrom(request);
+         
+      response2.cookie("token",token,{
+        signed:true,
+        httpOnly:true
+      });
+      
+      response2.json(token);
+      
+      }catch(err:any){
+        
+        throw new errorManage({
+          type:"BAD_REQUEST",
+          message:err.response.data
+        });
+  
+      }
+}
+
 
   @Get()
   returnAllIngredients(){

@@ -31,6 +31,7 @@ export class HttpExceptioManage implements ExceptionFilter {
         message: exception.message,
       });
     } else {
+      
       response.status(status).json({
         status: status,
         timeStamp: new Date().toISOString(),
