@@ -6,11 +6,23 @@ export class Order {
   id: number;
 
   @Column()
-  idUser: string;
+  quantityOfPlates:number;
+
+  @Column() 
+  quantityOfDrinks:number;
+
+  @Column("simple-array")
+  dishes:string[];
 
   @Column()
-  idTable: number;
+  idTable:number;
 
-  @Column('simple-array')
-  dishes: number[];
+  @Column()
+  name:string;
+
+  @Column() 
+  apellido:string;
+
+  @Column()
+  data:Date;
 }

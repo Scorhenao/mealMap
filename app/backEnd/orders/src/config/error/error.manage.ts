@@ -11,7 +11,7 @@ export class errorManage extends Error {
     super(`${type}:${message}`);
   }
 
-  public errorManage(message: string) {
+  public static errorManageController(message: string) {
     const name = message.split(':')[0];
     if (name) {
       throw new HttpException(message, HttpStatus[name]);

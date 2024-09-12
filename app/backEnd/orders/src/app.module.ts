@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -8,12 +8,13 @@ import { ConfigModule } from '@nestjs/config';
 import { credentialsOptions } from './config/db.config';
 
 import { HttpModule } from '@nestjs/axios';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { allManageErrors } from './config/filters/exception.filter';
 
 @Module({
   imports: [
     OrdersModule,
+   
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -37,6 +38,10 @@ import { allManageErrors } from './config/filters/exception.filter';
       provide: APP_FILTER,
       useClass: allManageErrors,
     },
+    {
+      provide:APP_PIPE,
+      useClass:ValidationPipe
+    }
   ],
 })
 export class AppModule {}

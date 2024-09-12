@@ -6,6 +6,7 @@ import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
 import { map } from 'rxjs';
 
+
 @Injectable()
 export class OrdersService {
   constructor(
@@ -16,15 +17,14 @@ export class OrdersService {
   async create(dataOrder: CreateOrderDto) {
     const results: any[] = await Promise.all(
       dataOrder.dishes.map(async (dishName) => {
-        this.httpService.get(`localhost:3004/dish/${dishName}`);
-      }),
+        this.httpService.get(`localhost:3002/dish/${dishName}`);
+      })
     );
 
     const tableId: any = this.httpService
-      .get('http://localhost:8080/tables')
+      .get('http://localhost:3000/tables')
       .pipe(map((response) => response.data));
 
-    console.log(results);
 
     const dataSave = this.orderRepository.create({
       ...dataOrder,
@@ -33,5 +33,4 @@ export class OrdersService {
     });
     this.orderRepository.save(dataSave);
   }
-
 }

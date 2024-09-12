@@ -1,14 +1,20 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 // import { CreateOrderDto } from './dto/create-order.dto';
 import { errorManage } from 'src/config/error/error.manage';
-
-@Controller('orders')
+import {Server} from 'socket.io';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { OrdersGuard } from './guard/orders.guard';
+@Controller()
 export class OrdersController {
+  server:Server
+  
   constructor(private readonly ordersService: OrdersService) {}
 
+
   @Post()
-  create(@Body() data2: any) {
+  @UseGuards(OrdersGuard)
+  create(@Body() data2: CreateOrderDto) {
     try {
       const createData = this.ordersService.create(data2);
       return createData;
@@ -19,34 +25,4 @@ export class OrdersController {
       });
     }
   }
-
-  // @Get()
-  // findAll() {
-  //   try {
-  //     const createData = this.ordersService.findAll();
-  //     return createData;
-  //   } catch (err: any) {
-  //     throw new errorManage({
-  //       type: 'BAD_REQUEST',
-  //       message: 'not cant create user',
-  //     });
-  //   }
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   try {
-  //     const findData = this.ordersService.findOne(+id);
-  //     return findData;
-  //   } catch (err: any) {
-  //     throw new errorManage({
-  //       type: 'BAD_REQUEST',
-  //       message: 'not cant create user',
-  //     });
-  //   }
-  // }
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.ordersService.remove(+id);
-  // }
 }
