@@ -986,3 +986,35 @@ Aquí está la **Historia de Usuario: "Personalización de Pedido"** con la estr
 
 ---
 
+
+## User Story: **"API Gateway Integration for Microservices"**
+
+**📝 Summary**: Implement the API Gateway to connect and manage interactions between NestJS microservices and Java services.
+
+**📖 Description**: As a **Developer**, I want the API Gateway to effectively connect all NestJS microservices and Java services so that requests can be routed correctly, authentication can be handled uniformly, and data can be managed across services efficiently. This integration will ensure that all services communicate seamlessly, and that the overall system functions cohesively, providing a unified experience for end-users.
+
+**Acceptance Criteria**:
+1. **Service Integration**:
+   - **Given**: The API Gateway is configured.
+   - **When**: A request is made to any of the microservices.
+   - **Then**: The request is correctly routed to the appropriate NestJS or Java service based on the endpoint.
+
+2. **Authentication**:
+   - **Given**: A user is authenticated through the API Gateway.
+   - **When**: The user makes requests to various microservices.
+   - **Then**: The API Gateway ensures that authentication tokens are validated across all services.
+
+3. **Data Consistency**:
+   - **Given**: Data is updated in one microservice.
+   - **When**: The data change is propagated.
+   - **Then**: The API Gateway ensures that the data remains consistent across all connected services.
+
+4. **Error Handling**:
+   - **Given**: An error occurs in any microservice.
+   - **When**: The error is encountered.
+   - **Then**: The API Gateway provides appropriate error responses and logs errors for debugging.
+
+5. **Performance**:
+   - **Given**: Multiple requests are made to various services.
+   - **When**: Requests are processed.
+   - **Then**: The API Gateway handles requests efficiently, ensuring minimal latency and high performance.
