@@ -15,7 +15,6 @@ export class jwtGuard implements CanActivate{
         const headerAuth=req.headers.authorization;
         console.log("The token is");
         const token=headerAuth.split(" ")[1];
-        console.log(token);
         
           
         if(!headerAuth){

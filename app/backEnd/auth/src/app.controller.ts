@@ -21,6 +21,7 @@ export class AppController {
   @Get("verifyToken")
   @UseGuards(jwtGuard)
   @UseGuards(apiKeyGuard)
+  @UseGuards(localGuard)
   returnResponseToken(@Req() user:any){
     console.log(user.user);
     

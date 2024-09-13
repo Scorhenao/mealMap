@@ -19,7 +19,6 @@ import { apiKeyGuard } from './guards/apiKey.guard';
       inject:[ConfigService],  
       useFactory:async(configService:ConfigService)=>({
         secret:configService.get<string>("SECRET_JWT") ,
-        signOptions:{expiresIn:'1h'} 
       })
     }),
     HttpModule.register({
