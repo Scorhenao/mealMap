@@ -12,65 +12,64 @@
 
 ### **🖥️ Frontend (React)**
 
-1. **🔑 Crear página de login**
-   - **Tipo de incidencia**: Tarea
-   - **Estado**: To do
-   - **📝 Resumen**: Desarrollar una interfaz de login única para que el owner acceda al sistema.
-   - **📖 Descripción**:
-     - **Escenario**: Página de login
-       - **Given**: El usuario abre la aplicación y accede a la página de login.
-       - **When**: El usuario ingresa sus credenciales.
-       - **Then**: El sistema autentica al usuario y lo redirige al panel principal.
-       - **And**: Si las credenciales son incorrectas, se muestra un mensaje de error.
-       - **And**: Si las credenciales son correctas, se muestra un mensaje de exito.
-       - **And**: si se equivoca 2 veces agrega un mensaje recordando que tiene minimo 2 numeros.
-   - **Dificultad**: 4
-   - **🏷️ Etiquetas**: UI, React
+1. **🔑 Create Login Page**
+   - **Issue Type**: Task
+   - **Status**: To do
+   - **📝 Summary**: Develop a unique login interface for the owner to access the system.
+   - **📖 Description**:
+     - **Scenario**: Login Page
+       - **Given**: The user opens the app and accesses the login page.
+       - **When**: The user enters their credentials.
+       - **Then**: The system authenticates the user and redirects them to the main dashboard.
+       - **And**: If the credentials are incorrect, an error message is displayed.
+       - **And**: If the credentials are correct, a success message is displayed.
+       - **And**: If the user fails 2 times, a message reminds them to include at least 2 numbers in the password.
+   - **Difficulty**: 4
+   - **🏷️ Tags**: UI, React
 
-2. **🍽️ Implementar sección de menú para pedidos**
-   - **Tipo de incidencia**: Tarea
-   - **Estado**: To do
-   - **📝 Resumen**: Crear una página de pedidos donde el owner puede ver el menu segun la hora (daily,morning,noon.night) y realizar pedidos.
-   - **📖 Descripción**:
-     - **Escenario**: Página de pedidos
-       - **Given**: El usuario accede a la sección de pedidos.
-       - **When**: Selecciona los platos del menu segun la hora.
-       - **Then**: Los platos seleccionados se añaden a la orden actual.
-       - **And**: El sistema permite personalizar el pedido sin modificar el precio.
-       - **And**: El sistema muestra un plato segun la hora.
-       - **And**: El sistema muestra ciertos platos segun la hora.
-       -**And**: Separa por secciones y muestra un resumen de cada tipo de plato.
-   - **Dificultad**: 7
-   - **🏷️ Etiquetas**: UI, React
+2. **🍽️ Implement Menu Section for Orders**
+   - **Issue Type**: Task
+   - **Status**: To do
+   - **📝 Summary**: Create an order page where the owner can view the menu based on the time (daily, morning, noon, night) and place orders.
+   - **📖 Description**:
+     - **Scenario**: Order Page
+       - **Given**: The user accesses the order section.
+       - **When**: They select dishes from the menu based on the time.
+       - **Then**: The selected dishes are added to the current order.
+       - **And**: The system allows customization of the order without changing the price.
+       - **And**: The system displays a dish based on the time.
+       - **And**: The system displays specific dishes based on the time.
+       - **And**: Dishes are categorized by sections, and a summary of each dish type is shown.
+   - **Difficulty**: 7
+   - **🏷️ Tags**: UI, React
 
-3. **🪑 Implementar sección de estado de mesas**
-   - **Tipo de incidencia**: Tarea
-   - **Estado**: To do
-   - **📝 Resumen**: Crear una sección para que los meseros actualicen el estado de las mesas.
-   - **📖 Descripción**:
-     - **Escenario**: Gestión de estado de mesas
-       - **Given**: El mesero accede a la sección de mesas.
-       - **When**: Cambia el estado de la mesa (disponible, ocupada).
-       - **Then**: El sistema actualiza la disponibilidad de las mesas.
-       - **And**: El sistema muestra el numero de cada mesa.
-       - **And**: El sistema muestra la fecha y hora de creacion de la orden de la mesa.
-   - **Dificultad**: 4
-   - **🏷️ Etiquetas**: UI, React
+3. **🪑 Implement Table Status Section**
+   - **Issue Type**: Task
+   - **Status**: To do
+   - **📝 Summary**: Create a section for waiters to update the table status.
+   - **📖 Description**:
+     - **Scenario**: Table Status Management
+       - **Given**: The waiter accesses the table section.
+       - **When**: They change the table status (available, occupied).
+       - **Then**: The system updates the table availability.
+       - **And**: The system shows the number of each table.
+       - **And**: The system shows the creation date and time of the table's order.
+   - **Difficulty**: 4
+   - **🏷️ Tags**: UI, React
 
-4. **👨‍🍳 Crear interfaz de gestión de cocina**
-   - **Tipo de incidencia**: Tarea
-   - **Estado**: To do
-   - **📝 Resumen**: Implementar la interfaz donde el kitchen staff puede ver los pedidos y cambiar su estado ().
-   - **📖 Descripción**:
-     - **Escenario**: Gestión de pedidos en cocina
-       - **Given**: El kitchen staff accede a la lista de pedidos.
-       - **When**: Actualiza el estado de los pedidos (preparando, listo).
-       - **Then**: El sistema refleja los cambios en la orden.
-       - **And**: Se muestra el total del pedido junto con su factura.
-   - **Dificultad**: 5
-   - **🏷️ Etiquetas**: UI, React
+4. **👨‍🍳 Create Kitchen Management Interface**
 
----
+   - **Issue Type**: Task
+   - **Status**: To do
+   - **📝 Summary**: Implement the interface where the kitchen staff can view orders and change their status.
+   - **📖 Description**:
+     - **Scenario**: Kitchen Order Management
+       - **Given**: The kitchen staff accesses the order list.
+       - **When**: They update the order status (preparing, ready).
+       - **Then**: The system reflects the changes in the order.
+       - **And**: The total order amount and its invoice are displayed.
+   - **Difficulty**: 5
+   - **🏷️ Tags**: UI, React
 
 ### **⚙️ Backend (NestJS)**
 
