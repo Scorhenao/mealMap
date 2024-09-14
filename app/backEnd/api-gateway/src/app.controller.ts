@@ -58,9 +58,7 @@ export class AppController implements handleMicroservices {
   @Post("token")
   @UseFilters(HttpExceptioManage)
   async returnJwt(@Body() datos:any, @Res() response2:Response){
-    try{
-      console.log("entramos");
-    
+    try{   
     const request=this.httpService.post("http://localhost:3005/token",datos,{
       withCredentials:true,
       headers:{

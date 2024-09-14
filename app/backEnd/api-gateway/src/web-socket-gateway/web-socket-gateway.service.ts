@@ -1,25 +1,47 @@
-import { Injectable } from '@nestjs/common';
-
+import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import * as WebSocket from 'ws';
 
 @Injectable()
-export class WebSocketGatewayService {
-  create(createWebSocketGatewayDto: any) {
-    return 'This action adds a new webSocketGateway';
+export class WebSocketGatewayService implements OnModuleInit, OnModuleDestroy {
+  private client: WebSocket;
+  private readonly url = 'ws://localhost:8080/websocket'; // URL del WebSocket en Spring Boot
+
+  onModuleInit() {
+    
+    this.client = new WebSocket(this.url); // URL of your Spring Boot WebSocket
+
+    this.client.on('open', () => {
+      console.log('Conectado al servidor WebSocket');
+    });
+
+    this.client.on('error', (error) => {
+      console.error('Error de conexión: ' + error);
+    });
+
+    this.client.on('close', () => {
+      console.log('Conexión cerrada');
+    });
   }
 
-  findAll() {
-    return `This action returns all webSocketGateway`;
+  onModuleDestroy() {
+    if (this.client) {
+      this.client.close();
+      console.log('Desconectado del servidor WebSocket');
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} webSocketGateway`;
-  }
-
-  update(id: number, updateWebSocketGatewayDto: any) {
-    return `This action updates a #${id} webSocketGateway`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} webSocketGateway`;
+  sendMessage(message: any,client: WebSocket) {   
+    if (this.client.readyState === WebSocket.OPEN) {      
+      this.client.on("message",(data)=>{
+        const message=data.toString();
+        console.log("la respuesta del servidor es ");
+        console.log(message);
+        
+        client.emit("hola",message)
+      })
+      this.client.send("getAllIngredients");
+    } else {
+      console.warn('No conectado al servidor WebSocket');
+    }
   }
 }
