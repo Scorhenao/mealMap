@@ -4,14 +4,14 @@ import { HttpService } from '@nestjs/axios';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
-import { map } from 'rxjs';
+import {map} from 'rxjs/operators';
 
 
 @Injectable()
 export class OrdersService {
   constructor(
     private httpService: HttpService,
-    @InjectRepository(Order) private orderRepository: Repository<Order>,
+    // @InjectRepository(Order) private orderRepository: Repository<Order>,
   ) {}
 
   async create(dataOrder: CreateOrderDto) {
@@ -23,14 +23,14 @@ export class OrdersService {
 
     const tableId: any = this.httpService
       .get('http://localhost:3000/tables')
-      .pipe(map((response) => response.data));
+      .pipe(map (response => response.data));
 
 
-    const dataSave = this.orderRepository.create({
-      ...dataOrder,
-      dishes: results,
-      idTable: tableId,
-    });
-    this.orderRepository.save(dataSave);
+    // const dataSave = this.orderRepository.create({
+    //   ...dataOrder,
+    //   dishes: results,
+    //   idTable: tableId,
+    // });
+    // this.orderRepository.save(dataSave);
   }
 }

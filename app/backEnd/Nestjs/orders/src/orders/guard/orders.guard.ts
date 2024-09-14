@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { Observable } from 'rxjs';
+import { Observable ,map} from 'rxjs/operators';
 import { errorManage } from 'src/config/error/error.manage';
 
 @Injectable()
@@ -12,8 +12,13 @@ export class OrdersGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
    try{
     const req:Request=context.switchToHttp().getRequest();
-    //const res:Response=context.switchToHttp().getResponse();
-    const data= this.httpService.post("http://localhost:3000/verifyToken",req);
+    const roles={uno:"client",dos:"admin"}
+    const data= this.httpService.post("http://localhost:3000/verifyRole",roles)
+    .pipe(map(response=>response.data));
+    console.log("los roles son ");
+    console.log(data);
+    
+    
     if(!data){
       throw new errorManage({
         type:"UNAUTHORIZED",

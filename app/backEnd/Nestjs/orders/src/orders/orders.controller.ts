@@ -13,11 +13,11 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
 
-  //@UseGuards(OrdersGuard)
+  @UseGuards(OrdersGuard)
   @Post("orders")
   create(@Body() data2:any) {
     try {
-      console.log("hola entrmaos");
+      console.log("hola entrmaos y el usuario esta autorizado");
       
       //const createData = this.ordersService.create(data2);
       return "hola";

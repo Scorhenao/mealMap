@@ -18,10 +18,10 @@ import { allManageErrors } from './config/filters/exception.filter';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useClass: credentialsOptions,
-    }),
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useClass: credentialsOptions,
+    // }),
 
     HttpModule.registerAsync({
       useFactory: () => ({

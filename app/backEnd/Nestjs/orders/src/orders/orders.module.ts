@@ -8,7 +8,7 @@ import { OrdersGuard } from './guard/orders.guard';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Order]),
+    //TypeOrmModule.forFeature([Order]),
     HttpModule.registerAsync({
       useFactory: () => ({
         timeout: 5000,
