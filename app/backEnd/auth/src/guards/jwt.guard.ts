@@ -23,7 +23,7 @@ export class jwtGuard implements CanActivate{
                 type:"UNAUTHORIZED",
                 message:"the token have expired"
             }); 
-        }
+}
         this.jwtService.verify(token);
         const decodeJwt=this.jwtService.decode(token);
         const user={

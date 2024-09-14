@@ -38,4 +38,18 @@ export class AppService {
       refres_token
     }
   }
+
+  validateRoles(role:any,roles:string[]){
+    try{
+      if(!roles.includes(role.role)){
+        throw new errorManage({
+          type:"FORBIDDEN",
+          message:"El usuario no tiene los permisos necesarios"
+        });
+      }
+      return "Efectivamente tiene los roles melos";
+    }catch(err:any){
+      throw errorManage.errorMethod(err.message);
+    }
+  }
 }
