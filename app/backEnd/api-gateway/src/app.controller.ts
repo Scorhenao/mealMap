@@ -59,25 +59,28 @@ export class AppController implements handleMicroservices {
   @UseFilters(HttpExceptioManage)
   async returnJwt(@Body() datos:any, @Res() response2:Response){
     try{   
+      console.log("entramos");
+      
     const request=this.httpService.post("http://localhost:3005/token",datos,{
       withCredentials:true,
       headers:{
-        "api-key":this.configService.get("API_KEY")
+        "api-key":this.configService.get<string>("API_KEY")
       }
     })
     .pipe(map(response=>response.data));
 
     const token=await  lastValueFrom(request);
-    console.log("volvemos al flujo ");
-    console.log(token);
       
-    response2.cookie("token2",token,{
-      signed:true,
-      httpOnly:true
-    });
+    console.log("peticion finisihed");
+    console.log(token);
+    
+    
+    response2.cookie("token2",token.acces_token)
+    
+    response2.cookie("tokenRefresh",token.refres_token);
     
     response2.json(token);
-    
+
     }catch(err:any){
       
       throw new errorManage({
@@ -88,14 +91,15 @@ export class AppController implements handleMicroservices {
     }
 }
 
-    @Post("verifytoken")
+    @Post("verifyRole")
     @UseFilters(HttpExceptioManage)
-    async verifyJwt(@Body() datos:any, @Res() response2:Response,@Req() request2:Request){
+    async verifyJwt(@Body() roles:any, @Res() response2:Response,@Req() request2:Request){
       try{
       const token2=request2.signedCookies["token2"];
+      const tokenRefresh=request2.signedCookies["refreshToken"];
+      console.log(roles);
       
-      
-      const request=this.httpService.get("http://localhost:3005/verifyToken",{
+      const request=this.httpService.get("http://localhost:3005/verifyRole/"+roles.uno+"/"+roles.dos,{
         withCredentials:true,
         headers:{
           "Authorization":"Bearer "+token2.token_access,
@@ -141,11 +145,11 @@ export class AppController implements handleMicroservices {
     }
   }
 
-  @Get()
-  @UseGuards(guardJwt)
-   createOrder(@Body() data:any){
+  @Get("orders")
+  //@UseGuards(guardJwt)
+  createOrder(@Body() data:any){
     try{
-      const request=this.httpService.post("http://localhost:3000/orders",data)
+      const request=this.httpService.post("http://localhost:3004/orders",data)
       .pipe(map(response=>response.data));
       if(!request){
         throw new errorManage({
@@ -163,8 +167,6 @@ export class AppController implements handleMicroservices {
   @Get()
   returnAllOrders() {}
 
-
-  @Post()
 
   @Post()
   sendNewUser(@Body() dataNewUser: User): Observable<User> {

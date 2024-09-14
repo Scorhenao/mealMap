@@ -34,9 +34,6 @@ export class WebSocketGatewayService implements OnModuleInit, OnModuleDestroy {
     if (this.client.readyState === WebSocket.OPEN) {      
       this.client.on("message",(data)=>{
         const message=data.toString();
-        console.log("la respuesta del servidor es ");
-        console.log(message);
-        
         client.emit("hola",message)
       })
       this.client.send("getAllIngredients");
