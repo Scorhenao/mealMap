@@ -6,6 +6,7 @@ import {
   Delete,
   Get,
   Inject,
+  Param,
   Patch,
   Post,
   Req,
@@ -26,21 +27,21 @@ export class AppController implements handleMicroservices {
   constructor(@Inject() private httpService: HttpService,private configService:ConfigService) {}
 
   @UseFilters(HttpExceptioManage)
-  @Get('user')
-  @UseGuards(guardJwt)
-  returnOneUser(): Observable<User> {
+  @Post('user')
+  returnOneUser(@Body() dataUser:any): any {
     try {
+      console.log("entramos a user");
+      
       let data = this.httpService
-        .get('http://localhost:3001')
+        .post('http://localhost:3001/user',dataUser)
         .pipe(map((response) => response.data));
-      data = null;
-      if (!data) {
-        throw new errorManage({
-          type: 'BAD_REQUEST',
-          message: 'The user not found',
-        });
-      }
-      return data;
+        const userPrueba={
+          email:"jhonatan@gmail.com",
+          password:"jhona123",
+          role:"admin",
+          name:"jhonatan"
+        }
+        return userPrueba;
     } catch (err: any) {
       throw errorManage.createSignatureError(err.message);
     }
@@ -59,27 +60,31 @@ export class AppController implements handleMicroservices {
   @UseFilters(HttpExceptioManage)
   async returnJwt(@Body() datos:any, @Res() response2:Response){
     try{   
-      console.log("entramos");
+      console.log("the api key is ");
+      console.log(this.configService.get<string>("API_KEY"));
       
-    const request=this.httpService.post("http://localhost:3005/token",datos,{
+      
+    const request=await this.httpService.axiosRef.post("http://localhost:3008/token",datos,{
       withCredentials:true,
       headers:{
-        "api-key":this.configService.get<string>("API_KEY")
+        "X-Api-Key":this.configService.get<string>("API_KEY")
       }
     })
-    .pipe(map(response=>response.data));
 
-    const token=await  lastValueFrom(request);
-      
-    console.log("peticion finisihed");
-    console.log(token);
+    console.log(request.data);
     
+    response2.cookie("token2",request.data.acces_token,{
+      httpOnly:true,
+      signed:true
+    })
     
-    response2.cookie("token2",token.acces_token)
+    response2.cookie("tokenRefresh",request.data.refres_token,{
+      httpOnly:true,
+      signed:true
+    });
     
-    response2.cookie("tokenRefresh",token.refres_token);
-    
-    response2.json(token);
+    response2.json("todo dalio perfecto");
+
 
     }catch(err:any){
       
@@ -91,39 +96,45 @@ export class AppController implements handleMicroservices {
     }
 }
 
-    @Post("verifyRole")
+    @Get("verifyRole")
     @UseFilters(HttpExceptioManage)
-    async verifyJwt(@Body() roles:any, @Res() response2:Response,@Req() request2:Request){
+    async verifyJwt(@Res() response2:Response,@Req() request2:Request){
       try{
-      const token2=request2.signedCookies["token2"];
-      const tokenRefresh=request2.signedCookies["refreshToken"];
-      console.log(roles);
+   console.log("entramos a verificar el role");
+   
+      console.log(request2.headers);
       
-      const request=this.httpService.get("http://localhost:3005/verifyRole/"+roles.uno+"/"+roles.dos,{
-        withCredentials:true,
+      const request=await this.httpService.axiosRef.get("http://localhost:3008/verifyToken",{
+       withCredentials:true,
         headers:{
-          "Authorization":"Bearer "+token2.token_access,
-          "api-key":this.configService.get<string>("API_KEY")
+          "Authorization":"Bearer "+request2.headers["x-access-token"],
+          "X-Refresh-Token":request2.headers["x-refresh-token"],
+          "X-Api-Key":this.configService.get<string>("API_KEY"),
+          "X-Service":request2.headers["x-service"]
         }
-      })
-      .pipe(map(response=>response.data));
-  
-      const token=await  lastValueFrom(request);
-         
-      response2.cookie("token",token,{
-        signed:true,
-        httpOnly:true
       });
       
-      response2.json(token);
+      console.log("el token vale");
+      console.log(request.data);
       
+      
+      const token=request.data;
+         
+      // response2.cookie("token",token,{
+      //   signed:true,
+      //   httpOnly:true
+      // });
+      
+      response2.json(token);
+
       }catch(err:any){
+        console.log("entramos el error");
         
         throw new errorManage({
           type:"BAD_REQUEST",
           message:err.response.data
         });
-  
+        throw errorManage.createSignatureError(err.message);
       }
 }
 
@@ -147,11 +158,22 @@ export class AppController implements handleMicroservices {
 
   @Get("orders")
   //@UseGuards(guardJwt)
-  createOrder(@Body() data:any){
-    try{
-      const request=this.httpService.post("http://localhost:3004/orders",data)
-      .pipe(map(response=>response.data));
-      if(!request){
+  async createOrder(@Body() dats:any,@Req() request2:Request,@Res() response:Response){
+    try{   
+      // response.clearCookie("token2");
+      // response.clearCookie("refreshToken");
+      const request=await this.httpService.axiosRef.post("http://localhost:3004/orders",dats,{
+        withCredentials:true,
+        headers:{
+          "X-Access-Token":request2.signedCookies["token2"],
+          "X-Api-Key":this.configService.get<string>("API_KEY"),
+          "X-Refresh-Token":request2.signedCookies["tokenRefresh"],
+        }
+      }
+      )
+
+      response.json("perfecto");
+      if(!request.data){
         throw new errorManage({
           type:"BAD_REQUEST",
           message:"The order not was created"
@@ -164,8 +186,14 @@ export class AppController implements handleMicroservices {
     }
   }
 
-  @Get()
-  returnAllOrders() {}
+  @Get("permission/:service/:role")
+ async returnPermission(@Param("service") service:string, @Param("role") role:string){
+    try{
+      const permission=await this.httpService.axiosRef.get(`http://localhost:3007/${service}/${role}`);
+      return permission.data;
+    }catch(err:any){
+    }
+  }
 
 
   @Post()

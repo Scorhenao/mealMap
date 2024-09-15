@@ -19,9 +19,6 @@ export class HttpExceptioManage implements ExceptionFilter {
       'There was an error processing your request. Please try again later.';
 
     if (exception instanceof HttpException) {
-      console.log('entramos');
-      console.log(request);
-
       status = exception.getStatus();
       response.status(status).json({
         status: status,

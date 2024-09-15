@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 export interface handleMicroservices {
-  returnOneUser(): Observable<User>;
+  returnOneUser(dataUser:any): any;
 
   // returnAllUsers():Observable<User[]>;
 
