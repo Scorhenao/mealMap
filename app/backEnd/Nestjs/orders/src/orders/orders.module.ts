@@ -5,19 +5,18 @@ import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { OrdersGuard } from './guard/orders.guard';
+import { apiKeyGuard } from './guard/api-key.guard';
 
 @Module({
   imports:[
     //TypeOrmModule.forFeature([Order]),
-    HttpModule.registerAsync({
-      useFactory: () => ({
-        timeout: 5000,
-        maxRedirects: 5,
-      }),
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5,
     }),
   ],
   controllers: [OrdersController],
-  providers: [OrdersService,OrdersGuard],
+  providers: [OrdersService,OrdersGuard,apiKeyGuard],
   exports:[OrdersService]
 })
 export class OrdersModule {}
