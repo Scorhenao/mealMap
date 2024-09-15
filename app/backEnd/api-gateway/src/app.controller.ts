@@ -38,7 +38,7 @@ export class AppController implements handleMicroservices {
         const userPrueba={
           email:"jhonatan@gmail.com",
           password:"jhona123",
-          role:"admin",
+          role:"clien",
           name:"jhonatan"
         }
         return userPrueba;
@@ -114,7 +114,7 @@ export class AppController implements handleMicroservices {
         }
       });
       
-      console.log("el token vale");
+      console.log("la respuesta es ");
       console.log(request.data);
       
       
