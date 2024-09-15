@@ -20,8 +20,10 @@ export class AppController {
   @UseGuards(apiKeyGuard,jwtGuard,roleGuard)
   returnVerifyRole(@Req() req:any){
     try{
-      console.log("entramos aca en la valdacion del token");
-      console.log("La respuesta es ");
+      console.log("la respuesta es ");
+      console.log(req.permission);
+      
+      return req.permission;
       
       // this.appService.validateRoles(req.user,[role,role2]);
     }catch(err:any){

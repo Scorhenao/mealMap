@@ -32,6 +32,8 @@ export class jwtGuard implements CanActivate{
                 request.user=tokenDecode;
                 return true;
             }else{
+                console.log("el token paso");
+                
                 const tokenDecode=this.jwtService.decode(tokenAccess);
 
                 
@@ -39,10 +41,7 @@ export class jwtGuard implements CanActivate{
                 request.validationToken=false;
                 return true;
             }
-        }catch(err:any){
-            console.log("estamos mal e auth");
-            console.log(err);
-            
+        }catch(err:any){          
             throw errorManage.errorMethod(err.message);
         }
 
