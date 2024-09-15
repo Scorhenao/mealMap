@@ -9,6 +9,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpFilter } from './common/config/error.exception';
 import { HttpModule } from '@nestjs/axios';
 import { apiKeyGuard } from './guards/apiKey.guard';
+import { roleGuard } from './guards/role.guard';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { apiKeyGuard } from './guards/apiKey.guard';
     jwtGuard,
     ConfigService,
     apiKeyGuard,
+    roleGuard,
     {
       provide:APP_FILTER,
       useClass:HttpFilter

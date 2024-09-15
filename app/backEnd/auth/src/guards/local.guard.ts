@@ -1,20 +1,38 @@
+import { HttpService } from "@nestjs/axios";
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { AuthGuard } from "@nestjs/passport";
-import { Request } from "express";
 import { Observable } from "rxjs";
+import { AppService } from "src/app.service";
+import { errorManage } from "src/common/error/error.Manage";
 
 @Injectable()
 export class localGuard implements CanActivate{
-    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-        console.log("entrmaos al guadria local");
-        
-        const request:Request=context.switchToHttp().getRequest();
-        const tokenRefresh=request.signedCookies;
-
-        console.log(tokenRefresh);
-        
-
-        return true;
-
+    constructor(private jwtService:JwtService,private appService:AppService){}
+    async canActivate(context: ExecutionContext) {
+        try{
+            const req=context.switchToHttp().getRequest();
+            const validateUser:any=await this.appService.validateUser(req.body);
+              
+            if(!validateUser){
+                throw new errorManage({
+                    type:"UNAUTHORIZED",
+                    message:"the token have expired"
+                }); 
+            }
+            console.log(validateUser);
+            
+            const user={
+                email:validateUser.email,
+                role:validateUser.role,
+                name:validateUser.name
+            }
+            console.log("usuario autoizado");
+            
+            req.user=user;
+            return true ;
+           }catch(err:any){ 
+            throw errorManage.errorMethod(err.message);
+           }
+        }
     }
-}

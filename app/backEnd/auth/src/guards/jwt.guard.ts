@@ -10,29 +10,42 @@ export class jwtGuard implements CanActivate{
     constructor(private jwtService:JwtService){}
 
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> | any {
-       try{
-        const req:Request=context.switchToHttp().getRequest();
-        const headerAuth=req.headers.authorization;
-        console.log("The token is");
-        const token=headerAuth.split(" ")[1];
-        
-          
-        if(!headerAuth){
-            throw new errorManage({
-                type:"UNAUTHORIZED",
-                message:"the token have expired"
-            }); 
+        try{
+            const request=context.switchToHttp().getRequest();
+            console.log(request.headers);
+            
+            const tokenAccess=request.headers.authorization.split(" ")[1];
+            const refreshToken=request.headers["x-refresh-token"];
+            console.log("estamos en jwtGuard");
+            
+            // console.log(tokenAccess);
+            // console.log("y el refresh token es ");
+            // console.log(refreshToken);
+            
+            
+            
+            if(!this.jwtService.verify(tokenAccess) || !this.jwtService.verify(refreshToken)){
+                request.validationToken=true;
+                const tokenDecode=this.jwtService.decode(tokenAccess);
+    
+                
+                request.user=tokenDecode;
+                return true;
+            }else{
+                const tokenDecode=this.jwtService.decode(tokenAccess);
+
+                
+                request.user=tokenDecode;
+                request.validationToken=false;
+                return true;
+            }
+        }catch(err:any){
+            console.log("estamos mal e auth");
+            console.log(err);
+            
+            throw errorManage.errorMethod(err.message);
         }
-        this.jwtService.verify(token);
-        const decodeJwt=this.jwtService.decode(token);
-        const user={
-            email:decodeJwt.email,
-            password:decodeJwt.password
-        }
-        req.user=user;
-        return true ;
-       }catch(err:any){ 
-        throw errorManage.errorMethod(err.message);
-       }
+
     }
 }
+

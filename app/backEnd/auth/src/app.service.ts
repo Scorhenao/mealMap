@@ -31,11 +31,36 @@ export class AppService {
 
   returnToken(data:any): any{
     console.log("entramos a crear el token");
-    const acces_token=this.jwtService.sign(data,{expiresIn:'20'});
+    const acces_token=this.jwtService.sign(data,{expiresIn:'20m'});
     const refres_token=this.jwtService.sign(data,{expiresIn:'20d'});
     return {
       acces_token,
       refres_token
+    }
+  }
+
+  validateRoles(role:any,roles:string[]){
+    try{
+      if(!roles.includes(role.role)){
+        throw new errorManage({
+          type:"FORBIDDEN",
+          message:"El usuario no tiene los permisos necesarios"
+        });
+      }
+      return "Efectivamente tiene los roles melos";
+    }catch(err:any){
+      throw errorManage.errorMethod(err.message);
+    }
+  }
+
+  async validateUser(dataUser:any){
+    try{
+      const requestUser=await this.http.axiosRef.post("http://localhost:3000/user",dataUser)
+      console.log(requestUser);
+      
+      return requestUser.data;
+    }catch(err:any){ 
+      throw err;
     }
   }
 }

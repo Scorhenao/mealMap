@@ -9,16 +9,18 @@ export class apiKeyGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
+    console.log("entramos al api key");
+    
     const request=context.switchToHttp().getRequest();
-    const apiKey=request.headers["api-key"];
+    const apiKey=request.headers["x-api-key"];
+    
     try{    
-    if(apiKey !== this.configService.get<string>("API_KEY")){    
+    if(!apiKey || apiKey !== this.configService.get<string>("API_KEY")){    
       throw new errorManage({
         type:"SERVICE_UNAVAILABLE",
         message:"api key not found"
       });
     }
-    
     return true;
     }catch(err:any){
       throw errorManage.errorMethod(err.message);

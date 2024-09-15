@@ -18,9 +18,7 @@ export class HttpFilter implements ExceptionFilter{
                 method:request.method,
                 message:message
             });
-        }else{
-            console.log(exception);
-            
+        }else{         
             response.status(status).json({
                 status:status,
                 path:request.url,
