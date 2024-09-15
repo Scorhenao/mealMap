@@ -14,8 +14,7 @@ export class OrdersGuard implements CanActivate {
    try{
     console.log("entramos al que order guard");
     
-    const req:Request=context.switchToHttp().getRequest();  
-    console.log(req.headers);
+    const req:any=context.switchToHttp().getRequest();  
     const data= await this.httpService.axiosRef.get("http://localhost:3000/verifyRole",{
       withCredentials:true,
       headers:{
@@ -25,12 +24,17 @@ export class OrdersGuard implements CanActivate {
       }
     });
     
-    if(!data){
+    if(!data.data){
       throw new errorManage({
         type:"UNAUTHORIZED",
         message:"You are not autoriced"
       });
     }
+    console.log("la data es");
+    
+    console.log(data.data);
+    
+    req.permission=data.data;
     return true;
    }catch(err:any){
     console.log("entramos al error");

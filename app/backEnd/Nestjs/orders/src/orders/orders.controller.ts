@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, UnauthorizedException } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 // import { CreateOrderDto } from './dto/create-order.dto';
 import { errorManage } from 'src/config/error/error.manage';
@@ -18,10 +18,16 @@ export class OrdersController {
 
   @Post("orders")
   @UseGuards(apiKeyGuard,OrdersGuard)
-  create(@Body() data2:any) {
+  create(@Body() data2:any,@Req() request:any) {
     try {
-      //const createData = this.ordersService.create(data2);
-      console.log("entramos a orders");
+      console.log(request.permission);
+      
+      if(!request.permission.canCreate){
+        console.log("no puedes crear");
+        throw new UnauthorizedException();
+      }
+      console.log("entramos a orders y si puedes crear");
+      console.log("creamos la orden");
       
       return "hola";
     } catch (err: any) {
