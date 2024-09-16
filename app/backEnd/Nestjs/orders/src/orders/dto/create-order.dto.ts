@@ -11,12 +11,16 @@ export class CreateOrderDto {
   quantityOfDrinks:number;
 
   @IsNotEmpty()
+  @IsInt()
+  quantityOfPeoples:number;
+
+  @IsNotEmpty()
   @IsArray()
   dishes:string[];
 
   @IsNotEmpty()
   @IsInt()
-  idTable:number;
+  Table:number;
 
   @IsNotEmpty()
   @IsString()
@@ -24,7 +28,7 @@ export class CreateOrderDto {
 
   @IsNotEmpty()
   @IsString()
-  apellido:string;
+  numDocument:string;
 
   @IsNotEmpty()
   @IsDate()
