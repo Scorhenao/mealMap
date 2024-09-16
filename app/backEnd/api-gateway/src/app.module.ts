@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { ConfigModule } from '@nestjs/config';
-import { JwtStrategy } from './verify-jwt/strategy/jwt.strategy';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { guardJwt } from './verify-jwt/guard/jwt.guard';
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { CachingModule } from './caching/caching.module';
 import { WebSocketGatewayModule } from './web-socket-gateway/web-socket-gateway.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -19,8 +20,15 @@ import { WebSocketGatewayModule } from './web-socket-gateway/web-socket-gateway.
     }),
     CachingModule,
     WebSocketGatewayModule,
+    JwtModule.registerAsync({
+      imports:[ConfigModule],
+      inject:[ConfigService],
+      useFactory:async(configureService:ConfigService)=>({
+        secret:configureService.get("SECRET_JWT")
+      })
+    }),
   ],
-  //providers:[JwtStrategy,guardJwt],
+  providers:[guardJwt],
   controllers: [AppController],
 })
 export class AppModule {}

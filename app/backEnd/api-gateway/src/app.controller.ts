@@ -38,7 +38,7 @@ export class AppController implements handleMicroservices {
         const userPrueba={
           email:"jhonatan@gmail.com",
           password:"jhona123",
-          role:"clien",
+          role:"client",
           name:"jhonatan"
         }
         return userPrueba;
@@ -156,33 +156,31 @@ export class AppController implements handleMicroservices {
     }
   }
 
-  @Get("orders")
-  //@UseGuards(guardJwt)
-  async createOrder(@Body() dats:any,@Req() request2:Request,@Res() response:Response){
-    try{   
-      // response.clearCookie("token2");
-      // response.clearCookie("refreshToken");
-      const request=await this.httpService.axiosRef.post("http://localhost:3004/orders",dats,{
+  @Post("orders")
+  @UseFilters(HttpExceptioManage)
+  @UseGuards(guardJwt)
+  async createOrder(@Body() dats:any,@Req() request2:any,@Res() response:Response){
+    try{  
+
+      const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
+
+
+      const request=await this.httpService.axiosRef.post("http://localhost:3004/orders",{
+        ...request2.decode,
+        ...dats,
+        ...returnTable.data
+      },{
         withCredentials:true,
         headers:{
-          "X-Access-Token":request2.signedCookies["token2"],
-          "X-Api-Key":this.configService.get<string>("API_KEY"),
-          "X-Refresh-Token":request2.signedCookies["tokenRefresh"],
+          "X-Api-Key":this.configService.get<string>("API_KEY")
         }
-      }
-      )
-
-      response.json("perfecto");
-      if(!request.data){
-        throw new errorManage({
-          type:"BAD_REQUEST",
-          message:"The order not was created"
-        })
-      }
-      return request;
-
-    }catch(err:any){
-      throw errorManage.createSignatureError(err.message);
+      });
+      response.json(request.data);
+    }catch(err:any){   
+      throw new errorManage({
+        type:err.response.data.statusCode,
+        message:err.response.data.message
+      });
     }
   }
 
