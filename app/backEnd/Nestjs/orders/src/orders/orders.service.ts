@@ -22,7 +22,7 @@ export class OrdersService {
 
   async assignTable(combinedData: any) {
     const { quantityOfPersons, tables } = combinedData;
-    return tables.find(table => table.availability && table.quantityOfChairs >= quantityOfPersons);
+    return tables.find(table => table.disponibility && table.quantityOfChairs >= quantityOfPersons);
   }
 
   // async createOrder(orderData: any) {
