@@ -16,16 +16,22 @@ export class AppController {
     return this.appService.returnToken(request.user);
   }
 
-  @Get("verifyToken")
-  @UseGuards(apiKeyGuard,jwtGuard,roleGuard)
+  @Get("renovateToken")
+  @UseGuards(apiKeyGuard,jwtGuard)
   returnVerifyRole(@Req() req:any){
     try{
-      console.log("la respuesta es ");
-      console.log(req.permission);
+      console.log("entramos a renovar el acees token");
       
-      return req.permission;
+      const newAccessToken=this.appService.returnToken({
+        name:req.dataUser.name,
+        role:req.dataUser.role,
+        email:req.dataUser.email
+      });
+
+      console.log(newAccessToken);
       
-      // this.appService.validateRoles(req.user,[role,role2]);
+      
+      return newAccessToken.acces_token;
     }catch(err:any){
       throw err;
     }

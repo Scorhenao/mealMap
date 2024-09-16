@@ -30,26 +30,11 @@ export class AppService {
 
 
   returnToken(data:any): any{
-    console.log("entramos a crear el token");
     const acces_token=this.jwtService.sign(data,{expiresIn:'20m'});
-    const refres_token=this.jwtService.sign(data,{expiresIn:'20d'});
+    const refres_token=this.jwtService.sign(data,{expiresIn:'25d'});
     return {
       acces_token,
       refres_token
-    }
-  }
-
-  validateRoles(role:any,roles:string[]){
-    try{
-      if(!roles.includes(role.role)){
-        throw new errorManage({
-          type:"FORBIDDEN",
-          message:"El usuario no tiene los permisos necesarios"
-        });
-      }
-      return "Efectivamente tiene los roles melos";
-    }catch(err:any){
-      throw errorManage.errorMethod(err.message);
     }
   }
 

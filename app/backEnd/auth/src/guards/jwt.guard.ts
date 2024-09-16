@@ -12,36 +12,22 @@ export class jwtGuard implements CanActivate{
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> | any {
         try{
             const request=context.switchToHttp().getRequest();
-            console.log(request.headers);
+            console.log("llegamos al guard de jwt");
             
-            const tokenAccess=request.headers.authorization.split(" ")[1];
-            const refreshToken=request.headers["x-refresh-token"];
-            console.log("estamos en jwtGuard");
+            const refreshToken=request.headers.authorization.split(" ")[1];
             
-            // console.log(tokenAccess);
-            // console.log("y el refresh token es ");
-            // console.log(refreshToken);
+            console.log(refreshToken);
             
-            
-            
-            if(!this.jwtService.verify(tokenAccess) || !this.jwtService.verify(refreshToken)){
-                request.validationToken=true;
-                const tokenDecode=this.jwtService.decode(tokenAccess);
-    
+            if(this.jwtService.verify(refreshToken,{ignoreExpiration:false})){
+                console.log("all this perfect");
                 
-                request.user=tokenDecode;
-                return true;
-            }else{
-                console.log("el token paso");
-                
-                const tokenDecode=this.jwtService.decode(tokenAccess);
-
-                
-                request.user=tokenDecode;
-                request.validationToken=false;
+                const tokenDecode=this.jwtService.decode(refreshToken);
+                request.dataUser=tokenDecode;
                 return true;
             }
         }catch(err:any){          
+            console.log("entro al error");
+            
             throw errorManage.errorMethod(err.message);
         }
 
