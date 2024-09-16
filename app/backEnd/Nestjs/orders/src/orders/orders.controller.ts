@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req, UnauthorizedException, Res } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, UnauthorizedException, Res, Get } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 // import { CreateOrderDto } from './dto/create-order.dto';
 import { errorManage } from 'src/config/error/error.manage';
@@ -31,6 +31,16 @@ export class OrdersController {
       });
     }
   }
+
+  @Post('assign-table')
+  assignTable(@Body() combinedData: any) {
+    return this.ordersService.assignTable(combinedData);
+  }
+
+  // @Post('create-order')
+  // createOrder(@Body() orderData: any) {
+  //   return this.ordersService.createOrder(orderData);
+  // }
 }
 
 
