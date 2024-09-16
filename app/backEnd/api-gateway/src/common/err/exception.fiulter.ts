@@ -18,6 +18,7 @@ export class HttpExceptioManage implements ExceptionFilter {
     let message =
       'There was an error processing your request. Please try again later.';
 
+<<<<<<< HEAD
     if (exception instanceof HttpException) {
       console.log('entramos');
       console.log(request);
@@ -39,6 +40,32 @@ export class HttpExceptioManage implements ExceptionFilter {
         path: request.url,
         message: message,
       });
+=======
+        console.log("the exception is");
+        console.log(exception);
+        
+        
+
+        if(exception instanceof HttpException){          
+             status= exception.getStatus();
+            response.status(status).json({
+                status:status,
+                timeStamp:new Date().toISOString(),
+                path:request.url,
+                method:request.method,
+                message:exception.message
+            })
+            
+        }else{
+            response.status(status).json({
+                status:status,
+                timeStamp:new Date().toISOString(),
+                method:request.method,
+                path:request.url,
+                message:message
+            });
+        }
+>>>>>>> da0c46f65fd187ca4320a5183fc53811216b6581
     }
   }
 }

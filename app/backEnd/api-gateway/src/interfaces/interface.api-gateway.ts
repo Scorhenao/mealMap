@@ -1,8 +1,13 @@
 import { Observable } from 'rxjs';
+<<<<<<< HEAD
+=======
+import { dtoCreateUser } from 'src/common/dto/dto.routeUser';
+>>>>>>> da0c46f65fd187ca4320a5183fc53811216b6581
 
 export interface handleMicroservices {
   returnOneUser(): Observable<User>;
 
+<<<<<<< HEAD
   // returnAllUsers():Observable<User[]>;
 
   // returnOneIngredients():Observable<Ingredient>;
@@ -20,3 +25,8 @@ export interface handleMicroservices {
   //     deleteIngredient(id:number):Observable<true>;
   //     deleteUser(id:string):Observable<true>;
 }
+=======
+export interface handleMicroservices{
+    returnOneUser(dtoCreateUser:dtoCreateUser):Observable<User>;
+}
+>>>>>>> da0c46f65fd187ca4320a5183fc53811216b6581
