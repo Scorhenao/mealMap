@@ -19,9 +19,7 @@ export class AppController {
   @Get("renovateToken")
   @UseGuards(apiKeyGuard,jwtGuard)
   returnVerifyRole(@Req() req:any){
-    try{
-      console.log("entramos a renovar el acees token");
-      
+    try{      
       const newAccessToken=this.appService.returnToken({
         name:req.dataUser.name,
         role:req.dataUser.role,

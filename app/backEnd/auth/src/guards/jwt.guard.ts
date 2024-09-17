@@ -16,7 +16,6 @@ export class jwtGuard implements CanActivate{
             
             const refreshToken=request.headers.authorization.split(" ")[1];
             
-            console.log(refreshToken);
             
             if(this.jwtService.verify(refreshToken,{ignoreExpiration:false})){
                 console.log("all this perfect");
