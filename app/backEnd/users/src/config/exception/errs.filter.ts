@@ -6,9 +6,10 @@ export class ErrsFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const req:Request=host.switchToHttp().getRequest();
     const res:Response=host.switchToHttp().getResponse();
-    const status=exception.getStatus() ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
+    const status=HttpStatus.INTERNAL_SERVER_ERROR;
     const message= exception.message ? exception.message : "The server have a problem come more last please";
 
+    
     if(exception instanceof HttpException){
       res.status(status).json({
         status: status,
@@ -18,8 +19,10 @@ export class ErrsFilter implements ExceptionFilter {
         message: exception.message,
       });
     }else{
+      
       const err= exception.message.split(" :: ");
       if(err){
+        console.log("entramos a la exception");
         res.status(status).json({
           status: err[0],
           timeStamp: new Date().toISOString(),

@@ -1,18 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseFilters } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { erroManage } from 'src/config/err/err.manage';
+import { ErrsFilter } from 'src/config/exception/errs.filter';
 
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private userRepository:Repository<User>){}
- 
+  
   async create(createUserDto: CreateUserDto) {
-    const dataUser=this.userRepository.create(createUserDto);
+    try{
+      throw new erroManage({
+        type:"BAD_REQUEST",
+        message:"malo"
+      });
+      const dataUser=this.userRepository.create(createUserDto);
     await this.userRepository.save(createUserDto);
     return dataUser;
+    }catch(err:any){
+      throw erroManage.signatureError(err.message);
+    }
   }
 
   async findAll() {
