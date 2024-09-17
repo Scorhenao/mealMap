@@ -46,6 +46,11 @@ export class guardJwt implements CanActivate{
                 const tokenDecode=this.jwtService.decode(newAcessToken.data);
                 req.decode=tokenDecode;
                 return true;
+            }else{
+                throw new errorManage({
+                    type:err.response.data.status,
+                    message:err.response.data.message
+                });
             }
         }
     }

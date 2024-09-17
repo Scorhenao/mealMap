@@ -56,22 +56,18 @@ export class AppController implements handleMicroservices {
   }
 
 
+
   @Post("token")
   @UseFilters(HttpExceptioManage)
   async returnJwt(@Body() datos:any, @Res() response2:Response){
     try{   
-      console.log("the api key is ");
-      console.log(this.configService.get<string>("API_KEY"));
-      
-      
+         
     const request=await this.httpService.axiosRef.post("http://localhost:3008/token",datos,{
       withCredentials:true,
       headers:{
         "X-Api-Key":this.configService.get<string>("API_KEY")
       }
     })
-
-    console.log(request.data);
     
     response2.cookie("token2",request.data.acces_token,{
       httpOnly:true,
@@ -95,6 +91,8 @@ export class AppController implements handleMicroservices {
 
     }
 }
+
+
 
     @Get("verifyRole")
     @UseFilters(HttpExceptioManage)
@@ -164,13 +162,13 @@ export class AppController implements handleMicroservices {
   async createOrder(@Body() dats:any,@Req() request2:any,@Res() response:Response){
     try{  
 
-      const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
+      // const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
 
 
       const request=await this.httpService.axiosRef.post("http://localhost:3004/orders",{
         ...request2.decode,
         ...dats,
-        ...returnTable.data
+        //...returnTable.data
       },{
         withCredentials:true,
         headers:{
