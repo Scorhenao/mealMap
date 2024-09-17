@@ -33,4 +33,14 @@ export class OrdersService {
     // await this.orderRepository.save(results);
     // return results;
   }
+
+  async assignTable(combinedData: any) {
+    const { quantityOfPersons, tables } = combinedData;
+    return tables.find(table => table.disponibility && table.quantityOfChairs >= quantityOfPersons);
+  }
+
+  // async createOrder(orderData: any) {
+  //   // Implementar la lógica para crear una orden
+  //   return { success: true, order: orderData }; // Simulando una respuesta
+  // }
 }
