@@ -1,0 +1,1 @@
+{"version":3,"file":"web-socket-gateway.module.js","sourceRoot":"","sources":["../../src/web-socket-gateway/web-socket-gateway.module.ts"],"names":[],"mappings":";;;;;;;;;AAAA,2CAAwC;AACxC,6EAAuE;AACvE,6EAAuE;AAKhE,IAAM,sBAAsB,GAA5B,MAAM,sBAAsB;CAAG,CAAA;AAAzB,wDAAsB;iCAAtB,sBAAsB;IAHlC,IAAA,eAAM,EAAC;QACN,SAAS,EAAE,CAAC,oDAAuB,EAAE,oDAAuB,CAAC;KAC9D,CAAC;GACW,sBAAsB,CAAG"}
