@@ -6,13 +6,7 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configureService=app.get(ConfigService);
-  app.use(cookieParser(configureService.get<string>("SIGNED_COOKIE"))); 
-  app.enableCors({
-    origin: '*', // Permite solicitudes desde cualquier origen
-    credentials: true, // Permite el envío de cookies
-  });
-  
- // 
+  app.use(cookieParser(configureService.get<string>("SIGNED_COOKIE")));
   await app.listen(3000);
 }
 bootstrap();
