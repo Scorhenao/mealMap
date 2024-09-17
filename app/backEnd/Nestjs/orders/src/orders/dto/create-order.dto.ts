@@ -1,4 +1,4 @@
-import { IsArray, IsDate, IsIn, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsDate, IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { idText } from 'typescript';
 
 export class CreateOrderDto {
@@ -19,8 +19,12 @@ export class CreateOrderDto {
   dishes:string[];
 
   @IsNotEmpty()
-  @IsInt()
-  Table:number;
+  @IsArray()
+  drinks:string[];
+
+  @IsNotEmpty()
+  @IsString()
+  Table:string;
 
   @IsNotEmpty()
   @IsString()
@@ -32,5 +36,9 @@ export class CreateOrderDto {
 
   @IsNotEmpty()
   @IsDate()
-  data:Date;
+  date:Date;
+
+  @IsOptional()
+  @IsString()
+  notIngredients:string[];
 }

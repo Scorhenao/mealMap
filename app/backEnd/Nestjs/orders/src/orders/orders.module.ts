@@ -9,7 +9,7 @@ import { apiKeyGuard } from './guard/api-key.guard';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Order]),
+    //TypeOrmModule.forFeature([Order]),
     HttpModule.register({
       timeout: 5000,
       maxRedirects: 5,

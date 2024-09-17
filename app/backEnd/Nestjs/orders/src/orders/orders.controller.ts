@@ -23,6 +23,8 @@ export class OrdersController {
   @UseGuards(apiKeyGuard,OrdersGuard)
   create(@Body() data2:any,@Req() request:any, @Res() response:Response) {
     try {     
+      console.log(data2);
+      this.ordersService.create(data2);
       response.json("data create melo");
     } catch (err: any) {
       throw new errorManage({

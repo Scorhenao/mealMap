@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 //import { dishesSeed } from './config/seeds/seed.typeDishes';
-import { DataSource } from 'typeorm';
+//import { DataSource } from 'typeorm';
 import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 
