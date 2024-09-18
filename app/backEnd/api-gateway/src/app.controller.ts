@@ -29,9 +29,7 @@ export class AppController implements handleMicroservices {
   @UseFilters(HttpExceptioManage)
   @Post('loginUser')
   async returnOneUser(@Body() dataUser:any) {
-    try { 
-      console.log("llegamos a ver el usuario");
-      
+    try {     
       let data = await this.httpService.axiosRef
         .post('http://localhost:5000/user/userOne',dataUser,{
           withCredentials: true,
@@ -40,12 +38,11 @@ export class AppController implements handleMicroservices {
           },
         })
         return data.data;
-    } catch (err: any) {
-      console.log(err.response);
+    } catch (err: any) {   
       
-      console.log("entramos al error");
+      console.log(err.response.data);
       
-      throw errorManage.createSignatureError(err.message);
+      throw errorManage.createSignatureError(err.response.data.message);
     }
   }
 
@@ -95,10 +92,8 @@ export class AppController implements handleMicroservices {
   @Post("login")
   @UseFilters(HttpExceptioManage)
   async returnJwt(@Body() datos:any, @Res() response2:Response){
-    try{   
-    console.log("entramos a login");
-    
-    const request=await this.httpService.axiosRef.post("http://localhost:3005/token",datos,{
+    try{      
+    const request=await this.httpService.axiosRef.post("http://localhost:3008/token",datos,{
       withCredentials:true,
       headers:{
         "X-Api-Key":this.configService.get<string>("API_KEY")
@@ -115,58 +110,47 @@ export class AppController implements handleMicroservices {
       signed:true
     });
     
-    response2.json("todo dalio perfecto");
+    response2.status(200).json(true);
 
 
     }catch(err:any){
-      
-      throw new errorManage({
-        type:"BAD_REQUEST",
-        message:err.message
-      });
 
+      throw errorManage.createSignatureError(err.response.data.message);
     }
 }
 
 
 
-    @Get("verifyRole")
-    @UseFilters(HttpExceptioManage)
-    async verifyJwt(@Res() response2:Response,@Req() request2:Request){
-      try{
-   console.log("entramos a verificar el role");
+//     @Get("verifyRole")
+//     @UseFilters(HttpExceptioManage)
+//     async verifyJwt(@Res() response2:Response,@Req() request2:Request){
+//       try{
+//    console.log("entramos a verificar el role");
    
-      console.log(request2.headers);
+//       console.log(request2.headers);
       
-      const request=await this.httpService.axiosRef.get("http://localhost:3008/verifyToken",{
-       withCredentials:true,
-        headers:{
-          "Authorization":"Bearer "+request2.headers["x-access-token"],
-          "X-Refresh-Token":request2.headers["x-refresh-token"],
-          "X-Api-Key":this.configService.get<string>("API_KEY"),
-          "X-Service":request2.headers["x-service"]
-        }
-      });
+//       const request=await this.httpService.axiosRef.get("http://localhost:3008/verifyToken",{
+//        withCredentials:true,
+//         headers:{
+//           "Authorization":"Bearer "+request2.headers["x-access-token"],
+//           "X-Refresh-Token":request2.headers["x-refresh-token"],
+//           "X-Api-Key":this.configService.get<string>("API_KEY"),
+//           "X-Service":request2.headers["x-service"]
+//         }
+//       });
       
-      const token=request.data;
-         
-      // response2.cookie("token",token,{
-      //   signed:true,
-      //   httpOnly:true
-      // });
-      
-      response2.json(token);
+//       response2.json(token);
 
-      }catch(err:any){
-        console.log("entramos el error");
+//       }catch(err:any){
+//         console.log("entramos el error");
         
-        throw new errorManage({
-          type:"BAD_REQUEST",
-          message:err.response.data
-        });
-        throw errorManage.createSignatureError(err.message);
-      }
-}
+//         throw new errorManage({
+//           type:"BAD_REQUEST",
+//           message:err.response.data
+//         });
+//         throw errorManage.createSignatureError(err.message);
+//       }
+// }
 
 
   @Get()

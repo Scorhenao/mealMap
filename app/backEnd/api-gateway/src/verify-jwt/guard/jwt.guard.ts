@@ -30,9 +30,9 @@ export class guardJwt implements CanActivate{
 
         }catch(err:any){
             
-            if(err.message=="jwt expired"){
-                console.log("entrmao al flujo deseado");
-                
+            if(err.message=="jwt expired"){     
+                console.log("entramos al flujo deseado");
+                        
                 const newAcessToken=await this.httpService.axiosRef.get("http://localhost:3008/renovateToken",{
                     withCredentials:true,
                     headers:{
