@@ -7,7 +7,6 @@ import { roles } from 'src/common/decorator/decorator.decorator';
 import { roleGuard } from 'src/common/guards/guards.guard';
 import { apiKeyGuard } from 'src/common/guards/apiKey.guard';
 
-
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -33,7 +32,7 @@ export class UserController {
       
     return await this.userService.findOne(dataUser);
     }catch(err:any){
-      throw new err;
+      throw err;
     }
   }
 

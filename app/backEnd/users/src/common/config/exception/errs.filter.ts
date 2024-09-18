@@ -5,42 +5,33 @@ import { Request, Response } from 'express';
 export class ErrsFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const req:Request=host.switchToHttp().getRequest();
+
     const res:Response=host.switchToHttp().getResponse();
-    const status=HttpStatus.INTERNAL_SERVER_ERROR;
-    const message= exception.message ? exception.message : "The server have a problem come more last please";
+    
+    const customHttp:any=HttpStatus[exception.message.split(" :: ")[0]];
+    const status= exception.getStatus || HttpStatus[exception.message.split(" :: ")[0]] ?  customHttp || HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    let message =exception.response || exception.message.split(" :: ") ? exception.response  ||exception.message.split(" :: ")[1] || exception.message :
+    'There was an error processing your request. Please try again later.';
 
     
     if(exception instanceof HttpException){
+        
       res.status(status).json({
         status: status,
         timeStamp: new Date().toISOString(),
         path: req.url,
         method: req.method,
-        message: exception.message,
+        message: message,
       });
-    }else{
-      
-      const err= exception.message.split(" :: ");
-      if(err){
-        console.log("entramos a la exception");
-        console.log(exception);
-        
-        res.status(status).json({
-          status: err[0],
-          timeStamp: new Date().toISOString(),
-          path: req.url,
-          method: req.method,
-          message: err[1],
-        });
-      }else{
+    }else{ 
         res.status(status).json({
           status: status,
           timeStamp: new Date().toISOString(),
           path: req.url,
           method: req.method,
-          message: exception.message,
+          message: message,
         });
-      }
     }
   }
 }
