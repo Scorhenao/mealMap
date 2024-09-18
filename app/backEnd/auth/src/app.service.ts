@@ -16,12 +16,16 @@ export class AppService {
       if(!dataUser.data){
         throw new errorManage({
           type:"BAD_REQUEST",
-          message:"El usuario debe estar en la base de datos"
+          message:"user not found"
         });
       }
       return dataUser.data;
     }catch(err:any){
-      throw errorManage.errorMethod(err.message);
+      console.log("entramos al errror");
+      
+      console.log(err);
+      
+      throw errorManage.errorMethod(err.response.data.message);
     }
   }
 

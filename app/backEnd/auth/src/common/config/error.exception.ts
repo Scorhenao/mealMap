@@ -1,32 +1,49 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
-import { Request,Response } from "express";
+import {
+    ArgumentsHost,
+    Catch,
+    ExceptionFilter,
+    HttpException,
+    HttpStatus,
+  } from '@nestjs/common';
+  import { Request, Response } from 'express';
+  import path from 'path';
+  
+  @Catch()
+  export class HttpFilter implements ExceptionFilter {
+    catch(exception: any, host: ArgumentsHost) {
+      const ctx = host.switchToHttp();
+      const response = ctx.getResponse<Response>();
+      const request = ctx.getRequest<Request>();
+  
+      console.log(exception);
+      
 
-@Catch()
-export class HttpFilter implements ExceptionFilter{
-    catch(exception: HttpException, host: ArgumentsHost) {
-        const ctx=host.switchToHttp();
-        const response:Response=ctx.getResponse();
-        const request:Request=ctx.getRequest()
-        let status=HttpStatus.INTERNAL_SERVER_ERROR;
-        let message = exception.message ? exception.message : "There is a internal server Error";
+      const customHttp:any=HttpStatus[exception.message.split(" :: ")[0]];
+      const status= exception.getStatus || HttpStatus[exception.message.split(" :: ")[0]] ?  customHttp || HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR;
+      
+      let message =exception.response || exception.message.split(" :: ") ? exception.response || exception.message.split(" :: ")[1] || exception.message :
+        'There was an error processing your request. Please try again later.';
+  
+      if (exception instanceof HttpException) {
+        console.log("entry to http");
+        console.log(status);
+        console.log(message);
         
-        if(exception instanceof HttpException){
-            response.status(status).json({
-                status:status,
-                path:request.url,
-                timestamp:new Date().toISOString(),
-                method:request.method,
-                message:message
-            });
-        }else{         
-            response.status(status).json({
-                status:status,
-                path:request.url,
-                timestamp:new Date().toISOString(),
-                method:request.method,
-                message:message
-            });
-        }
-
+        response.status(status).json({
+          status: status,
+          timeStamp: new Date().toISOString(),
+          path: request.url,
+          method: request.method,
+          message:message,
+        });
+      } else {           
+          response.status(status).json({
+            status: status,
+            timeStamp: new Date().toISOString(),
+            method: request.method,
+            path: request.url,
+            message: message,
+          }); 
     }
-}
+  }
+}  

@@ -11,6 +11,7 @@ import { HttpModule } from '@nestjs/axios';
 import { apiKeyGuard } from './guards/apiKey.guard';
 
 import { localStrategy } from './strategy/local.strategy';
+import { localGuard } from './guards/local.guard';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { localStrategy } from './strategy/local.strategy';
     ConfigService,
     apiKeyGuard,
     localStrategy,
+    localGuard,
     {
       provide:APP_FILTER,
       useClass:HttpFilter
