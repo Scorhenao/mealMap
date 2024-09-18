@@ -27,22 +27,24 @@ export class AppController implements handleMicroservices {
   constructor(@Inject() private httpService: HttpService,private configService:ConfigService) {}
 
   @UseFilters(HttpExceptioManage)
-  @Post('user')
-  returnOneUser(@Body() dataUser:any): any {
-    try {
-      console.log("entramos a user");
+  @Post('loginUser')
+  async returnOneUser(@Body() dataUser:any) {
+    try { 
+      console.log("llegamos a ver el usuario");
       
-      let data = this.httpService
-        .post('http://localhost:3001/user',dataUser)
-        .pipe(map((response) => response.data));
-        const userPrueba={
-          email:"jhonatan@gmail.com",
-          password:"jhona123",
-          role:"client",
-          name:"jhonatan"
-        }
-        return userPrueba;
+      let data = await this.httpService.axiosRef
+        .post('http://localhost:5000/user/userOne',dataUser,{
+          withCredentials: true,
+          headers: {
+            "X-Api-Key": this.configService.get<string>("API_KEY"),
+          },
+        })
+        return data.data;
     } catch (err: any) {
+      console.log(err.response);
+      
+      console.log("entramos al error");
+      
       throw errorManage.createSignatureError(err.message);
     }
   }
@@ -57,12 +59,46 @@ export class AppController implements handleMicroservices {
 
 
 
-  @Post("token")
+  @Post("Ingredient")
+  async createIngredient(@Body() dataIngredient:any){
+    try{
+      const data = await this.httpService.axiosRef.post("http://localhost:8080/ingredient",dataIngredient,{
+        headers:{
+          withCredentials: true,
+          "X-Api-Key":this.configService.get<string>("API_KEY"),
+        }
+      });
+      return data;
+    }catch(err:any){
+      throw new err;
+    }
+  }
+
+
+  @Post("Dish")
+  async createDish(@Body() dataDish:any){
+    try{
+      const data = await this.httpService.axiosRef.post("http://localhost:8080/dish",dataDish,{
+        headers:{
+          withCredentials: true,
+          "X-Api-Key":this.configService.get<string>("API_KEY"),
+        }
+      });
+      return data;
+    }catch(err:any){
+      throw new err;
+    }
+  }
+
+
+
+  @Post("login")
   @UseFilters(HttpExceptioManage)
   async returnJwt(@Body() datos:any, @Res() response2:Response){
     try{   
-         
-    const request=await this.httpService.axiosRef.post("http://localhost:3008/token",datos,{
+    console.log("entramos a login");
+    
+    const request=await this.httpService.axiosRef.post("http://localhost:3005/token",datos,{
       withCredentials:true,
       headers:{
         "X-Api-Key":this.configService.get<string>("API_KEY")
@@ -112,10 +148,6 @@ export class AppController implements handleMicroservices {
         }
       });
       
-      console.log("la respuesta es ");
-      console.log(request.data);
-      
-      
       const token=request.data;
          
       // response2.cookie("token",token,{
@@ -162,6 +194,10 @@ export class AppController implements handleMicroservices {
   async createOrder(@Body() dats:any,@Req() request2:any,@Res() response:Response){
     try{  
 
+      console.log("entramos la peticion");
+      
+      console.log(request2.decode);
+      
       // const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
 
 

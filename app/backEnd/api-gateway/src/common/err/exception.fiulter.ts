@@ -20,8 +20,6 @@ export class HttpExceptioManage implements ExceptionFilter {
 
     if (exception instanceof HttpException) {
       console.log("entramos a la exception de htpp");
-      
-      status = exception.getStatus();
       response.status(status).json({
         status: status,
         timeStamp: new Date().toISOString(),

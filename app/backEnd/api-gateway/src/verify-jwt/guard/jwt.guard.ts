@@ -29,6 +29,7 @@ export class guardJwt implements CanActivate{
             return true;
 
         }catch(err:any){
+            
             if(err.message=="jwt expired"){
                 console.log("entrmao al flujo deseado");
                 
@@ -45,6 +46,8 @@ export class guardJwt implements CanActivate{
                 });
                 const tokenDecode=this.jwtService.decode(newAcessToken.data);
                 req.decode=tokenDecode;
+                console.log("salimos bien");
+                
                 return true;
             }else{
                 throw new errorManage({
