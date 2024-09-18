@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 import { createTokenDto } from './common/dto/createToken';
 import { localGuard } from './guards/local.guard';
@@ -13,7 +13,6 @@ export class AppController {
 
   //new ValidationPipe()) Data:createTokenDto
   @Post("token")
-
   @UseGuards(localGuard,apiKeyGuard)
   getHello(@Body() data: any,@Req() request: any){    
     return this.appService.returnToken(request.user);
@@ -28,9 +27,6 @@ export class AppController {
         role:req.dataUser.role,
         email:req.dataUser.email
       });
-
-      console.log(newAccessToken);
-      
       
       return newAccessToken.acces_token;
     }catch(err:any){
