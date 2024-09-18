@@ -12,11 +12,11 @@ export class credentialsOptions implements TypeOrmOptionsFactory {
   ): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
     return {
       type: 'mysql',
-      host: this.configService.get<string>('HOST'),
-      port: +this.configService.get<string>('PORT'),
+      host: this.configService.get<string>('DB_HOST'),
+      port: +this.configService.get<string>('DB_PORT'),
       username: this.configService.get<string>('DB_USERNAME'),
-      password: this.configService.get<string>('PASSWORD'),
-      database: this.configService.get<string>('DATABASE'),
+      password: this.configService.get<string>('DB_PASSWORD'),
+      database: this.configService.get<string>('DB_DATABASE'),
       entities: [Order],
       synchronize: true,
     };

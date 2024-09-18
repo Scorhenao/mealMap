@@ -27,7 +27,8 @@ export class OrdersGuard implements CanActivate {
         message:"The user have a rol not autorized"
       });
     }
-
+    console.log("paso relajado");
+    
     return true;
    }catch(err:any){
     console.log("se envia algo malo");

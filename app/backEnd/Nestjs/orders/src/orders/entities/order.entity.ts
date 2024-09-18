@@ -11,18 +11,27 @@ export class Order {
   @Column() 
   quantityOfDrinks:number;
 
+  @Column()
+  quantityOfPeoples:number;
+
   @Column("simple-array")
   dishes:string[];
 
+  @Column("simple-array")
+  drinks:string[];
+
   @Column()
-  idTable:number;
+  Table:string;
 
   @Column()
   name:string;
 
-  @Column() 
-  apellido:string;
+  @Column()
+  idUser:string;
 
   @Column()
   data:Date;
+
+  @Column("simple-array")
+  notIngredients:string[];
 }
