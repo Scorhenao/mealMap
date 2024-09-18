@@ -9,11 +9,10 @@ export class apiKeyGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    
+
+    console.log("llegamos al apikey");
     const request=context.switchToHttp().getRequest();
     const apiKey=request.headers["x-api-key"];
-    
-    console.log(apiKey === this.configService.get<string>("API_KEY"));
     
     try{    
     if(!apiKey || apiKey !== this.configService.get<string>("API_KEY")){    

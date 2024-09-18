@@ -10,9 +10,12 @@ import { roleGuard } from './guards/role.guard';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+
+  //new ValidationPipe()) Data:createTokenDto
   @Post("token")
-  @UseGuards(apiKeyGuard,localGuard)
-  getHello(@Req() request:any){
+
+  @UseGuards(localGuard,apiKeyGuard)
+  getHello(@Body() data: any,@Req() request: any){    
     return this.appService.returnToken(request.user);
   }
 

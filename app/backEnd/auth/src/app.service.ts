@@ -10,19 +10,16 @@ export class AppService {
     private http:HttpService
   ){}
 
-  returnUser(email:string,password:string){
+  async returnUser(userData:any){
     try{
-      const dataUser= this.http.post("http://localhost:3000,user",{email:email,password:password}).
-      pipe(
-        map(response=>response.data)
-      );
-      if(!dataUser){
+      const dataUser=await this.http.axiosRef.post("http://localhost:3000/loginUser",userData);
+      if(!dataUser.data){
         throw new errorManage({
           type:"BAD_REQUEST",
           message:"El usuario debe estar en la base de datos"
         });
       }
-      return dataUser;
+      return dataUser.data;
     }catch(err:any){
       throw errorManage.errorMethod(err.message);
     }
@@ -30,8 +27,16 @@ export class AppService {
 
 
   returnToken(data:any): any{
-    const acces_token=this.jwtService.sign(data,{expiresIn:'20m'});
-    const refres_token=this.jwtService.sign(data,{expiresIn:'25d'});
+    console.log("entramos a crear el token");
+    const payload={
+      idUser:data.id,
+      email:data.email,
+      name:data.name,
+      role:data.role.name
+    }
+    
+    const acces_token=this.jwtService.sign(payload,{expiresIn:'20m'});
+    const refres_token=this.jwtService.sign(payload,{expiresIn:'20d'});
     return {
       acces_token,
       refres_token
