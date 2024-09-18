@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ErrsFilter } from 'src/config/exception/errs.filter';
+import { ErrsFilter } from 'src/common/config/exception/errs.filter';
+import { roles } from 'src/common/decorator/decorator.decorator';
+import { roleGuard } from 'src/common/guards/guards.guard';
+import { apiKeyGuard } from 'src/common/guards/apiKey.guard';
 
 
 @Controller('user')
@@ -15,13 +18,23 @@ export class UserController {
   }
 
   @Get()
+  @roles("admin","client")
+  @UseGuards(apiKeyGuard,roleGuard)
   findAll() {
     return this.userService.findAll();
   }
 
-  @Get(':name')
-  async findOne(@Param('name') name: string) {
-    return await this.userService.findOne(name);
+  @Post('userOne')
+  @UseGuards(apiKeyGuard)
+  async findOne(@Body() dataUser:any) {
+    try{
+      console.log("entramos a encontrar");
+      console.log(dataUser);
+      
+    return await this.userService.findOne(dataUser);
+    }catch(err:any){
+      throw new err;
+    }
   }
 
   @Patch(':id')

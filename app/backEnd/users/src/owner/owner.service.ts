@@ -4,7 +4,7 @@ import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Owner } from './entities/owner.entity';
 import { Repository } from 'typeorm';
-import { erroManage } from 'src/config/err/err.manage';
+import { erroManage } from 'src/common/config/err/err.manage';
 
 @Injectable()
 export class OwnerService {
