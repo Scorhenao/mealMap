@@ -28,7 +28,7 @@ export class WebSocketGatewayService implements OnModuleInit, OnModuleDestroy {
     if (this.client) {
       this.client.close();
       console.log('Desconectado del servidor WebSocket');
-    }
+    } 
   }
 
   sendMessage(message: any,client: WebSocket) {   
