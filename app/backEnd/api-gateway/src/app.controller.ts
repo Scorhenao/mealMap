@@ -195,6 +195,8 @@ export class AppController implements handleMicroservices {
           "X-Api-Key":this.configService.get<string>("API_KEY")
         }
       });
+      console.log("final");
+      
       response.json(request.data);
     }catch(err:any){   
       throw new errorManage({
@@ -203,6 +205,36 @@ export class AppController implements handleMicroservices {
       });
     }
   }
+
+
+  
+  @Get("ordersToday")
+  @UseFilters(HttpExceptioManage)
+  @UseGuards(guardJwt)
+  async getOrdersToday(@Req() request2:any,@Res() response:Response){
+    try{  
+
+      console.log("entramos la peticion");
+      
+      console.log(request2.decode);
+
+      const request=await this.httpService.axiosRef.get("http://localhost:3004",{
+        withCredentials:true,
+        headers:{
+          "X-Api-Key":this.configService.get<string>("API_KEY"),
+          "X-role":request2.decode.role
+        }
+      });
+     
+      response.json(request.data);
+    }catch(err:any){   
+      throw new errorManage({
+        type:err.response.data.statusCode,
+        message:err.response.data.message
+      });
+    }
+  }
+
 
   @Get("permission/:service/:role")
  async returnPermission(@Param("service") service:string, @Param("role") role:string){

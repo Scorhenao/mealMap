@@ -26,7 +26,6 @@ export class WebSocketGatewayGateway implements OnModuleInit{
       });
 
       this.client.on("error",(err)=>{
-        console.log(err);
         console.log("error");
         
        // console.log("Connected to server");

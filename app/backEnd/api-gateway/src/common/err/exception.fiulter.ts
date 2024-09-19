@@ -27,7 +27,6 @@ export class HttpExceptioManage implements ExceptionFilter {
     let message =exception.response || exception.message.split(" :: ") ? exception.response || exception.message.split(" :: ")[1] || exception.message :
     'There was an error processing your request. Please try again later.';
 
-    console.log("the status is");
     
     if (exception instanceof HttpException) {   
       response.status(status).json({

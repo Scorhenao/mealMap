@@ -16,19 +16,32 @@ export class guardJwt implements CanActivate{
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const req=context.switchToHttp().getRequest();
+        console.log("entramos a verificar el jwt");
+        
         const res:Response=context.switchToHttp().getResponse();
         const tokenAccess=req.signedCookies["token2"];
         const tokenRefresh=req.signedCookies["tokenRefresh"];
+
+        console.log(this.jwtService.decode(tokenRefresh));
+    console.log("y el access es ");
+    console.log(this.jwtService.decode(tokenAccess));
+
+    
+    
+        
 
         try{
             this.jwtService.verify(tokenAccess,{ignoreExpiration:false}); 
             
 
+            console.log("seguimos");
+            
             const tokenDecode=this.jwtService.decode(tokenAccess);  //Si llega a este punto entonces no expiro el acces token
             req.decode=tokenDecode;
             return true;
 
         }catch(err:any){
+            console.log("PAILA");
             
             if(err.message=="jwt expired"){     
                 console.log("entramos al flujo deseado");
@@ -50,6 +63,8 @@ export class guardJwt implements CanActivate{
                 
                 return true;
             }else{
+                console.log("entramos al error");
+                
                 throw new errorManage({
                     type:err.response.data.status,
                     message:err.response.data.message
