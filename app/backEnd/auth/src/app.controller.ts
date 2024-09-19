@@ -21,8 +21,9 @@ export class AppController {
   @Get("renovateToken")
   @UseGuards(apiKeyGuard,jwtGuard)
   returnVerifyRole(@Req() req:any){
-    try{      
+    try{       
       const newAccessToken=this.appService.returnToken({
+        id:req.dataUser.idUser,
         name:req.dataUser.name,
         role:req.dataUser.role,
         email:req.dataUser.email

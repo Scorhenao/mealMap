@@ -36,17 +36,20 @@ export class AppService {
       idUser:data.id,
       email:data.email,
       name:data.name,
-      role:data.role.name
+      role:data.role.name ? data.role : data.role
     }
+
     
-    const acces_token=this.jwtService.sign(payload,{expiresIn:'20m'});
+    const acces_token=this.jwtService.sign(payload,{expiresIn:'10s'});
     const refres_token=this.jwtService.sign(payload,{expiresIn:'20d'});
+
     return {
       acces_token,
       refres_token
     }
   }
 
+  
   async validateUser(dataUser:any){
     try{
       const requestUser=await this.http.axiosRef.post("http://localhost:3000/user",dataUser)

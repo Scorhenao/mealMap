@@ -14,13 +14,16 @@ export class jwtGuard implements CanActivate{
             const request=context.switchToHttp().getRequest();
             console.log("llegamos al guard de jwt");
             
-            const refreshToken=request.headers.authorization.split(" ")[1];
-            
+            const refreshToken=request.headers.authorization.split(" ")[1];          
             
             if(this.jwtService.verify(refreshToken,{ignoreExpiration:false})){
                 console.log("all this perfect");
                 
                 const tokenDecode=this.jwtService.decode(refreshToken);
+                console.log("el token decofificado es");
+                
+                console.log(tokenDecode);
+                
                 request.dataUser=tokenDecode;
                 return true;
             }
