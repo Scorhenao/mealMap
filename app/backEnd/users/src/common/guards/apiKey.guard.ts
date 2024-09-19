@@ -11,6 +11,7 @@ export class apiKeyGuard implements CanActivate{
     }
 
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+       try{
         const request=context.switchToHttp().getRequest();
         const apiKey=request.headers["x-api-key"];  
         if(apiKey !== this.configService.get<string>("API_KEY")){
@@ -24,5 +25,10 @@ export class apiKeyGuard implements CanActivate{
         console.log("pasmos el apikay");
         
         return true;
+       }catch(err:any){
+        console.log("entramos al error");
+        
+        throw err;
+       }
     }
 }

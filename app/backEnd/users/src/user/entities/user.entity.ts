@@ -1,7 +1,8 @@
 import { Role } from "src/role/entities/role.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity("users")
+@Unique(["email"])
 export class User {
     @PrimaryGeneratedColumn("uuid")
     id:string;

@@ -25,15 +25,13 @@ export class UserController {
   }
 
   @Post('userOne')
+  @UseFilters(ErrsFilter)
   @UseGuards(apiKeyGuard)
   async findOne(@Body() dataUser:any) {
-    try{
-      console.log("entramos a encontrar");
-      console.log(dataUser);
-      
+    try{     
     return await this.userService.findOne(dataUser);
     }catch(err:any){
-      throw new err;
+      throw err;
     }
   }
 
