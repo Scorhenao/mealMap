@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req, UnauthorizedException, Res, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, UnauthorizedException, Res, Get, UseInterceptors } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 // import { CreateOrderDto } from './dto/create-order.dto';
 import { errorManage } from 'src/config/error/error.manage';
@@ -11,6 +11,7 @@ import { map } from 'rxjs';
 import { apiKeyGuard } from './guard/api-key.guard';
 import { role } from './decorators/decorators.decorator';
 import { Response } from 'express';
+import { ConfirmOrderInterceptor } from './interceptor/interceptor.interceptor';
 @Controller()
 export class OrdersController {
   server:Server
@@ -21,6 +22,7 @@ export class OrdersController {
   @Post("orders")
   @role("admin","client")
   @UseGuards(apiKeyGuard,OrdersGuard)
+  @UseInterceptors(ConfirmOrderInterceptor)
   create(@Body() data2:any,@Req() request:any, @Res() response:Response) {
     try {     
       console.log(data2);

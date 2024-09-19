@@ -21,6 +21,8 @@ export class OrdersGuard implements CanActivate {
     
     const req:any=context.switchToHttp().getRequest();
     
+    console.log("THE ROL IS", req.body.role);
+    
     if(!role.includes(req.body.role)){
       throw new errorManage({
         type:"UNAUTHORIZED",

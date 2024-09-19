@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { OrdersGuard } from './guard/orders.guard';
 import { apiKeyGuard } from './guard/api-key.guard';
+import { ConfirmOrderInterceptor } from './interceptor/interceptor.interceptor';
 
 @Module({
   imports:[
@@ -16,7 +17,7 @@ import { apiKeyGuard } from './guard/api-key.guard';
     }),
   ],
   controllers: [OrdersController],
-  providers: [OrdersService,OrdersGuard,apiKeyGuard],
+  providers: [OrdersService,OrdersGuard,apiKeyGuard,ConfirmOrderInterceptor],
   exports:[OrdersService]
 })
 export class OrdersModule {}

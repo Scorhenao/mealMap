@@ -15,31 +15,32 @@ export class OrdersService {
   ) {}
 
   async create(dataOrder: any) {
-    let quantityOfDrinks=0;
-    let quantityOfDished=0;
-    let dishes=[];
-    let drinks=[];
-    for(let x of dataOrder.order.dishes){
-      quantityOfDished++;
-      dishes.push(x.nameDish);
-    }
-    for(let p of dataOrder.order.drinks){
-      quantityOfDrinks++;
-      drinks.push(p.nameDrink);
-    }
+    return "hola";
+    // let quantityOfDrinks=0;
+    // let quantityOfDished=0;
+    // let dishes=[];
+    // let drinks=[];
+    // for(let x of dataOrder.order.dishes){
+    //   quantityOfDished++;
+    //   dishes.push(x.nameDish);
+    // }
+    // for(let p of dataOrder.order.drinks){
+    //   quantityOfDrinks++;
+    //   drinks.push(p.nameDrink);
+    // }
 
-    const dataCreate =this.orderRepository.create({
-      quantityOfDrinks:quantityOfDrinks,
-      quantityOfPlates:quantityOfDished,
-      quantityOfPeoples:dataOrder.order.quantityOfPeoples,
-      dishes:dishes,
-      drinks:drinks,
-      Table:dataOrder.table,
-      name:dataOrder.name,
-      idUser:dataOrder.numDocument,
-      data:new Date(),
-      notIngredients:dataOrder.notIngredients,
-    });
+    // const dataCreate =this.orderRepository.create({
+    //   quantityOfDrinks:quantityOfDrinks,
+    //   quantityOfPlates:quantityOfDished,
+    //   quantityOfPeoples:dataOrder.order.quantityOfPeoples,
+    //   dishes:dishes,
+    //   drinks:drinks,
+    //   Table:dataOrder.table,
+    //   name:dataOrder.name,
+    //   idUser:dataOrder.numDocument,
+    //   data:new Date(),
+    //   notIngredients:dataOrder.notIngredients,
+    // });
     
     
     // const results=this.orderRepository.create(dataOrder);
@@ -52,6 +53,15 @@ export class OrdersService {
     return tables.find(table => table.disponibility && table.quantityOfChairs >= quantityOfPersons);
   }
 
+
+  async returnOrdersDay(){
+    try{
+      const dateCurently=new Date();
+      const dataOrders=
+    }catch(err:any){
+
+    }
+  }
   // async createOrder(orderData: any) {
   //   // Implementar la lógica para crear una orden
   //   return { success: true, order: orderData }; // Simulando una respuesta
