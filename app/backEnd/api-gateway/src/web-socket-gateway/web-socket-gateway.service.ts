@@ -4,7 +4,8 @@ import * as WebSocket from 'ws';
 @Injectable()
 export class WebSocketGatewayService implements OnModuleInit, OnModuleDestroy {
   private client: WebSocket;
-  private readonly url = 'ws://localhost:8080/websocket'; // URL del WebSocket en Spring Boot
+  private readonly url = 'ws://localhost:8080/ws/myHandler'; // URL del WebSocket en Spring Boot
+ // URL del WebSocket en Spring Boot
 
   onModuleInit() {
     
@@ -34,9 +35,11 @@ export class WebSocketGatewayService implements OnModuleInit, OnModuleDestroy {
     if (this.client.readyState === WebSocket.OPEN) {      
       this.client.on("message",(data)=>{
         const message=data.toString();
+        console.log(message);
+        
         client.emit("hola",message)
       })
-      this.client.send("getAllIngredients");
+      this.client.send("getAllDishes");
     } else {
       console.warn('No conectado al servidor WebSocket');
     }

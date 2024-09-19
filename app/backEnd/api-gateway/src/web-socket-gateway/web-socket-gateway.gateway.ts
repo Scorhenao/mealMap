@@ -18,13 +18,17 @@ export class WebSocketGatewayGateway implements OnModuleInit{
   server:Server;
 
   onModuleInit() {
-      this.client=new WebSocket("ws://localhost:8080/websocket");
+      this.client=new WebSocket("http://localhost:8080/ws/myHandler");
 
       this.client.on("open",()=>{
-        //console.log("Connected to server");
+        console.log("conectado");
+        
       });
 
-      this.client.on("error",()=>{
+      this.client.on("error",(err)=>{
+        console.log(err);
+        console.log("error");
+        
        // console.log("Connected to server");
       });
   }
@@ -33,6 +37,8 @@ export class WebSocketGatewayGateway implements OnModuleInit{
   @SubscribeMessage('message')
   create(@ConnectedSocket() client:WebSocket,@MessageBody() message: any) {
     this.webSocketGatewayService.sendMessage(message,client);
-    client.emit("message","hola");
+    console.log(message);
+    
+    client.emit("dishes","hola");
   }
 }
