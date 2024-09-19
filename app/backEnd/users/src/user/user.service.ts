@@ -31,25 +31,17 @@ export class UserService {
 
   async findOne(name: any) {   
     try{ 
-      const dataUser= await this.userRepository.findOne({where:{email:name.email}});
-
-      console.log("pasamos la consulta");
-      console.log(dataUser);
-      
+      const dataUser= await this.userRepository.findOne({where:{email:name.email}});      
       if(!dataUser || !await bcrypt.compare(name.password,dataUser.password)){
         console.log("paila");
         
         throw new erroManage({
           type:"NOT_FOUND",
-          message:"INcorrect Credenctials"
+          message:"Incorrect Credenctials"
         });
-      }
-      
+      }    
       return dataUser;
-    }catch(err:any){
-      console.log(err);
-      console.log("entramos en el error");
-      
+    }catch(err:any){         
       throw erroManage.signatureError(err.message);
     }
   }

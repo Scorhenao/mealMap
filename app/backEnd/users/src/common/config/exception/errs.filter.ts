@@ -5,21 +5,20 @@ import { Request, Response } from 'express';
 export class ErrsFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const req:Request=host.switchToHttp().getRequest();
+
     const res:Response=host.switchToHttp().getResponse();
-    let status=exception.getStatus() ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
-    const message= exception.message ? exception.message : "The server have a problem come more last please";
+    const customHttp:any=HttpStatus[exception.message.split(" :: ")[0]];
+    
+    const status= exception.getStatus || HttpStatus[exception.message.split(" :: ")[0]] ?  customHttp || HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    let message =exception.response || exception.message.split(" :: ") ? exception.response  ||exception.message.split(" :: ")[1] || exception.message :
+    'There was an error processing your request. Please try again later.';
+
 
     console.log("llegamos a la exception");
     
     
     if(exception instanceof HttpException){
-      console.log("entramos a la exception http");
-      const err= exception.message.split(" :: ");
-      //console.log(HttpStatus[err[0]]);
-     console.log(status);
-     console.log(message);
-     
-      
       res.status(status).json({
         status: status,
         timeStamp: new Date().toISOString(),
@@ -27,31 +26,15 @@ export class ErrsFilter implements ExceptionFilter {
         method: req.method,
         message: message,
       });
-    }else{
-      
-      const err= exception.message.split(" :: ");
-      if(err){
-        console.log("entramos a la exception mela");
-        console.log(exception);
-        
-        res.status(404).json({
-          status: 404,
+
+    }else{ 
+        res.status(status).json({
+          status: status,
           timeStamp: new Date().toISOString(),
           path: req.url,
           method: req.method,
-          message: err[1],
+          message: message,
         });
-      }else{
-        console.log("entrmao a la exception fea");
-        
-        res.status(404).json({
-          status: 404,
-          timeStamp: new Date().toISOString(),
-          path: req.url,
-          method: req.method,
-          message: exception.message,
-        });
-      }
     }
   }
 }
