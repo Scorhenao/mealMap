@@ -20,14 +20,13 @@ export class OrdersController {
 
 
   @Post("orders")
-  @role("admin","client")
+  @role("admin","client","owner")
   @UseGuards(apiKeyGuard,OrdersGuard)
   @UseInterceptors(ConfirmOrderInterceptor)
-  create(@Body() data2:any,@Req() request:any, @Res() response:Response) {
+  async create(@Body() data2:any,@Req() request:any, @Res() response:Response) {
     try {     
-      console.log(data2);
-      this.ordersService.create(data2);
-      response.json("data create melo");
+      const createOrder=await this.ordersService.create(data2);
+      response.json(createOrder);
     } catch (err: any) {
       throw new errorManage({
         type: 'BAD_REQUEST',
@@ -35,6 +34,8 @@ export class OrdersController {
       });
     }
   }
+
+
 
   @Post('assign-table')
   assignTable(@Body() combinedData: any) {
@@ -45,6 +46,18 @@ export class OrdersController {
   // createOrder(@Body() orderData: any) {
   //   return this.ordersService.createOrder(orderData);
   // }
+
+  @Get()
+  @role("admin","owner")
+  @UseGuards(apiKeyGuard,OrdersGuard)
+  async returnOrders(){
+    try{
+      const orders=await this.ordersService.returnOrdersDay();
+      return orders;
+    }catch(erre:any){
+      throw erre;
+    }
+  }
 }
 
 

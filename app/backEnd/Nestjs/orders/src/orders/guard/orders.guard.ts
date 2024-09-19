@@ -12,18 +12,24 @@ export class OrdersGuard implements CanActivate {
   constructor(private httpService:HttpService,private configService:ConfigService,
     private reflector:Reflector
   ){}
+
   async canActivate(
     context: ExecutionContext,
   ) {
    try{
     console.log("entramos al que order guard");
-    const role= this.reflector.get(KEY_VALUE,context.getHandler());
+    const roleController= this.reflector.get(KEY_VALUE,context.getHandler());
     
-    const req:any=context.switchToHttp().getRequest();
+    const req:any=context.switchToHttp().getRequest(); 
     
-    console.log("THE ROL IS", req.body.role);
+    const roleSend=req.body.role ? req.body.role : req.headers["x-role"];
+
+    console.log("the role is ");
+    console.log(roleSend);
     
-    if(!role.includes(req.body.role)){
+    
+    
+    if(!roleController.includes(roleSend)){
       throw new errorManage({
         type:"UNAUTHORIZED",
         message:"The user have a rol not autorized"

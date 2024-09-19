@@ -31,7 +31,4 @@ export class Order {
 
   @Column()
   data:Date;
-
-  @Column("simple-array")
-  notIngredients:string[];
 }
