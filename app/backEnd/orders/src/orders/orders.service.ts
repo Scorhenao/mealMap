@@ -19,25 +19,22 @@ export class OrdersService {
   ) {}
 
   async create(dataOrder: any) {
-    try{
-      console.log(Date.now());
-  
+    try{ 
     let quantityOfDrinks=0;
     let quantityOfDished=0;
     let dishes=[];
     let drinks=[];
     
-    for(let x of dataOrder.ORDER.DISHES){
+    for(let x of dataOrder.DISHES){
+      if(x.notIngredient){
+        dishes.push(x.NAMEDISH);
+      }
       quantityOfDished++;
-      dishes.push(x.NAMEDISH);
     }
     for(let p of dataOrder.ORDER.DRINKS){
       quantityOfDrinks++;
       drinks.push(p.NAMEDRINK);
     }
-
-
-    
     const dataCreate =this.orderRepository.create({
       quantityOfDrinks:quantityOfDrinks,
       quantityOfPlates:quantityOfDished,
@@ -58,10 +55,10 @@ export class OrdersService {
     }
   }
 
-  async assignTable(combinedData: any) {
-    const { quantityOfPersons, tables } = combinedData;
-    return tables.find(table => table.disponibility && table.quantityOfChairs >= quantityOfPersons);
-  }
+  // async assignTable(combinedData: any) {
+  //   const { quantityOfPersons, tables } = combinedData;
+  //   return tables.find(table => table.disponibility && table.quantityOfChairs >= quantityOfPersons);
+  // }
 
 
   async returnOrdersDay(){

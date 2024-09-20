@@ -16,20 +16,18 @@ export class allManageErrors implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     const customHttp:number=exception.message.split(" :: ")[0];
-    console.log(customHttp);
-    
-    
-    
-    
+    console.log(exception.message);
     
     const status=  HttpStatus[exception.message.split(" :: ")[0]] || exception.status ? exception.status || customHttp : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    let message =exception.response || exception.message.split(" :: ") ? exception.response || exception.message.split(" :: ")[1] || exception.message :
+    let message =exception.response || exception.message.split(" :: ")[1] ? exception.message || exception.response || exception.message.split(" :: ")[1] :
     'There was an error processing your request. Please try again later.';
 
-    console.log("the status is");
     
-    if (exception instanceof HttpException) {   
+    if (exception instanceof HttpException) { 
+      console.log("the status is");
+      console.log(status);
+      
       response.status(status).json({
         status: status,
         timeStamp: new Date().toISOString(),
@@ -38,7 +36,9 @@ export class allManageErrors implements ExceptionFilter {
         message: message,
       });
     } 
-    else {                     
+    else {      
+      console.log("entrmaos a la personalizada");
+                     
         response.status(status).json({
           status: status,
           timeStamp: new Date().toISOString(),

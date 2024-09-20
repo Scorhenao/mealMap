@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req, UnauthorizedException, Res, Get, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, UnauthorizedException, Res, Get, UseInterceptors, ValidationPipe } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 // import { CreateOrderDto } from './dto/create-order.dto';
 import { errorManage } from 'src/config/error/error.manage';
@@ -12,6 +12,10 @@ import { apiKeyGuard } from './guard/api-key.guard';
 import { role } from './decorators/decorators.decorator';
 import { Response } from 'express';
 import { ConfirmOrderInterceptor } from './interceptor/interceptor.interceptor';
+import { ApiBody, ApiHeader, ApiResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
+
+
+@ApiTags("Orders")
 @Controller()
 export class OrdersController {
   server:Server
@@ -23,7 +27,7 @@ export class OrdersController {
   @role("admin","client","owner")
   @UseGuards(apiKeyGuard,OrdersGuard)
   @UseInterceptors(ConfirmOrderInterceptor)
-  async create(@Body() data2:any,@Req() request:any, @Res() response:Response) {
+  async create(@Body(new ValidationPipe()) data2:CreateOrderDto,@Req() request:any, @Res() response:Response) {
     try {     
       const createOrder=await this.ordersService.create(data2);
       response.json(createOrder);
@@ -36,11 +40,10 @@ export class OrdersController {
   }
 
 
-
-  @Post('assign-table')
-  assignTable(@Body() combinedData: any) {
-    return this.ordersService.assignTable(combinedData);
-  }
+  // @Post('assign-table')
+  // assignTable(@Body() combinedData: any) {
+  //   return this.ordersService.assignTable(combinedData);
+  // }
 
   // @Post('create-order')
   // createOrder(@Body() orderData: any) {
