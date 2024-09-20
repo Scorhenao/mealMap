@@ -21,48 +21,59 @@ import { errorManage } from './common/config/error.manage';
 import { HttpExceptioManage } from './common/err/exception.fiulter';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { REQUEST } from '@nestjs/core';
 
+@UseFilters(HttpExceptioManage)
 @Controller()
 export class AppController implements handleMicroservices {
   constructor(@Inject() private httpService: HttpService,private configService:ConfigService) {}
 
-  @UseFilters(HttpExceptioManage)
-  @Post('loginUser')
-  async returnOneUser(@Body() dataUser:any) {
-    try {     
-      let data = await this.httpService.axiosRef
-        .post('http://localhost:5000/user/userOne',dataUser,{
-          withCredentials: true,
-          headers: {
-            "X-Api-Key": this.configService.get<string>("API_KEY"),
-          },
-        })
-        return data.data;
-    } catch (err: any) {   
-      
-      console.log(err.response.data);
-      
-      throw errorManage.createSignatureError(err.response.data.message);
+  @Post("user")
+  async returnCreateUser(@Body() dataUser:any){
+    try{     
+      const data=await this.httpService.axiosRef.post("http://localhost:5000/user",dataUser);
+      return data.data;
+    }catch(err:any){        
+      throw new errorManage({
+        type:err.response.data.status,
+        message:err.response.data.message 
+      });
     }
   }
 
   @Get("allUsers")
   @UseGuards(guardJwt)
-  returnAllUsers(): Observable<User[]> {
-    return this.httpService
-      .get('http://localhost:3001/users')
-      .pipe(map((response) => response.data));
+  async returnAllUsers() {
+    const allUser=await this.httpService.axiosRef
+      .get('http://localhost:3001/users');
+    return allUser.data;
   }
 
 
+  @Get("user")
+  @UseGuards(guardJwt)
+  async returnUser(@Req() request:any){
+    try{     
+      const oneUser=await this.httpService.axiosRef.get("http://localhost:5000/user/"+request.decode.idUser);
+      return oneUser.data;
+    }catch(err:any){
+      throw new errorManage({
+        type:err.response.data.status,
+        message:err.response.data.message
+      });
+    }
+  }
+
 
   @Post("Ingredient")
-  async createIngredient(@Body() dataIngredient:any){
+  @UseGuards(guardJwt)
+  async createIngredient(@Body() dataIngredient:any,@Req() request:any){
     try{
       const data = await this.httpService.axiosRef.post("http://localhost:8080/ingredient",dataIngredient,{
         headers:{
           withCredentials: true,
           "X-Api-Key":this.configService.get<string>("API_KEY"),
+          "X-Role":request.decode.role
         }
       });
       return data;
@@ -73,12 +84,14 @@ export class AppController implements handleMicroservices {
 
 
   @Post("Dish")
-  async createDish(@Body() dataDish:any){
+  @UseGuards(guardJwt)
+  async createDish(@Body() dataDish:any,@Req() request:any){
     try{
       const data = await this.httpService.axiosRef.post("http://localhost:8080/dish",dataDish,{
         headers:{
           withCredentials: true,
           "X-Api-Key":this.configService.get<string>("API_KEY"),
+          "X-Role":request.decode.role
         }
       });
       return data;
@@ -90,7 +103,6 @@ export class AppController implements handleMicroservices {
 
 
   @Post("login")
-  @UseFilters(HttpExceptioManage)
   async returnJwt(@Body() datos:any, @Res() response2:Response){
     try{      
     const request=await this.httpService.axiosRef.post("http://localhost:3008/token",datos,{
@@ -121,43 +133,17 @@ export class AppController implements handleMicroservices {
 
 
 
-//     @Get("verifyRole")
-//     @UseFilters(HttpExceptioManage)
-//     async verifyJwt(@Res() response2:Response,@Req() request2:Request){
-//       try{
-//    console.log("entramos a verificar el role");
-   
-//       console.log(request2.headers);
-      
-//       const request=await this.httpService.axiosRef.get("http://localhost:3008/verifyToken",{
-//        withCredentials:true,
-//         headers:{
-//           "Authorization":"Bearer "+request2.headers["x-access-token"],
-//           "X-Refresh-Token":request2.headers["x-refresh-token"],
-//           "X-Api-Key":this.configService.get<string>("API_KEY"),
-//           "X-Service":request2.headers["x-service"]
-//         }
-//       });
-      
-//       response2.json(token);
-
-//       }catch(err:any){
-//         console.log("entramos el error");
-        
-//         throw new errorManage({
-//           type:"BAD_REQUEST",
-//           message:err.response.data
-//         });
-//         throw errorManage.createSignatureError(err.message);
-//       }
-// }
-
-
-  @Get()
-  returnAllIngredients(){
+  @Get("ingredients")
+  @UseGuards(guardJwt)
+  returnAllIngredients(@Req() request:any){
     try{
-      const peticion=this.httpService.get("http://localhost:3001/ingredient")
-      .pipe(map(response=>response.data));
+      const peticion=this.httpService.axiosRef.get("http://localhost:8080/ingredient",{
+        withCredentials:true,
+        headers:{
+          "X-Role":request.decode.role
+        }
+      });
+
       if(!peticion){
         throw new errorManage({
           type:"BAD_REQUEST",
@@ -170,10 +156,29 @@ export class AppController implements handleMicroservices {
     }
   }
 
+
+    @Post('loginUser')
+  async returnOneUser(@Body() dataUser:any) {
+    try {     
+      let data = await this.httpService.axiosRef
+        .post('http://localhost:5000/user/userOne',dataUser,{
+          withCredentials: true,
+          headers: {
+            "X-Api-Key": this.configService.get<string>("API_KEY"),
+          },
+        })
+        return data.data;
+    } catch (err: any) {   
+      
+      console.log(err.response.data);
+      
+      throw errorManage.createSignatureError(err.response.data.message);
+    }
+  }
+
   
 
   @Post("orders")
-  @UseFilters(HttpExceptioManage)
   @UseGuards(guardJwt)
   async createOrder(@Body() dats:any,@Req() request2:any,@Res() response:Response){
     try{ 
@@ -204,14 +209,9 @@ export class AppController implements handleMicroservices {
 
   
   @Get("ordersToday")
-  @UseFilters(HttpExceptioManage)
   @UseGuards(guardJwt)
   async getOrdersToday(@Req() request2:any,@Res() response:Response){
     try{  
-
-      console.log("entramos la peticion");
-      
-      console.log(request2.decode);
 
       const request=await this.httpService.axiosRef.get("http://localhost:3004",{
         withCredentials:true,
@@ -224,43 +224,50 @@ export class AppController implements handleMicroservices {
       response.json(request.data);
     }catch(err:any){   
       throw new errorManage({
-        type:err.response.data.statusCode,
+        type:err.response.data.status,
         message:err.response.data.message
       });
     }
   }
 
 
-  @Get("permission/:service/:role")
- async returnPermission(@Param("service") service:string, @Param("role") role:string){
+  // @Post("notifyOrder")
+  // async giveDishesOrders(){
+  //   try{
+  //     await this.httpService.axiosRef.post("http://localhost:8080/dihesOrders"{
+
+  //     })
+  //   }catch(err:any){
+
+  //   }
+  // }
+
+
+  @Patch()
+  @UseGuards(guardJwt)
+  updateUser(@Body() data: Partial<User>, @Req() request:any) {
+   try{
+    const dataReturn= this.httpService.axiosRef
+    .patch(`http://localhost:5000/user/${request.decode.idUser}`, data)
+   }catch(err:any){
+    throw new errorManage({
+      type:err.response.data.statusCode,
+      message:err.response.data.message
+    });
+   }
+  }
+
+  @Delete("user")
+  @UseGuards(guardJwt)
+  deleteUser(@Req() request:any) {
     try{
-      const permission=await this.httpService.axiosRef.get(`http://localhost:3007/${service}/${role}`);
-      return permission.data;
+      const dataDelete= this.httpService.axiosRef
+      .delete(`http://localhost:5000/user/${request.decode.idUser}`);
     }catch(err:any){
+
     }
   }
 
-
-  @Post()
-  sendNewUser(@Body() dataNewUser: User): Observable<User> {
-    return this.httpService
-      .post('http://localhost:3001/user', dataNewUser)
-      .pipe(map((response) => response.data));
-  }
-
-  @Patch()
-  updateUser(data: Partial<User>): Observable<User> {
-    return this.httpService
-      .patch('http://localhost:3001/user', data)
-      .pipe(map((response) => response.data));
-  }
-
-  @Delete()
-  deleteUser(id: string): Observable<true> {
-    return this.httpService
-      .delete('http://localhost:3001/user')
-      .pipe(map((response) => response.data));
-  }
 
 
 }

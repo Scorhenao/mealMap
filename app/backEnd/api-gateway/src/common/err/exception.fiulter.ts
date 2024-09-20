@@ -14,17 +14,21 @@ export class HttpExceptioManage implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-
-    const customHttp:number=exception.message.split(" :: ")[0];
-    console.log(customHttp);
     
-    const status=  HttpStatus[exception.message.split(" :: ")[0]] || exception.status ? exception.status || customHttp : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    const status= exception.status || HttpStatus[exception.message.split(" :: ")[0]]  ? exception.status || exception.message.split(" :: ")[0] || HttpStatus.BAD_REQUEST: HttpStatus.INTERNAL_SERVER_ERROR;
 
     let message =exception.response || exception.message.split(" :: ") ? exception.response || exception.message.split(" :: ")[1] || exception.message :
     'There was an error processing your request. Please try again later.';
   
+    console.log(status);
+    console.log(message);
+    
+    
     
     if (exception instanceof HttpException) { 
+      console.log("entrmaos a http");
+      
       response.status(status).json({
         status: status,
         timeStamp: new Date().toISOString(),
@@ -33,7 +37,9 @@ export class HttpExceptioManage implements ExceptionFilter {
         message: message,
       });
     } 
-    else {                     
+    else { 
+      console.log("entramos a custom");
+                          
         response.status(status).json({
           status: status,
           timeStamp: new Date().toISOString(),

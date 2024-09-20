@@ -16,7 +16,7 @@ export class WebSocketGatewayService implements OnModuleInit, OnModuleDestroy {
     });
 
     this.client.on('error', (error) => {
-      console.log(error);
+
       
       console.error('Error de conexión: ' + error);
     });
