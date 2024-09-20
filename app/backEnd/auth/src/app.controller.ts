@@ -31,6 +31,8 @@ export class AppController {
       
       return newAccessToken.acces_token;
     }catch(err:any){
+      console.log(err);
+      
       throw err;
     }
   }

@@ -36,11 +36,10 @@ export class AppService {
       idUser:data.id,
       email:data.email,
       name:data.name,
-      role:data.role.name ? data.role : data.role
+      role:data.role.name ? data.role.name : data.role
     }
-
-    
-    const acces_token=this.jwtService.sign(payload,{expiresIn:'10s'});
+  
+    const acces_token=this.jwtService.sign(payload,{expiresIn:'30m'});
     const refres_token=this.jwtService.sign(payload,{expiresIn:'20d'});
 
     return {
