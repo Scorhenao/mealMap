@@ -18,17 +18,13 @@ export class HttpExceptioManage implements ExceptionFilter {
     const customHttp:number=exception.message.split(" :: ")[0];
     console.log(customHttp);
     
-    
-    
-    
-    
     const status=  HttpStatus[exception.message.split(" :: ")[0]] || exception.status ? exception.status || customHttp : HttpStatus.INTERNAL_SERVER_ERROR;
 
     let message =exception.response || exception.message.split(" :: ") ? exception.response || exception.message.split(" :: ")[1] || exception.message :
     'There was an error processing your request. Please try again later.';
-
+  
     
-    if (exception instanceof HttpException) {   
+    if (exception instanceof HttpException) { 
       response.status(status).json({
         status: status,
         timeStamp: new Date().toISOString(),

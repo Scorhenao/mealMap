@@ -176,11 +176,7 @@ export class AppController implements handleMicroservices {
   @UseFilters(HttpExceptioManage)
   @UseGuards(guardJwt)
   async createOrder(@Body() dats:any,@Req() request2:any,@Res() response:Response){
-    try{  
-
-      console.log("entramos la peticion");
-      
-      console.log(request2.decode);
+    try{ 
       
       // const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
 
@@ -195,12 +191,11 @@ export class AppController implements handleMicroservices {
           "X-Api-Key":this.configService.get<string>("API_KEY")
         }
       });
-      console.log("final");
       
       response.json(request.data);
-    }catch(err:any){   
+    }catch(err:any){        
       throw new errorManage({
-        type:err.response.data.statusCode,
+        type:err.response.data.status,
         message:err.response.data.message
       });
     }
