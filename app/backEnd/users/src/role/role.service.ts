@@ -8,23 +8,26 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class RoleService {
   constructor(@InjectRepository(Role) private roleRepository:Repository<Role>){}
-  create(createRoleDto: CreateRoleDto) {
-    return 'This action adds a new role';
+  
+  async create(createRoleDto: CreateRoleDto) {
+    const dataRole=this.roleRepository.create(createRoleDto);
+    await this.roleRepository.save(dataRole);
+    return dataRole;
   }
 
   async findAll() {
     return await this.roleRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
+  async findOne(name:string) {
+   try{
+    return await this.roleRepository.findOne({where:{name:name}});
+   }catch(err:any){
+    throw new err;
+   }
   }
 
-  update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  async remove(id:number){
+    await this.roleRepository.delete(id);
   }
 }

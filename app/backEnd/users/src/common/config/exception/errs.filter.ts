@@ -11,7 +11,7 @@ export class ErrsFilter implements ExceptionFilter {
     
     const status= exception.getStatus || HttpStatus[exception.message.split(" :: ")[0]] ?  customHttp || HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    let message =exception.response || exception.message.split(" :: ") ? exception.response  ||exception.message.split(" :: ")[1] || exception.message :
+    let message =exception.response || exception.message.split(" :: ") ? exception.response.error  || exception.response ||exception.message.split(" :: ")[1] || exception.message :
     'There was an error processing your request. Please try again later.';
 
 
@@ -19,6 +19,11 @@ export class ErrsFilter implements ExceptionFilter {
     
     
     if(exception instanceof HttpException){
+      console.log(exception);
+      console.log(status);
+      console.log(message);
+      
+      
       res.status(status).json({
         status: status,
         timeStamp: new Date().toISOString(),

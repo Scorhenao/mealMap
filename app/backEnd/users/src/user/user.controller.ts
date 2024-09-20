@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UseGuards, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -12,7 +12,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
   
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
@@ -25,13 +25,20 @@ export class UserController {
 
   @Post('userOne')
   @UseFilters(ErrsFilter)
-  @UseGuards(apiKeyGuard)
+ // @UseGuards(apiKeyGuard)
   async findOne(@Body() dataUser:any) {
     try{     
     return await this.userService.findOne(dataUser);
     }catch(err:any){
       throw err;
     }
+  }
+
+  @Get(":id")
+  async findOneUser(@Param("id") id:string){
+    console.log("entro");
+    
+    return await this.userService.findOne2(id);
   }
 
   @Patch(':id')

@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Owner } from './entities/owner.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Owner])],
+  imports:[TypeOrmModule.forFeature([Owner]),],
   controllers: [OwnerController],
   providers: [OwnerService],
   exports:[TypeOrmModule]

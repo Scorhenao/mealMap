@@ -10,9 +10,6 @@ export class Owner {
     business_name:string;
 
     @Column()
-    nit:number;
-
-    @Column()
     idUser:string;
 
     @OneToOne(()=>User)
