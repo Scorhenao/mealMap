@@ -36,11 +36,12 @@ import { allManageErrors } from './config/filters/exception.filter';
     {
       provide: APP_FILTER,
       useClass: allManageErrors,
-    },
+    }
+    /*,
     {
       provide:APP_PIPE,
       useClass:ValidationPipe
-    }
+    }*/
   ],
 })
 export class AppModule {}

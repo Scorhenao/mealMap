@@ -27,10 +27,10 @@ export class OrdersController {
   @role("admin","client","owner")
   @UseGuards(apiKeyGuard,OrdersGuard)
   @UseInterceptors(ConfirmOrderInterceptor)
-  async create(@Body(new ValidationPipe()) data2:CreateOrderDto,@Req() request:any, @Res() response:Response) {
+  async create(@Body() data2:CreateOrderDto,@Req() request:any, @Res() response:Response) {
     try {     
       const createOrder=await this.ordersService.create(data2);
-      response.json(createOrder);
+      response.status(200).json("melo");
     } catch (err: any) {
       throw new errorManage({
         type: 'BAD_REQUEST',

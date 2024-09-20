@@ -23,10 +23,6 @@ export class OrdersGuard implements CanActivate {
     const req:any=context.switchToHttp().getRequest(); 
     
     const roleSend=req.body.role ? req.body.role : req.headers["x-role"];
-
-    console.log("the role is ");
-    console.log(roleSend);
-    
     
     
     if(!roleController.includes(roleSend)){
@@ -35,7 +31,6 @@ export class OrdersGuard implements CanActivate {
         message:"The user have a rol not autorized"
       });
     }
-    console.log("paso relajado");
     
     return true;
    }catch(err:any){

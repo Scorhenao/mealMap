@@ -6,6 +6,7 @@ import { Order } from './entities/order.entity';
 import { Between, Repository } from 'typeorm';
 import {map} from 'rxjs/operators';
 import { errorManage } from 'src/config/error/error.manage';
+import { response } from 'express';
 
 
 @Injectable()
@@ -20,36 +21,41 @@ export class OrdersService {
 
   async create(dataOrder: any) {
     try{ 
-    let quantityOfDrinks=0;
-    let quantityOfDished=0;
-    let dishes=[];
-    let drinks=[];
+      console.log("ENTRAMOS AL SERVICIO");
+      
+    //   console.log(dataOrder);
+      
+    // let quantityOfDrinks=0;
+    // let quantityOfDished=0;
+    // let dishes=[];
+    // let drinks=[];
     
-    for(let x of dataOrder.DISHES){
-      if(x.notIngredient){
-        dishes.push(x.NAMEDISH);
-      }
-      quantityOfDished++;
-    }
-    for(let p of dataOrder.ORDER.DRINKS){
-      quantityOfDrinks++;
-      drinks.push(p.NAMEDRINK);
-    }
-    const dataCreate =this.orderRepository.create({
-      quantityOfDrinks:quantityOfDrinks,
-      quantityOfPlates:quantityOfDished,
-      quantityOfPeoples:dataOrder.ORDER.QUANTITYPEOPLE,
-      dishes:dishes,
-      drinks:drinks,
-      Table:dataOrder.ORDER.TABLE,
-      name:dataOrder.name,
-      idUser:dataOrder.idUser,
-      data:this.dateToday,
-    });  
+    // for(let x of dataOrder.DISHES){
+    //   if(x.notIngredient){
+    //     dishes.push(x.NAMEDISH);
+    //   }
+    //   quantityOfDished++;
+    // }
+    // for(let p of dataOrder.ORDER.DRINKS){
+    //   quantityOfDrinks++;
+    //   drinks.push(p.NAMEDRINK);
+    // }
+    // const dataCreate =this.orderRepository.create({
+    //   quantityOfDrinks:quantityOfDrinks,
+    //   quantityOfPlates:quantityOfDished,
+    //   quantityOfPeoples:dataOrder.ORDER.QUANTITYPEOPLE,
+    //   dishes:dishes,
+    //   drinks:drinks,
+    //   Table:dataOrder.ORDER.TABLE,
+    //   name:dataOrder.name,
+    //   idUser:dataOrder.idUser,
+    //   data:this.dateToday,
+    // });  
     
-    const results=this.orderRepository.create(dataCreate);
-    await this.orderRepository.save(results);
-    return results;
+    // const results=this.orderRepository.create(dataCreate);
+    // await this.orderRepository.save(results);
+    return "melo";
+    //return results;
     }catch(err:any){
       throw new err;
     }

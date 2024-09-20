@@ -14,6 +14,7 @@ export class apiKeyGuard implements CanActivate {
     if(!req.headers["x-api-key"] || req.headers["x-api-key"] !== this.configService.get<string>("API_KEY") ) {     
         throw new UnauthorizedException();
     } 
+    
     return true;
   }
 }
