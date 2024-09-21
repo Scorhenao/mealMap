@@ -14,6 +14,6 @@ async function bootstrap() {
   await seedRol.run(dataSource);
   await seedUse.run(dataSource);
   app.useGlobalFilters(new ErrsFilter());
-  await app.listen(5000);
+  await app.listen(3003);
 }
 bootstrap();
