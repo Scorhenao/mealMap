@@ -7,6 +7,6 @@ async function bootstrap() {
     origin: '*', // Permite solicitudes desde cualquier origen
     credentials: true, // Permite el envío de cookies
   });
-  await app.listen(3008);
+  await app.listen(3002);
 }
 bootstrap();
