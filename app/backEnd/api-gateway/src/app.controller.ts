@@ -31,7 +31,7 @@ export class AppController implements handleMicroservices {
   @Post("user")
   async returnCreateUser(@Body() dataUser:any){
     try{     
-      const data=await this.httpService.axiosRef.post("http://localhost:5000/user",dataUser);
+      const data=await this.httpService.axiosRef.post("http://localhost:3003/user",dataUser);
       return data.data;
     }catch(err:any){        
       throw new errorManage({
@@ -54,7 +54,7 @@ export class AppController implements handleMicroservices {
   @UseGuards(guardJwt)
   async returnUser(@Req() request:any){
     try{     
-      const oneUser=await this.httpService.axiosRef.get("http://localhost:5000/user/"+request.decode.idUser);
+      const oneUser=await this.httpService.axiosRef.get("http://localhost:3003/user/"+request.decode.idUser);
       return oneUser.data;
     }catch(err:any){
       throw new errorManage({
@@ -162,7 +162,7 @@ export class AppController implements handleMicroservices {
   async returnOneUser(@Body() dataUser:any) {
     try {     
       let data = await this.httpService.axiosRef
-        .post('http://localhost:5000/user/userOne',dataUser,{
+        .post('http://localhost:3003/user/userOne',dataUser,{
           withCredentials: true,
           headers: {
             "X-Api-Key": this.configService.get<string>("API_KEY"),
@@ -249,7 +249,7 @@ export class AppController implements handleMicroservices {
   updateUser(@Body() data: Partial<User>, @Req() request:any) {
    try{
     const dataReturn= this.httpService.axiosRef
-    .patch(`http://localhost:5000/user/${request.decode.idUser}`, data)
+    .patch(`http://localhost:3003/user/${request.decode.idUser}`, data)
    }catch(err:any){
     throw new errorManage({
       type:err.response.data.statusCode,
@@ -263,7 +263,7 @@ export class AppController implements handleMicroservices {
   deleteUser(@Req() request:any) {
     try{
       const dataDelete= this.httpService.axiosRef
-      .delete(`http://localhost:5000/user/${request.decode.idUser}`);
+      .delete(`http://localhost:3003/user/${request.decode.idUser}`);
     }catch(err:any){
 
     }
