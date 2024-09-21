@@ -51,8 +51,8 @@ export class OrdersController {
   // }
 
   @Get()
-  @role("admin","owner")
-  @UseGuards(apiKeyGuard,OrdersGuard)
+  // @role("admin","owner")
+   @UseGuards(apiKeyGuard,OrdersGuard)
   async returnOrders(){
     try{
       const orders=await this.ordersService.returnOrdersDay();
