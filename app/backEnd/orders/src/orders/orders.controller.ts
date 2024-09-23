@@ -12,7 +12,8 @@ import { apiKeyGuard } from './guard/api-key.guard';
 import { role } from './decorators/decorators.decorator';
 import { Response } from 'express';
 import { ConfirmOrderInterceptor } from './interceptor/interceptor.interceptor';
-import { ApiBody, ApiHeader, ApiResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiHeader, ApiOkResponse, ApiResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
+import { responseOrders } from './dto/responseOrders';
 
 
 @ApiTags("Orders")
@@ -26,6 +27,7 @@ export class OrdersController {
   @Post("orders")
   @role("admin","client","owner")
   @UseGuards(apiKeyGuard,OrdersGuard)
+  @ApiBody({type:CreateOrderDto})
   @UseInterceptors(ConfirmOrderInterceptor)
   async create(@Body() data2:CreateOrderDto,@Req() request:any, @Res() response:Response) {
     try {     
@@ -52,7 +54,8 @@ export class OrdersController {
 
   @Get()
   @role("admin","owner")
-  @UseGuards(apiKeyGuard,OrdersGuard)
+  @ApiOkResponse({type:[responseOrders]})
+   @UseGuards(apiKeyGuard,OrdersGuard)
   async returnOrders(){
     try{
       const orders=await this.ordersService.returnOrdersDay();
