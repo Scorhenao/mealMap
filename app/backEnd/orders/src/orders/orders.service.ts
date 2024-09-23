@@ -50,6 +50,7 @@ export class OrdersService {
     //   name:dataOrder.name,
     //   idUser:dataOrder.idUser,
     //   data:this.dateToday,
+    //   totalPrice:dataOrder.total
     // });  
     
     // const results=this.orderRepository.create(dataCreate);

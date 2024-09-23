@@ -1,11 +1,15 @@
 import { Body, Controller, Get, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AppService } from './app.service';
-import { createTokenDto } from './common/dto/createToken';
 import { localGuard } from './guards/local.guard';
 import { jwtGuard } from './guards/jwt.guard';
 import { apiKeyGuard } from './guards/apiKey.guard';
 import { roleGuard } from './guards/role.guard';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { createTokenDto } from './common/dto/dtoRequest/createToken';
+import { tokenResponse } from './common/dto/dtoResponse/responseToken';
 
+
+@ApiTags("auth")
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -13,12 +17,18 @@ export class AppController {
 
   //new ValidationPipe()) Data:createTokenDto
   @Post("token")
+  @ApiBody({type:createTokenDto})
+  @ApiOkResponse({
+    description:"creation token",
+    type:tokenResponse
+  })
   @UseGuards(localGuard,apiKeyGuard)
   getHello(@Body() data: any,@Req() request: any){    
     return this.appService.returnToken(request.user);
   }
 
   @Get("renovateToken")
+  @ApiBearerAuth()
   @UseGuards(apiKeyGuard,jwtGuard)
   returnVerifyRole(@Req() req:any){
     try{       

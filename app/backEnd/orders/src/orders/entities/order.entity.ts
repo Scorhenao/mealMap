@@ -31,4 +31,7 @@ export class Order {
 
   @Column()
   data:Date;
+
+  @Column()
+  totalPrice:number;
 }
