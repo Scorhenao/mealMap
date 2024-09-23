@@ -3,43 +3,42 @@ import { IsArray, IsDate, IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from '
 import { idText } from 'typescript';
 
 export class CreateOrderDto {
-  @ApiProperty()
+  @ApiProperty({example:2})
   @IsNotEmpty()
   @IsInt()
   quantityOfPlates:number;
 
-  @ApiProperty()
+  @ApiProperty(
+    {example:3}
+  )
   @IsNotEmpty()
   @IsInt()
   quantityOfDrinks:number;
 
-  @ApiProperty()
+  @ApiProperty({example:1})
   @IsNotEmpty()
   @IsInt()
   quantityOfPeoples:number;
 
-  @ApiProperty()
+  @ApiProperty({example:[{dishes:{name:"bandeja paisa",ingredients:[{name:"arroz"},{name:"chicharron"}]}}]})
   @IsNotEmpty()
   @IsArray()
   dishes:string[];
 
 
-  @ApiProperty()
+  @ApiProperty({example:[{drinks:["cocacola,milo"]}]})
   @IsNotEmpty()
   @IsArray()
   drinks:string[];
 
-  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   Table:string;
 
 
-  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   name:string;
-
 
   @IsNotEmpty()
   @IsString()
