@@ -78,7 +78,6 @@ export class UserService {
           message:"The id user incorrect"
         });
       }
-      const deleteHash=await bcrypt.
       return user;
     }
     catch(err:any){
