@@ -22,14 +22,28 @@ import { HttpExceptioManage } from './common/err/exception.fiulter';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { REQUEST } from '@nestjs/core';
+import { ApiBody, ApiCookieAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { createUserDto } from './common/dto/dtoRequest/createUser.dto';
+import { createIngredientDto } from './common/dto/dtoRequest/createIngredient';
+import { createDishDto } from './common/dto/dtoRequest/createDish';
+import { loginDto } from './common/dto/dtoRequest/createToken';
+import { createOrderDto } from './common/dto/dtoRequest/createOrder';
+import { createUserResponse } from './common/dto/dtoResponse/createUser';
+import { ingredientResponse } from './common/dto/dtoResponse/createIngredient';
 
 @UseFilters(HttpExceptioManage)
+@ApiTags("Routes for the services")
 @Controller()
 export class AppController implements handleMicroservices {
   constructor(@Inject() private httpService: HttpService,private configService:ConfigService) {}
 
   @Post("user")
-  async returnCreateUser(@Body() dataUser:any){
+  @ApiBody({type:createUserDto})
+  @ApiOkResponse({
+    description:"user create correctly",
+    type:createUserResponse
+  })
+  async returnCreateUser(@Body() dataUser:createUserDto){
     try{     
       const data=await this.httpService.axiosRef.post("http://localhost:3003/user",dataUser);
       return data.data;
@@ -42,6 +56,12 @@ export class AppController implements handleMicroservices {
   }
 
   @Get("allUsers")
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
+  @ApiOkResponse({
+    description:"return all users",
+    type:[createUserResponse]
+  })
   @UseGuards(guardJwt)
   async returnAllUsers() {
     const allUser=await this.httpService.axiosRef
@@ -51,6 +71,12 @@ export class AppController implements handleMicroservices {
 
 
   @Get("user")
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
+  @ApiOkResponse({
+    description:"return one user correctly",
+    type:createUserResponse
+  })
   @UseGuards(guardJwt)
   async returnUser(@Req() request:any){
     try{     
@@ -66,6 +92,13 @@ export class AppController implements handleMicroservices {
 
 
   @Post("Ingredient")
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
+  @ApiBody({type:createIngredientDto})
+  @ApiOkResponse({
+    description:"create ingredient correctly",
+    type:ingredientResponse,
+  })
   @UseGuards(guardJwt)
   async createIngredient(@Body() dataIngredient:any,@Req() request:any){
     try{
@@ -84,6 +117,9 @@ export class AppController implements handleMicroservices {
 
 
   @Post("Dish")
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
+  @ApiBody({type:createDishDto})
   @UseGuards(guardJwt)
   async createDish(@Body() dataDish:any,@Req() request:any){
     try{
@@ -103,6 +139,7 @@ export class AppController implements handleMicroservices {
 
 
   @Post("login")
+  @ApiBody({type:loginDto})
   async returnJwt(@Body() datos:any, @Res() response2:Response){
     try{      
       console.log("enter");
@@ -135,6 +172,8 @@ export class AppController implements handleMicroservices {
 
 
   @Get("ingredients")
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
   @UseGuards(guardJwt)
   returnAllIngredients(@Req() request:any){
     try{
@@ -180,6 +219,9 @@ export class AppController implements handleMicroservices {
   
 
   @Post("orders")
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
+  @ApiBody({type:createOrderDto})
   @UseGuards(guardJwt)
   async createOrder(@Body() dats:any,@Req() request2:any,@Res() response:Response){
     try{ 
@@ -210,6 +252,12 @@ export class AppController implements handleMicroservices {
 
   
   @Get("ordersToday")
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
+  @ApiOkResponse({
+    description:"return order last 24hours",
+    type:[createOrderDto]
+  })
   @UseGuards(guardJwt)
   async getOrdersToday(@Req() request2:any,@Res() response:Response){
     try{  
@@ -245,6 +293,8 @@ export class AppController implements handleMicroservices {
 
 
   @Patch()
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
   @UseGuards(guardJwt)
   updateUser(@Body() data: Partial<User>, @Req() request:any) {
    try{
@@ -259,6 +309,8 @@ export class AppController implements handleMicroservices {
   }
 
   @Delete("user")
+  @ApiCookieAuth("access-token-cookie")
+  @ApiCookieAuth("refresh-token-cookie")
   @UseGuards(guardJwt)
   deleteUser(@Req() request:any) {
     try{
