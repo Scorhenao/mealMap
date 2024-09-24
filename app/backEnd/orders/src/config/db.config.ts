@@ -7,9 +7,7 @@ import { Order } from 'src/orders/entities/order.entity';
 export class credentialsOptions implements TypeOrmOptionsFactory {
   constructor(private configService: ConfigService) {}
 
-  createTypeOrmOptions(
-    connectionName?: string,
-  ): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
+  createTypeOrmOptions(): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
     return {
       type: 'mysql',
       host: this.configService.get<string>('DB_HOST'),
