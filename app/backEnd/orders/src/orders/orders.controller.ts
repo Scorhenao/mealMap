@@ -13,8 +13,8 @@ import { role } from './decorators/decorators.decorator';
 import { Response } from 'express';
 import { ConfirmOrderInterceptor } from './interceptor/interceptor.interceptor';
 import { ApiBody, ApiHeader, ApiOkResponse, ApiResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
-import { responseOrders } from './dto/responseOrders';
 
+import { responseOrders } from './dto/responseOrder';
 
 @ApiTags("Orders")
 @Controller()
