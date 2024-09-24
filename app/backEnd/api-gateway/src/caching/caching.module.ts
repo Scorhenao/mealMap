@@ -4,11 +4,11 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports:[
+  imports: [
     CacheModule.register({
-      store:"memory",
-      max:120,
-      ttl:70
+      store: 'memory',
+      max: 120,
+      ttl: 70,
     }),
     HttpModule.register({
       timeout: 5000,
@@ -16,6 +16,6 @@ import { HttpModule } from '@nestjs/axios';
     }),
   ],
   providers: [CachingService],
-  exports:[CachingService]
+  exports: [CachingService],
 })
 export class CachingModule {}

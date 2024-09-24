@@ -6,16 +6,24 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const configureService=app.get(ConfigService);
-  app.use(cookieParser(configureService.get<string>("SIGNED_COOKIE")));
+  const configureService = app.get(ConfigService);
+  app.use(cookieParser(configureService.get<string>('SIGNED_COOKIE')));
 
   const config = new DocumentBuilder()
-  .setTitle('Api Gateway')
-  .setDescription('')
-  .setVersion('1.0')
-  .addCookieAuth("access-token-cookie",{type:"apiKey",in:"cookie",name:"token"})
-  .addCookieAuth("refresh-token-cookie",{type:"apiKey",in:"cookie",name:"tokenRefresh"})
-  .build();
+    .setTitle('Api Gateway')
+    .setDescription('')
+    .setVersion('1.0')
+    .addCookieAuth('access-token-cookie', {
+      type: 'apiKey',
+      in: 'cookie',
+      name: 'token',
+    })
+    .addCookieAuth('refresh-token-cookie', {
+      type: 'apiKey',
+      in: 'cookie',
+      name: 'tokenRefresh',
+    })
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

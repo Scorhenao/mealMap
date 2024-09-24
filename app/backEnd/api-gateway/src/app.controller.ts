@@ -22,7 +22,12 @@ import { HttpExceptioManage } from './common/err/exception.fiulter';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { REQUEST } from '@nestjs/core';
-import { ApiBody, ApiCookieAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCookieAuth,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { createUserDto } from './common/dto/dtoRequest/createUser.dto';
 import { createIngredientDto } from './common/dto/dtoRequest/createIngredient';
 import { createDishDto } from './common/dto/dtoRequest/createDish';
@@ -32,253 +37,273 @@ import { createUserResponse } from './common/dto/dtoResponse/createUser';
 import { ingredientResponse } from './common/dto/dtoResponse/createIngredient';
 
 @UseFilters(HttpExceptioManage)
-@ApiTags("Routes for the services")
+@ApiTags('Routes for the services')
 @Controller()
 export class AppController implements handleMicroservices {
-  constructor(@Inject() private httpService: HttpService,private configService:ConfigService) {}
+  constructor(
+    @Inject() private httpService: HttpService,
+    private configService: ConfigService,
+  ) {}
 
-  @Post("user")
-  @ApiBody({type:createUserDto})
+  @Post('user')
+  @ApiBody({ type: createUserDto })
   @ApiOkResponse({
-    description:"user create correctly",
-    type:createUserResponse
+    description: 'user create correctly',
+    type: createUserResponse,
   })
-  async returnCreateUser(@Body() dataUser:createUserDto){
-    try{     
-      const data=await this.httpService.axiosRef.post("http://localhost:3003/user",dataUser);
+  async returnCreateUser(@Body() dataUser: createUserDto) {
+    try {
+      const data = await this.httpService.axiosRef.post(
+        'http://localhost:3003/user',
+        dataUser,
+      );
       return data.data;
-    }catch(err:any){        
+    } catch (err: any) {
       throw new errorManage({
-        type:err.response.data.status,
-        message:err.response.data.message 
+        type: err.response.data.status,
+        message: err.response.data.message,
       });
     }
   }
 
-  @Get("allUsers")
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
+  @Get('allUsers')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
   @ApiOkResponse({
-    description:"return all users",
-    type:[createUserResponse]
+    description: 'return all users',
+    type: [createUserResponse],
   })
   @UseGuards(guardJwt)
   async returnAllUsers() {
-    const allUser=await this.httpService.axiosRef
-      .get('http://localhost:3001/users');
+    const allUser = await this.httpService.axiosRef.get(
+      'http://localhost:3001/users',
+    );
     return allUser.data;
   }
 
-
-  @Get("user")
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
+  @Get('user')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
   @ApiOkResponse({
-    description:"return one user correctly",
-    type:createUserResponse
+    description: 'return one user correctly',
+    type: createUserResponse,
   })
   @UseGuards(guardJwt)
-  async returnUser(@Req() request:any){
-    try{     
-      const oneUser=await this.httpService.axiosRef.get("http://localhost:3003/user/"+request.decode.idUser);
+  async returnUser(@Req() request: any) {
+    try {
+      const oneUser = await this.httpService.axiosRef.get(
+        'http://localhost:3003/user/' + request.decode.idUser,
+      );
       return oneUser.data;
-    }catch(err:any){
+    } catch (err: any) {
       throw new errorManage({
-        type:err.response.data.status,
-        message:err.response.data.message
+        type: err.response.data.status,
+        message: err.response.data.message,
       });
     }
   }
 
-
-  @Post("Ingredient")
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
-  @ApiBody({type:createIngredientDto})
+  @Post('Ingredient')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
+  @ApiBody({ type: createIngredientDto })
   @ApiOkResponse({
-    description:"create ingredient correctly",
-    type:ingredientResponse,
+    description: 'create ingredient correctly',
+    type: ingredientResponse,
   })
   @UseGuards(guardJwt)
-  async createIngredient(@Body() dataIngredient:any,@Req() request:any){
-    try{
-      const data = await this.httpService.axiosRef.post("http://localhost:8080/ingredient",dataIngredient,{
-        headers:{
-          withCredentials: true,
-          "X-Api-Key":this.configService.get<string>("API_KEY"),
-          "X-Role":request.decode.role
-        }
-      });
+  async createIngredient(@Body() dataIngredient: any, @Req() request: any) {
+    try {
+      const data = await this.httpService.axiosRef.post(
+        'http://localhost:8080/ingredient',
+        dataIngredient,
+        {
+          headers: {
+            withCredentials: true,
+            'X-Api-Key': this.configService.get<string>('API_KEY'),
+            'X-Role': request.decode.role,
+          },
+        },
+      );
       return data;
-    }catch(err:any){
-      throw new err;
+    } catch (err: any) {
+      throw new err();
     }
   }
 
-
-  @Post("Dish")
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
-  @ApiBody({type:createDishDto})
+  @Post('Dish')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
+  @ApiBody({ type: createDishDto })
   @UseGuards(guardJwt)
-  async createDish(@Body() dataDish:any,@Req() request:any){
-    try{
-      const data = await this.httpService.axiosRef.post("http://localhost:8080/dish",dataDish,{
-        headers:{
-          withCredentials: true,
-          "X-Api-Key":this.configService.get<string>("API_KEY"),
-          "X-Role":request.decode.role
-        }
-      });
+  async createDish(@Body() dataDish: any, @Req() request: any) {
+    try {
+      const data = await this.httpService.axiosRef.post(
+        'http://localhost:8080/dish',
+        dataDish,
+        {
+          headers: {
+            withCredentials: true,
+            'X-Api-Key': this.configService.get<string>('API_KEY'),
+            'X-Role': request.decode.role,
+          },
+        },
+      );
       return data;
-    }catch(err:any){
-      throw new err;
+    } catch (err: any) {
+      throw new err();
     }
   }
 
+  @Post('login')
+  @ApiBody({ type: loginDto })
+  async returnJwt(@Body() datos: any, @Res() response2: Response) {
+    try {
+      console.log('enter');
 
+      const request = await this.httpService.axiosRef.post(
+        'http://localhost:3002/token',
+        datos,
+        {
+          withCredentials: true,
+          headers: {
+            'X-Api-Key': this.configService.get<string>('API_KEY'),
+          },
+        },
+      );
+      response2.cookie('token2', request.data.acces_token, {
+        httpOnly: true,
+        signed: true,
+      });
 
-  @Post("login")
-  @ApiBody({type:loginDto})
-  async returnJwt(@Body() datos:any, @Res() response2:Response){
-    try{      
-      console.log("enter");
-      
-    const request=await this.httpService.axiosRef.post("http://localhost:3002/token",datos,{
-      withCredentials:true,
-      headers:{
-        "X-Api-Key":this.configService.get<string>("API_KEY")
-      }
-    });
-    response2.cookie("token2",request.data.acces_token,{
-      httpOnly:true,
-      signed:true
-    })
-    
-    response2.cookie("tokenRefresh",request.data.refres_token,{
-      httpOnly:true,
-      signed:true
-    });
-    
-    response2.status(200).json(true);
+      response2.cookie('tokenRefresh', request.data.refres_token, {
+        httpOnly: true,
+        signed: true,
+      });
 
-
-    }catch(err:any){
-
+      response2.status(200).json(true);
+    } catch (err: any) {
       throw errorManage.createSignatureError(err.response.data.message);
     }
-}
+  }
 
+  @Get('ingredients')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
+  //@UseGuards(guardJwt)
+  async returnAllIngredients(@Req() request: any) {
+    try {
+      console.log('ohla');
 
+      const peticion = await this.httpService.axiosRef.get(
+        'http://localhost:8080/ingredients/readAll',
+        {
+          withCredentials: true,
+          headers: {
+            'X-Role': request.decode.role,
+          },
+        },
+      );
 
-  @Get("ingredients")
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
-  @UseGuards(guardJwt)
-  returnAllIngredients(@Req() request:any){
-    try{
-      const peticion=this.httpService.axiosRef.get("http://localhost:8080/ingredient",{
-        withCredentials:true,
-        headers:{
-          "X-Role":request.decode.role
-        }
-      });
-
-      if(!peticion){
+      if (!peticion) {
         throw new errorManage({
-          type:"BAD_REQUEST",
-          message:"There is not ingredients"
+          type: 'BAD_REQUEST',
+          message: 'There is not ingredients',
         });
       }
-      return peticion;
-    }catch(err:any){
+      return peticion.data;
+    } catch (err: any) {
       throw errorManage.createSignatureError(err.message);
     }
   }
 
-
-    @Post('loginUser')
-  async returnOneUser(@Body() dataUser:any) {
-    try {     
-      let data = await this.httpService.axiosRef
-        .post('http://localhost:3003/user/userOne',dataUser,{
+  @Post('loginUser')
+  async returnOneUser(@Body() dataUser: any) {
+    try {
+      let data = await this.httpService.axiosRef.post(
+        'http://localhost:3003/user/userOne',
+        dataUser,
+        {
           withCredentials: true,
           headers: {
-            "X-Api-Key": this.configService.get<string>("API_KEY"),
+            'X-Api-Key': this.configService.get<string>('API_KEY'),
           },
-        })
-        return data.data;
-    } catch (err: any) {   
-      
+        },
+      );
+      return data.data;
+    } catch (err: any) {
       console.log(err.response.data);
-      
+
       throw errorManage.createSignatureError(err.response.data.message);
     }
   }
 
-  
-
-  @Post("orders")
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
-  @ApiBody({type:createOrderDto})
+  @Post('orders')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
+  @ApiBody({ type: createOrderDto })
   @UseGuards(guardJwt)
-  async createOrder(@Body() dats:any,@Req() request2:any,@Res() response:Response){
-    try{ 
-      
+  async createOrder(
+    @Body() dats: any,
+    @Req() request2: any,
+    @Res() response: Response,
+  ) {
+    try {
       // const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
 
+      const request = await this.httpService.axiosRef.post(
+        'http://localhost:3001/orders',
+        {
+          ...request2.decode,
+          ...dats,
+          //...returnTable.data
+        },
+        {
+          withCredentials: true,
+          headers: {
+            'X-Api-Key': this.configService.get<string>('API_KEY'),
+          },
+        },
+      );
 
-      const request=await this.httpService.axiosRef.post("http://localhost:3001/orders",{
-        ...request2.decode,
-        ...dats,
-        //...returnTable.data
-      },{
-        withCredentials:true,
-        headers:{
-          "X-Api-Key":this.configService.get<string>("API_KEY")
-        }
-      });
-      
       response.json(request.data);
-    }catch(err:any){        
+    } catch (err: any) {
       throw new errorManage({
-        type:err.response.data.status,
-        message:err.response.data.message
+        type: err.response.data.status,
+        message: err.response.data.message,
       });
     }
   }
 
-
-  
-  @Get("ordersToday")
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
+  @Get('ordersToday')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
   @ApiOkResponse({
-    description:"return order last 24hours",
-    type:[createOrderDto]
+    description: 'return order last 24hours',
+    type: [createOrderDto],
   })
   @UseGuards(guardJwt)
-  async getOrdersToday(@Req() request2:any,@Res() response:Response){
-    try{  
+  async getOrdersToday(@Req() request2: any, @Res() response: Response) {
+    try {
+      const request = await this.httpService.axiosRef.get(
+        'http://localhost:3001',
+        {
+          withCredentials: true,
+          headers: {
+            'X-Api-Key': this.configService.get<string>('API_KEY'),
+            'X-role': request2.decode.role,
+          },
+        },
+      );
 
-      const request=await this.httpService.axiosRef.get("http://localhost:3001",{
-        withCredentials:true,
-        headers:{
-          "X-Api-Key":this.configService.get<string>("API_KEY"),
-          "X-role":request2.decode.role
-        }
-      });
-     
       response.json(request.data);
-    }catch(err:any){   
+    } catch (err: any) {
       throw new errorManage({
-        type:err.response.data.status,
-        message:err.response.data.message
+        type: err.response.data.status,
+        message: err.response.data.message,
       });
     }
   }
-
 
   // @Post("notifyOrder")
   // async giveDishesOrders(){
@@ -291,36 +316,46 @@ export class AppController implements handleMicroservices {
   //   }
   // }
 
-
   @Patch()
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
   @UseGuards(guardJwt)
-  updateUser(@Body() data: Partial<User>, @Req() request:any) {
-   try{
-    const dataReturn= this.httpService.axiosRef
-    .patch(`http://localhost:3003/user/${request.decode.idUser}`, data)
-   }catch(err:any){
-    throw new errorManage({
-      type:err.response.data.statusCode,
-      message:err.response.data.message
-    });
-   }
-  }
-
-  @Delete("user")
-  @ApiCookieAuth("access-token-cookie")
-  @ApiCookieAuth("refresh-token-cookie")
-  @UseGuards(guardJwt)
-  deleteUser(@Req() request:any) {
-    try{
-      const dataDelete= this.httpService.axiosRef
-      .delete(`http://localhost:3003/user/${request.decode.idUser}`);
-    }catch(err:any){
-
+  updateUser(@Body() data: Partial<User>, @Req() request: any) {
+    try {
+      const dataReturn = this.httpService.axiosRef.patch(
+        `http://localhost:3003/user/${request.decode.idUser}`,
+        data,
+      );
+    } catch (err: any) {
+      throw new errorManage({
+        type: err.response.data.statusCode,
+        message: err.response.data.message,
+      });
     }
   }
 
+  @Delete('user')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
+  @UseGuards(guardJwt)
+  deleteUser(@Req() request: any) {
+    try {
+      const dataDelete = this.httpService.axiosRef.delete(
+        `http://localhost:3003/user/${request.decode.idUser}`,
+      );
+    } catch (err: any) {}
+  }
 
-
+  @Delete('ingredient/:id')
+  @ApiCookieAuth('access-token-cookie')
+  @ApiCookieAuth('refresh-token-cookie')
+  //@UseGuards(guardJwt)
+  async deleteIngredient(@Req() request: any, @Param('id') id: string) {
+    try {
+      const dataDelete = await this.httpService.axiosRef.delete(
+        `http://localhost:8080/ingredients/delete/${+id}`,
+      );
+      return dataDelete.data;
+    } catch (err: any) {}
+  }
 }

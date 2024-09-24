@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
 
-
 export interface handleMicroservices {
-  returnOneUser(dataUser:any): any;
+  returnOneUser(dataUser: any): any;
 
   // returnAllUsers():Observable<User[]>;
 
@@ -25,4 +24,3 @@ export interface handleMicroservices {
 // export interface handleMicroservices{
 //     returnOneUser(dtoCreateUser:dtoCreateUser):Observable<User>;
 // }
-

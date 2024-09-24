@@ -21,14 +21,14 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
     CachingModule,
     WebSocketGatewayModule,
     JwtModule.registerAsync({
-      imports:[ConfigModule],
-      inject:[ConfigService],
-      useFactory:async(configureService:ConfigService)=>({
-        secret:configureService.get("SECRET_JWT")
-      })
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configureService: ConfigService) => ({
+        secret: configureService.get('SECRET_JWT'),
+      }),
     }),
   ],
-  providers:[guardJwt],
+  providers: [guardJwt],
   controllers: [AppController],
 })
 export class AppModule {}
