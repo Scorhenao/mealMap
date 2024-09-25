@@ -6,17 +6,6 @@ import { Dish } from './dishes.dto';
 import { Drink } from './drinks.dto';
 
 export class CreateOrderDto {
-  // @ApiProperty({example:2})
-  // @IsNotEmpty()
-  // @IsInt()
-  // quantityOfPlates:number;
-
-  // @ApiProperty(
-  //   {example:3}
-  // )
-  // @IsNotEmpty()
-  // @IsInt()
-  // quantityOfDrinks:number;
 
   @ApiProperty({ example: 1 })
   @IsNotEmpty()
@@ -48,6 +37,7 @@ export class CreateOrderDto {
     "jugo mango"
   ],
   })
+  @IsOptional()
   @IsNotEmpty()
   @ValidateNested({each:true})
   @Type(()=>Drink)
@@ -66,6 +56,11 @@ export class CreateOrderDto {
   @IsString()
   @IsOptional()
   idUser:string;
+
+  @ApiProperty({example:40000})
+  @IsNotEmpty()
+  @IsNumber()
+  totalPrice:number;
 
   @IsNotEmpty()
   @Type(()=>Date)

@@ -34,7 +34,7 @@ export class guardJwt implements CanActivate {
 
       req.decode = tokenDecode;
       return true;
-    } catch (err: any) {
+    } catch (err: any) {      
       if (err.message == 'jwt expired') {
         console.log('entramos al flujo deseado');
         const newAcessToken = await this.httpService.axiosRef.get(
@@ -58,6 +58,7 @@ export class guardJwt implements CanActivate {
 
         return true;
       } else {
+
         throw new errorManage({
           type: err.response.data.status,
           message: err.response.data.message,

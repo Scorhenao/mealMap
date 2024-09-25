@@ -143,6 +143,9 @@ export class AppController implements handleMicroservices {
   ) {
     try {
       // const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
+
+      console.log(data);
+      
       const dataOrders={
         ...data,
         table:"floor 1 table 102",
@@ -177,6 +180,10 @@ export class AppController implements handleMicroservices {
   @ApiBody({ type: loginDto })
   async returnJwt(@Body() datos: any, @Res() response2: Response) {
     try {
+      console.log("entro a verificarion");
+      console.log(datos);
+      
+      
       const request = await this.httpService.axiosRef.post(
         'http://localhost:3002/token',
         datos,

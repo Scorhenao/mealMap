@@ -10,6 +10,7 @@ export class apiKeyGuard implements CanActivate {
     context: ExecutionContext,
   ) {  
     const req:Request=context.switchToHttp().getRequest(); 
+     console.log('entra');
      
     if(!req.headers["x-api-key"] || req.headers["x-api-key"] !== this.configService.get<string>("API_KEY") ) {     
         throw new UnauthorizedException();

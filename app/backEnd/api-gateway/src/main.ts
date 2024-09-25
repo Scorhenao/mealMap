@@ -9,6 +9,12 @@ async function bootstrap() {
   const configureService = app.get(ConfigService);
   app.use(cookieParser(configureService.get<string>('SIGNED_COOKIE')));
 
+
+  app.enableCors({
+    origin: '*', 
+    credentials: true, 
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Api Gateway')
     .setDescription('')
