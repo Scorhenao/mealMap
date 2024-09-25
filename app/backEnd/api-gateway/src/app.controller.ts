@@ -14,14 +14,12 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { lastValueFrom, map, Observable } from 'rxjs';
 import { guardJwt } from './verify-jwt/guard/jwt.guard';
 import { handleMicroservices } from './interfaces/interface.api-gateway';
 import { errorManage } from './common/config/error.manage';
 import { HttpExceptioManage } from './common/err/exception.fiulter';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
-import { REQUEST } from '@nestjs/core';
 import {
   ApiBody,
   ApiCookieAuth,
@@ -479,7 +477,12 @@ export class AppController implements handleMicroservices {
           },
         },
       );
-    } catch (err: any) {}
+    } catch (err: any) {
+      throw new errorManage({
+        type: err.response.data.statusCode,
+        message: err.response.data.message,
+      });
+    }
   }
 
 
@@ -502,6 +505,11 @@ export class AppController implements handleMicroservices {
         },
       );
       return dataDelete.data;
-    } catch (err: any) {}
+    } catch (err: any) {
+      throw new errorManage({
+        type: err.response.data.statusCode,
+        message: err.response.data.message,
+      });
+    }
   }
 }

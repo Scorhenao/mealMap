@@ -18,7 +18,7 @@ export class CreateOrderDto {
   // @IsInt()
   // quantityOfDrinks:number;
 
-  @ApiProperty({example:1})
+  @ApiProperty({ example: 1 })
   @IsNotEmpty()
   quantityOfPeoples:number;
 
@@ -60,7 +60,7 @@ export class CreateOrderDto {
 
   @IsNotEmpty()
   @IsString()
-  name:string;
+  name: string;
 
   @IsNotEmpty()
   @IsString()
@@ -70,5 +70,5 @@ export class CreateOrderDto {
   @IsNotEmpty()
   @Type(()=>Date)
   @IsDate()
-  date:Date;
+  date: Date;
 }

@@ -4,15 +4,14 @@ import { HttpService } from '@nestjs/axios';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { Between, Repository } from 'typeorm';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { errorManage } from 'src/config/error/error.manage';
 import { response } from 'express';
 
-
 @Injectable()
 export class OrdersService {
-  private date=new Date();
-  private dateToday:any=`${this.date.getFullYear()}-${this.date.getMonth()+1}-${this.date.getDate()}`;
+  private date = new Date();
+  private dateToday: any = `${this.date.getFullYear()}-${this.date.getMonth() + 1}-${this.date.getDate()}`;
 
   constructor(
     private httpService: HttpService,
@@ -85,4 +84,5 @@ export class OrdersService {
       throw errorManage.errorManageController(err.message);
     }
   }
+
 }
