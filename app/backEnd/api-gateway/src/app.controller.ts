@@ -14,14 +14,12 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { lastValueFrom, map, Observable } from 'rxjs';
 import { guardJwt } from './verify-jwt/guard/jwt.guard';
 import { handleMicroservices } from './interfaces/interface.api-gateway';
 import { errorManage } from './common/config/error.manage';
 import { HttpExceptioManage } from './common/err/exception.fiulter';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
-import { REQUEST } from '@nestjs/core';
 import {
   ApiBody,
   ApiCookieAuth,
@@ -249,12 +247,15 @@ export class AppController implements handleMicroservices {
     @Res() response: Response,
   ) {
     try {
-      // const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
+      const returnTable = await this.httpService.axiosRef.post(
+        'http://localhost:8080/table/available/' + dats.quantityPeople,
+      );
 
       const request = await this.httpService.axiosRef.post(
         'http://localhost:3001/orders',
         {
           ...request2.decode,
+          ...returnTable,
           ...dats,
           //...returnTable.data
         },
@@ -343,7 +344,12 @@ export class AppController implements handleMicroservices {
       const dataDelete = this.httpService.axiosRef.delete(
         `http://localhost:3003/user/${request.decode.idUser}`,
       );
-    } catch (err: any) {}
+    } catch (err: any) {
+      throw new errorManage({
+        type: err.response.data.statusCode,
+        message: err.response.data.message,
+      });
+    }
   }
 
   @Delete('ingredient/:id')
@@ -356,6 +362,11 @@ export class AppController implements handleMicroservices {
         `http://localhost:8080/ingredients/delete/${+id}`,
       );
       return dataDelete.data;
-    } catch (err: any) {}
+    } catch (err: any) {
+      throw new errorManage({
+        type: err.response.data.statusCode,
+        message: err.response.data.message,
+      });
+    }
   }
 }

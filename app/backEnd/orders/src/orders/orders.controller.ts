@@ -1,8 +1,19 @@
-import { Controller, Post, Body, UseGuards, Req, UnauthorizedException, Res, Get, UseInterceptors, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Req,
+  UnauthorizedException,
+  Res,
+  Get,
+  UseInterceptors,
+  ValidationPipe,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 // import { CreateOrderDto } from './dto/create-order.dto';
 import { errorManage } from 'src/config/error/error.manage';
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersGuard } from './guard/orders.guard';
 import { log } from 'console';
@@ -12,27 +23,42 @@ import { apiKeyGuard } from './guard/api-key.guard';
 import { role } from './decorators/decorators.decorator';
 import { Response } from 'express';
 import { ConfirmOrderInterceptor } from './interceptor/interceptor.interceptor';
-import { ApiBody, ApiHeader, ApiOkResponse, ApiResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiHeader,
+  ApiOkResponse,
+  ApiResponse,
+  ApiResponseProperty,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { responseOrders } from './dto/responseOrder';
 
-@ApiTags("Orders")
+@ApiTags('Orders')
 @Controller()
 export class OrdersController {
-  server:Server
-  
-  constructor(private readonly ordersService: OrdersService,private httpService:HttpService ) {}
+  server: Server;
 
+  constructor(
+    private readonly ordersService: OrdersService,
+    private httpService: HttpService,
+  ) {}
 
-  @Post("orders")
-  @role("admin","client","owner")
-  @UseGuards(apiKeyGuard,OrdersGuard)
-  @ApiBody({type:CreateOrderDto})
+  @Post('orders')
+  @role('admin', 'client', 'owner')
+  @UseGuards(apiKeyGuard, OrdersGuard)
+  @ApiBody({ type: CreateOrderDto })
   @UseInterceptors(ConfirmOrderInterceptor)
-  async create(@Body() data2:CreateOrderDto,@Req() request:any, @Res() response:Response) {
-    try {     
-      const createOrder=await this.ordersService.create(data2);
-      response.status(200).json("melo");
+  async create(
+    @Body() data2: CreateOrderDto,
+    @Req() request: any,
+    @Res() response: Response,
+  ) {
+    try {
+      console.log(request.body);
+      
+      const createOrder = await this.ordersService.create(data2);
+      response.status(200).json('melo');
     } catch (err: any) {
       throw new errorManage({
         type: 'BAD_REQUEST',
@@ -40,7 +66,6 @@ export class OrdersController {
       });
     }
   }
-
 
   // @Post('assign-table')
   // assignTable(@Body() combinedData: any) {
@@ -53,20 +78,18 @@ export class OrdersController {
   // }
 
   @Get()
-  @role("admin","owner")
-  @ApiOkResponse({type:[responseOrders]})
-   @UseGuards(apiKeyGuard,OrdersGuard)
-  async returnOrders(){
-    try{
-      const orders=await this.ordersService.returnOrdersDay();
+  @role('admin', 'owner')
+  @ApiOkResponse({ type: [responseOrders] })
+  @UseGuards(apiKeyGuard, OrdersGuard)
+  async returnOrders() {
+    try {
+      const orders = await this.ordersService.returnOrdersDay();
       return orders;
-    }catch(erre:any){
+    } catch (erre: any) {
       throw erre;
     }
   }
 }
-
-
 
 // {
 //   "role":"client",
@@ -88,7 +111,6 @@ export class OrdersController {
 
 //       ],
 
-
 //       "drinks":[
 
 //           {
@@ -101,7 +123,6 @@ export class OrdersController {
 //               "price":5500
 //           }
 //       ],
-
 
 //       "quantityPeople":1
 
