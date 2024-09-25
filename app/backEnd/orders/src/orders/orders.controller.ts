@@ -29,11 +29,11 @@ export class OrdersController {
   @UseGuards(apiKeyGuard,OrdersGuard)
   @ApiBody({type:CreateOrderDto})
   @UseInterceptors(ConfirmOrderInterceptor)
-  async create(@Body() data2:CreateOrderDto,@Req() request:any, @Res() response:Response) {
+  async create(@Body(new ValidationPipe()) data2:CreateOrderDto,@Req() request:any, @Res() response:Response) {
     try {     
       const createOrder=await this.ordersService.create(data2);
-      response.status(200).json("melo");
-    } catch (err: any) {
+      response.status(200).json(createOrder);
+    } catch (err: any) {      
       throw new errorManage({
         type: 'BAD_REQUEST',
         message: 'not cant create user',
@@ -42,20 +42,24 @@ export class OrdersController {
   }
 
 
-  // @Post('assign-table')
-  // assignTable(@Body() combinedData: any) {
-  //   return this.ordersService.assignTable(combinedData);
-  // }
+ @Get("all")
+ @role("admin","owner")
+ @ApiOkResponse({type:[responseOrders]})
+ @UseGuards(apiKeyGuard,OrdersGuard)
+ async allOrders(){
+  try{
+    const data=await this.ordersService.returnAllOrders();
+    return data;
+  }catch(err:any){
+    throw err;
+  }
+ }
 
-  // @Post('create-order')
-  // createOrder(@Body() orderData: any) {
-  //   return this.ordersService.createOrder(orderData);
-  // }
 
   @Get()
   @role("admin","owner")
   @ApiOkResponse({type:[responseOrders]})
-   @UseGuards(apiKeyGuard,OrdersGuard)
+  @UseGuards(apiKeyGuard,OrdersGuard)
   async returnOrders(){
     try{
       const orders=await this.ordersService.returnOrdersDay();

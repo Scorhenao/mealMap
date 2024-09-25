@@ -26,7 +26,7 @@ export class Order {
   @Column()
   name:string;
 
-  @Column()
+  @Column({nullable:true})
   idUser:string;
 
   @Column()

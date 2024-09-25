@@ -11,6 +11,11 @@ async function bootstrap() {
   const seedRol=new seedRole();
   const seedUse=new seedUser();
 
+  app.enableCors({
+    origin: 'http://localhost:3000', 
+    credentials: true, 
+  });
+  
   await seedRol.run(dataSource);
   await seedUse.run(dataSource);
   app.useGlobalFilters(new ErrsFilter());

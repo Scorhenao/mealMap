@@ -5,8 +5,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: '*', // Permite solicitudes desde cualquier origen
-    credentials: true, // Permite el envío de cookies
+    origin: 'http://localhost:3000', 
+    credentials: true, 
   });
 
   const config = new DocumentBuilder()
