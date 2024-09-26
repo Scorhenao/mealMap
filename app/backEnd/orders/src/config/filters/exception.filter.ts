@@ -15,7 +15,6 @@ export class allManageErrors implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    console.log(exception);
     
     const customHttp:number=exception.message.split(" :: ")[0];  
     const status=  HttpStatus[exception.message.split(" :: ")[0]] || exception.status ? exception.status || customHttp : HttpStatus.INTERNAL_SERVER_ERROR;

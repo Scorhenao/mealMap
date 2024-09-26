@@ -46,13 +46,11 @@ export class OrdersController {
 
   @Post('orders')
   @role('admin', 'client', 'owner')
-  //@UseGuards(apiKeyGuard, OrdersGuard)
+  @UseGuards(apiKeyGuard, OrdersGuard)
   @ApiBody({ type: CreateOrderDto })
   @UseInterceptors(ConfirmOrderInterceptor)
   async create(@Body(new ValidationPipe()) data2:CreateOrderDto,@Req() request:any, @Res() response:Response) {
     try {     
-      console.log('entramos');
-      
       const createOrder=await this.ordersService.create(data2);
       response.status(200).json(createOrder);
     } catch (err: any) {      
@@ -70,6 +68,8 @@ export class OrdersController {
  @UseGuards(apiKeyGuard,OrdersGuard)
  async allOrders(){
   try{
+    console.log("entrmaos");
+    
     const data=await this.ordersService.returnAllOrders();
     return data;
   }catch(err:any){

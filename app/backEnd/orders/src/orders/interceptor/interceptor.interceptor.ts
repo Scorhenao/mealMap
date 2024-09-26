@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable()
 export class ConfirmOrderInterceptor implements NestInterceptor {
@@ -21,14 +21,12 @@ export class ConfirmOrderInterceptor implements NestInterceptor {
     const res: Response = context.switchToHttp().getResponse();
 
     return next.handle().pipe(
-      map(async () => {
+      tap(async () => {
         if (res.statusCode === 200) {
-          console.log('HOLA');
-          console.log(req.body.dishes);
           const ingredientCount = {};
 
           for (const dish of req.body.dishes) {
-            for (const ingredient of dish.ingredients) {
+            for (const ingredient of dish.ingredient) {
               const name = ingredient.name;
 
               if (ingredientCount[name]) {
@@ -45,14 +43,12 @@ export class ConfirmOrderInterceptor implements NestInterceptor {
               quantity,
             }),
           );
-
+       
           await this.httpService.axiosRef.post(
             'http://localhost:3000/notifyOrder',
             ingredientsArray,
           );
         }
-
-        return true;
       }),
     );
   }
