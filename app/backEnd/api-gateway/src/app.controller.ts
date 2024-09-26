@@ -165,6 +165,8 @@ export class AppController implements handleMicroservices {
 
       response.json(request.data);
     } catch (err: any) {     
+      console.log(err);
+      
       throw new errorManage({
         type: err.response.data.status,
         message: err.response.data.message,
@@ -193,6 +195,9 @@ export class AppController implements handleMicroservices {
           },
         },
       );
+
+      console.log(request.data);
+      
       response2.cookie('token2', request.data.acces_token, {
         httpOnly: true,
         signed: true,
