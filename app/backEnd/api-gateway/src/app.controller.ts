@@ -142,19 +142,18 @@ export class AppController implements handleMicroservices {
     @Res() response: Response,
   ) {
     try {
-      // const returnTable=await this.httpService.axiosRef.post("http://localhost:8080",dats.quantityPeople);
-
-      console.log(data);
-      
+      const returnTable=await this.httpService.axiosRef.get("http://localhost:8080/tables/available/"+data.quantityOfPeoples);
+          
       const dataOrders={
         ...data,
-        table:"floor 1 table 102",
+        table:`Table :${returnTable.data.idTable} Floor: ${returnTable.data.floor}`,
         name:request2.decode.name,
         date:new Date()
       }      
+      console.log(dataOrders);
       const request = await this.httpService.axiosRef.post(
         'http://localhost:3001/orders',
-          dataOrders,
+        dataOrders,
         {
           withCredentials: true,
           headers: {
@@ -165,7 +164,7 @@ export class AppController implements handleMicroservices {
       );
 
       response.json(request.data);
-    } catch (err: any) {
+    } catch (err: any) {     
       throw new errorManage({
         type: err.response.data.status,
         message: err.response.data.message,
@@ -238,9 +237,11 @@ export class AppController implements handleMicroservices {
     // notify to service inventory of a new order
     @Post("notifyOrder")
     async giveDishesOrders(@Body() data:any){
-      try{
-        await this.httpService.axiosRef.post("http://localhost:8080/dihesOrders",data);
+      try{   
+        await this.httpService.axiosRef.post("http://localhost:8080/orders/discount",data);
       }catch(err:any){
+        console.log(err);
+        
         throw new errorManage({
           type: err.response.data.status,
           message: err.response.data.message,
@@ -332,6 +333,8 @@ export class AppController implements handleMicroservices {
   @UseGuards(guardJwt)
   async returnAllOrders(@Req() request:any){
     try{
+      console.log('entramos');
+      
       const requestData=await this.httpService.axiosRef.get("http://localhost:3001/all",{
         withCredentials:true,
         headers:{
@@ -340,6 +343,8 @@ export class AppController implements handleMicroservices {
         }
       });
 
+      console.log("dale la data");
+      
       return requestData.data;
     }catch(err:any){
       throw new errorManage({
