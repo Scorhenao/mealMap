@@ -22,13 +22,15 @@ export class guardJwt implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    console.log('entramos a verificar el jwt');
+    
 
     const res: Response = context.switchToHttp().getResponse();
-    console.log(req.cookies);
     
     const tokenAccess = req.signedCookies['token2'];
     const tokenRefresh = req.signedCookies['tokenRefresh'];
+  
+    console.log(tokenAccess);
+    
     try {
       this.jwtService.verify(tokenAccess, { ignoreExpiration: false });
 

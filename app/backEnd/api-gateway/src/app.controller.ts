@@ -142,6 +142,9 @@ export class AppController implements handleMicroservices {
     @Res() response: Response,
   ) {
     try {
+
+      console.log("entro para la data");
+      
       const returnTable=await this.httpService.axiosRef.get("http://localhost:8080/tables/available/"+data.quantityOfPeoples);
           
       const dataOrders={
@@ -201,11 +204,13 @@ export class AppController implements handleMicroservices {
       response2.cookie('token2', request.data.acces_token, {
         httpOnly: true,
         signed: true,
+        sameSite: 'none'
       });
 
       response2.cookie('tokenRefresh', request.data.refres_token, {
         httpOnly: true,
         signed: true,
+        sameSite:'none'
       });
 
       response2.status(200).json(true);
